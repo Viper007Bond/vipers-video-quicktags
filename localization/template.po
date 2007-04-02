@@ -1,0 +1,202 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Viper's Video Quicktags v5.0.x\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-04-01 23:48-0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: C:\\Webserver\\htdocs\\plugindev\\wp-content\\plugins\\vipers-video-quicktags\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"Last-Translator: Viper007Bond <poedit@viper007bond.com>\n"
+"Language-Team: \n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: vipers_videoquicktags.php:138
+#: vipers_videoquicktags.php:332
+msgid "YouTube"
+msgstr ""
+
+#: vipers_videoquicktags.php:140
+msgid "GVideo"
+msgstr ""
+
+#: vipers_videoquicktags.php:140
+#: vipers_videoquicktags.php:338
+msgid "Google Video"
+msgstr ""
+
+#: vipers_videoquicktags.php:142
+#: vipers_videoquicktags.php:344
+msgid "IFILM"
+msgstr ""
+
+#: vipers_videoquicktags.php:144
+#: vipers_videoquicktags.php:350
+msgid "Metacafe"
+msgstr ""
+
+#: vipers_videoquicktags.php:146
+#: vipers_videoquicktags.php:356
+msgid "MySpace"
+msgstr ""
+
+#: vipers_videoquicktags.php:148
+msgid "QT"
+msgstr ""
+
+#: vipers_videoquicktags.php:148
+#: vipers_videoquicktags.php:362
+msgid "Quicktime"
+msgstr ""
+
+#: vipers_videoquicktags.php:150
+msgid "Video File"
+msgstr ""
+
+#: vipers_videoquicktags.php:152
+msgid "FLV"
+msgstr ""
+
+#: vipers_videoquicktags.php:192
+#: vipers_videoquicktags.php:314
+msgid "Viper's Video Quicktags Configuration"
+msgstr ""
+
+#: vipers_videoquicktags.php:192
+msgid "Video Quicktags"
+msgstr ""
+
+#: vipers_videoquicktags.php:255
+#, php-format
+msgid ""
+"Please enter the URL that the %%sitename%% video is located at.\\n"
+"\\n"
+"Example:"
+msgstr ""
+
+#: vipers_videoquicktags.php:266
+#, php-format
+msgid ""
+"Please enter the FULL URL to the %%videotype%% video file:\\n"
+"\\n"
+"Example:"
+msgstr ""
+
+#: vipers_videoquicktags.php:269
+msgid ""
+"How many pixels WIDE would you like to display this video?\\n"
+"If you don't know, then 320 and 640 are nice numbers."
+msgstr ""
+
+#: vipers_videoquicktags.php:274
+#, php-format
+msgid ""
+"How many pixels TALL would you like to display this video?\\n"
+"If you don't know, then %%goodheight%% works well with %%width%%."
+msgstr ""
+
+#: vipers_videoquicktags.php:296
+msgid "Options reset to defaults."
+msgstr ""
+
+#: vipers_videoquicktags.php:298
+msgid "Options saved."
+msgstr ""
+
+#: vipers_videoquicktags.php:319
+msgid "Please note that even if you hide a button, the BBCode for that video type will still continue to work. The buttons are only there to make your life easier."
+msgstr ""
+
+#: vipers_videoquicktags.php:324
+msgid "Media Type"
+msgstr ""
+
+#: vipers_videoquicktags.php:325
+msgid "Show Button?"
+msgstr ""
+
+#: vipers_videoquicktags.php:326
+msgid "Default Width"
+msgstr ""
+
+#: vipers_videoquicktags.php:327
+msgid "Default Height"
+msgstr ""
+
+#: vipers_videoquicktags.php:364
+#: vipers_videoquicktags.php:365
+#: vipers_videoquicktags.php:373
+#: vipers_videoquicktags.php:374
+#: vipers_videoquicktags.php:379
+#: vipers_videoquicktags.php:380
+msgid "N/A"
+msgstr ""
+
+#: vipers_videoquicktags.php:369
+msgid "Generic Video File"
+msgstr ""
+
+#: vipers_videoquicktags.php:377
+msgid "Flash Video File (FLV)"
+msgstr ""
+
+#: vipers_videoquicktags.php:387
+msgid "Other Options"
+msgstr ""
+
+#: vipers_videoquicktags.php:391
+msgid "Align videos to the:"
+msgstr ""
+
+#: vipers_videoquicktags.php:394
+msgid "Left"
+msgstr ""
+
+#: vipers_videoquicktags.php:395
+msgid "Center"
+msgstr ""
+
+#: vipers_videoquicktags.php:396
+msgid "Right"
+msgstr ""
+
+#: vipers_videoquicktags.php:398
+msgid "part of the post"
+msgstr ""
+
+#: vipers_videoquicktags.php:403
+msgid "Show the buttons in the WYSIWYG editor on:"
+msgstr ""
+
+#: vipers_videoquicktags.php:404
+msgid "(You may need to clear your browser's cache after changing this value)"
+msgstr ""
+
+#: vipers_videoquicktags.php:407
+msgid "Line #1"
+msgstr ""
+
+#: vipers_videoquicktags.php:408
+msgid "Line #2"
+msgstr ""
+
+#: vipers_videoquicktags.php:412
+msgid "Hosted Video Files:"
+msgstr ""
+
+#: vipers_videoquicktags.php:416
+msgid "Use Windows Media Player for Windows users. May or may not work for all users."
+msgstr ""
+
+#: vipers_videoquicktags.php:424
+#: vipers_videoquicktags.php:426
+msgid "Update Options"
+msgstr ""
+
+#: vipers_videoquicktags.php:425
+msgid "Reset to Defaults"
+msgstr ""
+

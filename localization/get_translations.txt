@@ -1,0 +1,8 @@
+Plugin translations are available at the plugin's homepage:
+
+http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/#translations
+
+
+You can also make your own using the included template file. For details, see the WP Codex:
+
+http://codex.wordpress.org/Translating_WordPress
