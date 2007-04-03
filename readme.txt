@@ -14,6 +14,22 @@ Tired of copying and pasting the embed HTML from sites like YouTube into posts o
 
 Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, alignment on the page) and much more. Best of all, it won't break your page's (X)HTML validation.
 
+Currently supports these video sites:
+
+* [YouTube](http://www.youtube.com/)
+* [Google Video](http://video.google.com/)
+* [IFILM](http://www.ifilm.com/)
+* [Metacafe](http://www.metacafe.com/)
+* [MySpace](http://www.myspace.com/)
+
+As well as these file types:
+
+* QuickTime (MOV, etc.)
+* Generic video files (AVI, MPEG, WMV, etc.)
+* Flash Video Files (FLV)
+
+If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get mt to include it.
+
 == Installation ==
 
 ###Updgrading From A Previous Version###
