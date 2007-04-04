@@ -28,7 +28,7 @@ As well as these file types:
 * Generic video files (AVI, MPEG, WMV, etc.)
 * Flash Video Files (FLV)
 
-If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get mt to include it.
+If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get me to include it.
 
 == Installation ==
 
