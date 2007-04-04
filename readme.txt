@@ -3,7 +3,7 @@ Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video
 Requires at least: 2.0
-Tested up to: 2.1.2
+Tested up to: 2.1.3
 Stable tag: trunk
 
 Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
