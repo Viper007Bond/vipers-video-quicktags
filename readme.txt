@@ -52,8 +52,8 @@ This should result in the following file structure:
             | screenshot-1.png
             | screenshot-2.png
             | screenshot-3.png
-            | vipers_videoquicktags.js
-            | vipers_videoquicktags.php
+            | vipers-video-quicktags.js
+            | vipers-video-quicktags.php
             - images
                 | flv.png
                 | googlevideo.png
@@ -73,7 +73,7 @@ This should result in the following file structure:
                 - tinymce
                     | editor_plugin.js
                     - langs
-                        | en_us.js`
+                        | en.js`
 
 Then just visit your admin area and activate the plugin.
 
