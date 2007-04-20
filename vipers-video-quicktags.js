@@ -5,29 +5,52 @@
 | This file contains some wrappers for UFO as well as UFO itself.        |
 \************************************************************************/
 
-function vvq_youtube(objectID, widthvalue, heightvalue, videoID) {
-	var FO = { movie:"http://www.youtube.com/v/" + videoID, width:widthvalue, height:heightvalue, majorversion:"6", build:"0" };
+function vvq_youtube(objectID, videoWidth, videoHeight, videoID) {
+	var FO = { movie:"http://www.youtube.com/v/" + videoID, width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
 	UFO.create(FO, objectID);
 }
 
-function vvq_googlevideo(objectID, widthvalue, heightvalue, videoID) {
-	var FO = { movie:"http://video.google.com/googleplayer.swf?docId=" + videoID, width:widthvalue, height:heightvalue, majorversion:"6", build:"0" };
+function vvq_googlevideo(objectID, videoWidth, videoHeight, videoID) {
+	var FO = { movie:"http://video.google.com/googleplayer.swf?docId=" + videoID, width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
 	UFO.create(FO, objectID);
 }
 
-function vvq_ifilm(objectID, widthvalue, heightvalue, videoID) {
-	var FO = { movie:"http://www.ifilm.com/efp", flashvars:"flvbaseclip=" + videoID, width:widthvalue, height:heightvalue, majorversion:"6", build:"0" };
+function vvq_ifilm(objectID, videoWidth, videoHeight, videoID) {
+	var FO = { movie:"http://www.ifilm.com/efp", flashvars:"flvbaseclip=" + videoID, width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
 	UFO.create(FO, objectID);
 }
 
-function vvq_metacafe(objectID, widthvalue, heightvalue, videoID, videoName) {
-	var FO = { movie:"http://www.metacafe.com/fplayer/" + videoID + "/" + videoName + ".swf", flashvars:"playerVars=playerVars=showStats=yes|autoPlay=no", width:widthvalue, height:heightvalue, majorversion:"6", build:"0" };
+function vvq_metacafe(objectID, videoWidth, videoHeight, videoID, videoName) {
+	var FO = { movie:"http://www.metacafe.com/fplayer/" + videoID + "/" + videoName + ".swf", flashvars:"playerVars=playerVars=showStats=yes|autoPlay=no", width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
 	UFO.create(FO, objectID);
 }
 
-function vvq_myspace(objectID, widthvalue, heightvalue, videoID) {
-	var FO = { movie:"http://lads.myspace.com/videos/vplayer.swf", flashvars:"m=" + videoID + "&type=video", width:widthvalue, height:heightvalue, majorversion:"6", build:"0" };
+function vvq_myspace(objectID, videoWidth, videoHeight, videoID) {
+	var FO = { movie:"http://lads.myspace.com/videos/vplayer.swf", flashvars:"m=" + videoID + "&type=video", width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
 	UFO.create(FO, objectID);
+}
+
+function vvq_vimeo(objectID, videoWidth, videoHeight, videoID) {
+	var FO = { movie:"http://www.vimeo.com/moogaloop.swf?clip_id=" + videoID, width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
+	UFO.create(FO, objectID);
+}
+
+function vvq_flv(objectID, videoWidth, videoHeight, SWFURL, FLVFileURL) {
+	var FO = { movie:SWFURL, flashvars:"file=" + FLVFileURL + "&usefullscreen=false", allowFullScreen:"true", width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
+	UFO.create(FO, objectID);
+}
+
+// Get around Internet Explorer's retarded click-to-activate thing by writing the HTML via Javascript
+function vvq_quicktime(objectID, videoWidth, videoHeight, videoURL) {
+	document.getElementById(objectID).innerHTML = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" codebase="http://www.apple.com/qtactivex/qtplugin.cab" width="' + videoWidth + '" height="' + videoHeight + '"><param name="src" value="' + videoURL + '" /><param name="controller" value="true" /><param name="autoplay" value="false" /><param name="wmode" value="transparent" /><object type="video/quicktime" data="' + videoURL + '" width="' + videoWidth + '" height="' + videoHeight + '" class="mov"><param name="controller" value="true" /><param name="autoplay" value="false" /><p><a href="' + videoURL + '">' + videoURL + '</a></p></object></object>';
+}
+
+function vvq_videoWMP(objectID, videoWidth, videoHeight, videoURL) {
+	document.getElementById(objectID).innerHTML = '<object classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701" standby="Loading Microsoft Windows Media Player components..." type="application/x-oleobject" width="' + videoWidth + '" height="' + videoHeight + '"><param name="url" value="' + videoURL + '" /><param name="allowchangedisplaysize" value="true" /><param name="autosize" value="true" /><param name="displaysize" value="1" /><param name="showcontrols" value="true" /><param name="showstatusbar" value="true" /><param name="autorewind" value="true" /><param name="autostart" value="false" /><param name="volume" value="100" /></object>';
+}
+
+function vvq_videoNoWMP(objectID, videoWidth, videoHeight, videoURL, mimeType) {
+	document.getElementById(objectID).innerHTML = '<object type="' + mimeType + '" data="' + videoURL + '" width="' + videoWidth + '" height="' + videoHeight + '" class="vvqbox vvqvideo"><param name="src" value="' + videoURL + '" /><param name="allowchangedisplaysize" value="true" /><param name="autosize" value="true" /><param name="displaysize" value="1" /><param name="showcontrols" value="true" /><param name="showstatusbar" value="true" /><param name="autorewind" value="true" /><param name="autostart" value="false" /><param name="volume" value="100" /></object>';
 }
 
 

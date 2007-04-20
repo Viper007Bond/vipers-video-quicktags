@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Viper's Video Quicktags v5.0.x\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-04-01 23:48-0800\n"
+"PO-Revision-Date: 2007-04-20 05:25-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,189 +14,191 @@ msgstr ""
 "Language-Team: \n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: vipers_videoquicktags.php:138
-#: vipers_videoquicktags.php:332
+#: vipers-video-quicktags.php:164
+#: vipers-video-quicktags.php:434
 msgid "YouTube"
 msgstr ""
 
-#: vipers_videoquicktags.php:140
+#: vipers-video-quicktags.php:166
 msgid "GVideo"
 msgstr ""
 
-#: vipers_videoquicktags.php:140
-#: vipers_videoquicktags.php:338
+#: vipers-video-quicktags.php:166
+#: vipers-video-quicktags.php:440
 msgid "Google Video"
 msgstr ""
 
-#: vipers_videoquicktags.php:142
-#: vipers_videoquicktags.php:344
+#: vipers-video-quicktags.php:168
+#: vipers-video-quicktags.php:446
 msgid "IFILM"
 msgstr ""
 
-#: vipers_videoquicktags.php:144
-#: vipers_videoquicktags.php:350
+#: vipers-video-quicktags.php:170
+#: vipers-video-quicktags.php:452
 msgid "Metacafe"
 msgstr ""
 
-#: vipers_videoquicktags.php:146
-#: vipers_videoquicktags.php:356
+#: vipers-video-quicktags.php:172
+#: vipers-video-quicktags.php:458
 msgid "MySpace"
 msgstr ""
 
-#: vipers_videoquicktags.php:148
+#: vipers-video-quicktags.php:174
+#: vipers-video-quicktags.php:464
+msgid "Vimeo"
+msgstr ""
+
+#: vipers-video-quicktags.php:176
 msgid "QT"
 msgstr ""
 
-#: vipers_videoquicktags.php:148
-#: vipers_videoquicktags.php:362
+#: vipers-video-quicktags.php:176
+#: vipers-video-quicktags.php:470
 msgid "Quicktime"
 msgstr ""
 
-#: vipers_videoquicktags.php:150
+#: vipers-video-quicktags.php:178
 msgid "Video File"
 msgstr ""
 
-#: vipers_videoquicktags.php:152
+#: vipers-video-quicktags.php:180
 msgid "FLV"
 msgstr ""
 
-#: vipers_videoquicktags.php:192
-#: vipers_videoquicktags.php:314
+#: vipers-video-quicktags.php:221
+#: vipers-video-quicktags.php:416
 msgid "Viper's Video Quicktags Configuration"
 msgstr ""
 
-#: vipers_videoquicktags.php:192
+#: vipers-video-quicktags.php:221
 msgid "Video Quicktags"
 msgstr ""
 
-#: vipers_videoquicktags.php:255
-#, php-format
+#: vipers-video-quicktags.php:328
 msgid ""
-"Please enter the URL that the %%sitename%% video is located at.\\n"
+"Please enter the URL that the %sitename% video is located at.\\n"
 "\\n"
 "Example:"
 msgstr ""
 
-#: vipers_videoquicktags.php:266
-#, php-format
-msgid ""
-"Please enter the FULL URL to the %%videotype%% video file:\\n"
-"\\n"
-"Example:"
-msgstr ""
-
-#: vipers_videoquicktags.php:269
+#: vipers-video-quicktags.php:333
+#: vipers-video-quicktags.php:364
 msgid ""
 "How many pixels WIDE would you like to display this video?\\n"
-"If you don't know, then 320 and 640 are nice numbers."
+"\\n"
+"Leave this box blank or press Cancel to use the default width."
 msgstr ""
 
-#: vipers_videoquicktags.php:274
-#, php-format
+#: vipers-video-quicktags.php:341
+#: vipers-video-quicktags.php:372
+msgid "How many pixels TALL would you like to display this video?"
+msgstr ""
+
+#: vipers-video-quicktags.php:359
 msgid ""
-"How many pixels TALL would you like to display this video?\\n"
-"If you don't know, then %%goodheight%% works well with %%width%%."
+"Please enter the FULL URL to the %videotype% video file:\\n"
+"\\n"
+"Example:"
 msgstr ""
 
-#: vipers_videoquicktags.php:296
+#: vipers-video-quicktags.php:398
 msgid "Options reset to defaults."
 msgstr ""
 
-#: vipers_videoquicktags.php:298
+#: vipers-video-quicktags.php:400
 msgid "Options saved."
 msgstr ""
 
-#: vipers_videoquicktags.php:319
+#: vipers-video-quicktags.php:421
 msgid "Please note that even if you hide a button, the BBCode for that video type will still continue to work. The buttons are only there to make your life easier."
 msgstr ""
 
-#: vipers_videoquicktags.php:324
+#: vipers-video-quicktags.php:426
 msgid "Media Type"
 msgstr ""
 
-#: vipers_videoquicktags.php:325
+#: vipers-video-quicktags.php:427
 msgid "Show Button?"
 msgstr ""
 
-#: vipers_videoquicktags.php:326
+#: vipers-video-quicktags.php:428
 msgid "Default Width"
 msgstr ""
 
-#: vipers_videoquicktags.php:327
+#: vipers-video-quicktags.php:429
 msgid "Default Height"
 msgstr ""
 
-#: vipers_videoquicktags.php:364
-#: vipers_videoquicktags.php:365
-#: vipers_videoquicktags.php:373
-#: vipers_videoquicktags.php:374
-#: vipers_videoquicktags.php:379
-#: vipers_videoquicktags.php:380
-msgid "N/A"
-msgstr ""
-
-#: vipers_videoquicktags.php:369
+#: vipers-video-quicktags.php:477
 msgid "Generic Video File"
 msgstr ""
 
-#: vipers_videoquicktags.php:377
+#: vipers-video-quicktags.php:485
 msgid "Flash Video File (FLV)"
 msgstr ""
 
-#: vipers_videoquicktags.php:387
+#: vipers-video-quicktags.php:495
 msgid "Other Options"
 msgstr ""
 
-#: vipers_videoquicktags.php:391
+#: vipers-video-quicktags.php:499
 msgid "Align videos to the:"
 msgstr ""
 
-#: vipers_videoquicktags.php:394
+#: vipers-video-quicktags.php:502
 msgid "Left"
 msgstr ""
 
-#: vipers_videoquicktags.php:395
+#: vipers-video-quicktags.php:503
 msgid "Center"
 msgstr ""
 
-#: vipers_videoquicktags.php:396
+#: vipers-video-quicktags.php:504
 msgid "Right"
 msgstr ""
 
-#: vipers_videoquicktags.php:398
+#: vipers-video-quicktags.php:506
 msgid "part of the post"
 msgstr ""
 
-#: vipers_videoquicktags.php:403
+#: vipers-video-quicktags.php:511
 msgid "Show the buttons in the WYSIWYG editor on:"
 msgstr ""
 
-#: vipers_videoquicktags.php:404
+#: vipers-video-quicktags.php:512
 msgid "(You may need to clear your browser's cache after changing this value)"
 msgstr ""
 
-#: vipers_videoquicktags.php:407
+#: vipers-video-quicktags.php:515
 msgid "Line #1"
 msgstr ""
 
-#: vipers_videoquicktags.php:408
+#: vipers-video-quicktags.php:516
 msgid "Line #2"
 msgstr ""
 
-#: vipers_videoquicktags.php:412
+#: vipers-video-quicktags.php:520
 msgid "Hosted Video Files:"
 msgstr ""
 
-#: vipers_videoquicktags.php:416
+#: vipers-video-quicktags.php:524
 msgid "Use Windows Media Player for Windows users. May or may not work for all users."
 msgstr ""
 
-#: vipers_videoquicktags.php:424
-#: vipers_videoquicktags.php:426
+#: vipers-video-quicktags.php:529
+msgid "Prompt for width and height?"
+msgstr ""
+
+#: vipers-video-quicktags.php:533
+msgid "Yes, please ask me every time for the width and height of the video."
+msgstr ""
+
+#: vipers-video-quicktags.php:541
+#: vipers-video-quicktags.php:543
 msgid "Update Options"
 msgstr ""
 
-#: vipers_videoquicktags.php:425
+#: vipers-video-quicktags.php:542
 msgid "Reset to Defaults"
 msgstr ""
 

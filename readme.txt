@@ -21,6 +21,7 @@ Currently supports these video sites:
 * [IFILM](http://www.ifilm.com/)
 * [Metacafe](http://www.metacafe.com/)
 * [MySpace](http://www.myspace.com/)
+* [Vimeo](http://www.vimeo.com/)
 
 As well as these file types:
 
@@ -29,6 +30,8 @@ As well as these file types:
 * Flash Video Files (FLV)
 
 If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get me to include it.
+
+**For plugin support, please use [my forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23) rather than the below comments area. Thanks.**
 
 == Installation ==
 
@@ -59,6 +62,7 @@ This should result in the following file structure:
                 | myspace.png
                 | quicktime.png
                 | videofile.png
+                | vimeo.png
                 | youtube.png
             - localization
                 | get_translations.txt
@@ -127,3 +131,45 @@ If you'd like to add a border for example, try adding something like this to you
 	border: 3px solid red;
 	padding: 5px;
 }`
+
+== ChangeLog ==
+
+**Version 5.1.0**
+
+* Renamed the plugin file and Javascript file to match the plugin's folder name.
+* Forgot to code in FLV file BBCode->HTML (whoops!). Thanks to [Jack](http://jackcorto.dyndns.org/) for pointing this out.
+* Due to using the wrong variable on my part, you were unable to change the default width and height of videos. Now fixed and the boxes on the options page actually work.
+* Quicktime and generic video files are now inserted via Javascript in order to get around the annoying IE click-to-activate thing.
+* Default width/heights for non-Flash files can now be set. Plugin will now not prompt you for width/height by default for those. Admin area Javascript completely recoded as a result.
+* You can now opt to have the plugin always prompt you for a width and height. Option configuration via the options page.
+* Added support for [Vimeo](http://www.vimeo.com/)
+* Fixed the layering issue with Flash for things like Lightbox. Thanks to [timjohns](http://timdotnet.net/wiggumdaily/) for pointing out that I forgot to handle this. I can't figure out a way to fix it for non-Flash videos though. :(
+* Fixed buttons in TinyMCE in Internet Explorer. Issue was caused by tiny Javascript issue. Man I **HATE** that browser!
+* Due to WP 2.0.x being old and crappy, it'd add `<br />`'s inside `<script>` tags. Worked around it by adding the Javascript after `wpautop()` runs.
+* Fixed title text for buttons in TinyMCE.
+* Updated Flash Video Player (FLV player) to v3.7.
+* Other various bug fixes that I can't remember.
+
+**Version 5.0.0**
+
+* Complete recode once again featuring UFO for Flash objects and lots of other stuff. Basically v4.0.0 without all the bugs.
+
+**Version 4.0.0**
+
+* Once again, completely recoded from the ground up. Too many changes to even begin to list.
+
+**Version 3.0.0**
+
+* Completely recoded again. This time added a bunch more buttons and switched to regex replacement rather than the stupid method I was using before (woo hoo!).
+
+**Version 2.0.0**
+
+* Plugin completely recoded in order to make buttons for the WYSIWYG editor.
+
+**Version 1.0.1**
+
+* Transparency mode parameter set on the Flash. This makes it so that other items (such as menus or positioned items) appear in front of the videos rather than behind them.
+
+**Version 1.0.0**
+
+* Inital release.
