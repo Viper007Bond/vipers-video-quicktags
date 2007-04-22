@@ -134,6 +134,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.1.2**
+
+* Spelling mistake ("video" instead of "vimeo") made the Vimeo button in the rich editor never be hidden. Thanks to [giuseppe](http://www.soveratonews.com/) for [pointing it out](http://www.viper007bond.com/wordpress-plugins/forums/viewtopic.php?id=527).
+
 **Version 5.1.1**
 
 * Buttons weren't working in the rich editor due to a stupid mistake on my part (I forgot to replace some debug code with the correct code). Fixed with thanks to [nhdriver4](http://onovia.com/) for [pointing it out](http://www.viper007bond.com/wordpress-plugins/forums/viewtopic.php?id=526).
