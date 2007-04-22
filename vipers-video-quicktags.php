@@ -194,7 +194,7 @@ class VipersVideoQuicktags {
 		return $buttons;
 	}
 	function tinymce_before_init() {
-		echo 'tinyMCE.loadPlugin("vipersvideoquicktags", "http://localhost/plugindev/wp-content/plugins/vipers-video-quicktags/resources/tinymce/");';
+		echo 'tinyMCE.loadPlugin("vipersvideoquicktags", "' . $this->fullfolderurl . 'resources/tinymce/");';
 	}
 
 
