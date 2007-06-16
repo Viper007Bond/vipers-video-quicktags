@@ -3,7 +3,7 @@ Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video
 Requires at least: 2.0
-Tested up to: 2.1.3
+Tested up to: latest
 Stable tag: trunk
 
 Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
@@ -30,8 +30,6 @@ As well as these file types:
 * Flash Video Files (FLV)
 
 If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get me to include it.
-
-**For plugin support, please use [my forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23) rather than the below comments area. Thanks.**
 
 == Installation ==
 
