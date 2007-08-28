@@ -137,6 +137,7 @@ If you'd like to add a border for example, try adding something like this to you
 * YouTube.com regional support (uk.youtube.com, etc.)
 * WPMU support hopefully
 * Support for v2.x (old!) style placeholders
+* Updated FLV player file to latest version
 * Another attempt at stopping autoplaying self-hosted videos
 * Other minor fixes
 
