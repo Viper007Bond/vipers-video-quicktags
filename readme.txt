@@ -132,6 +132,14 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.1.3**
+
+* YouTube.com regional support (uk.youtube.com, etc.)
+* WPMU support hopefully
+* Support for v2.x (old!) style placeholders
+* Another attempt at stopping autoplaying self-hosted videos
+* Other minor fixes
+
 **Version 5.1.2**
 
 * Spelling mistake ("video" instead of "vimeo") made the Vimeo button in the rich editor never be hidden. Thanks to [giuseppe](http://www.soveratonews.com/) for [pointing it out](http://www.viper007bond.com/wordpress-plugins/forums/viewtopic.php?id=527).

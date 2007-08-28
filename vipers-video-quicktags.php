@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.1.2
+Version: 5.1.3
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.1.2';
+	var $version = '5.1.3';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 
@@ -108,7 +108,7 @@ class VipersVideoQuicktags {
 		if ( TRUE === $this->anybuttons() ) add_action('init', array(&$this, 'addbuttons'));
 
 		// Are we running at least WordPress 2.1?
-		$this->twopointoneplus = version_compare($wp_version, '2.1.0', '>=');
+		$this->twopointoneplus = ( class_exists('WP_Scripts') ) ? TRUE : FALSE;
 
 		// Loads the needed Javascript file
 		if ( TRUE == $this->twopointoneplus ) wp_enqueue_script('vvq', $this->folder . '/vipers-video-quicktags.js', FALSE, $this->version);
@@ -217,8 +217,7 @@ class VipersVideoQuicktags {
 
 
 	function admin_menu() {
-		// The spaces to &nbsp; is done so that the menu tab doesn't ever end up on two lines
-		add_options_page(__("Viper's Video Quicktags Configuration", 'vvq'), str_replace(' ', '&nbsp;', __('Video Quicktags', 'vvq')), 'manage_options', basename(__FILE__), array(&$this, 'optionspage'));
+		add_options_page(__("Viper's Video Quicktags Configuration", 'vvq'), __('Video Quicktags', 'vvq'), 'manage_options', basename(__FILE__), array(&$this, 'optionspage'));
 	}
 
 
@@ -598,7 +597,7 @@ class VipersVideoQuicktags {
 		// Format is: 'match regex' => array('type' => 'videotype', results => array( ... ))
 		// The type is used internally and the results array is the order in which the data will be returned (width, height, url, + anything else you want)
 		$searchpatterns = array (
-			'#\[youtube\]http://(www.youtube|youtube)\.com/watch\?v=([\w-]+)(.*?)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('', 'videoid')),
+			'#\[youtube\]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/watch\?v=([\w-]+)(.*?)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('', 'videoid')),
 			'#\[youtube\]([\w-]+)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('videoid')),
 			'#\[youtube width="(\d+)" height="(\d+)"]http://(www.youtube|youtube)\.com/watch\?v=([\w-]+)(.*?)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', '', 'videoid')),
 			'#\[youtube width="(\d+)" height="(\d+)"]([\w-]+)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', 'videoid')),
@@ -629,6 +628,10 @@ class VipersVideoQuicktags {
 
 			'#\[flv](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('videoid')),
 			'#\[flv width="(\d+)" height="(\d+)"](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('width', 'height', 'videoid')),
+
+			// VERY old (v2.x) placeholder handling
+			'#\<!--youtubevideo--><span style="display: none">([\w-]+)</span><!--youtubevideoend-->#i' => array('type' => 'youtube', 'results' => array('videoid')),
+			'#\<!--googlevideovideo--><span style="display: none">([\w-]+)</span><!--googlevideovideoend-->#i' => array('type' => 'googlevideo', 'results' => array('videoid')),
 		);
 
 		// Now we loop through each search item and look for matches. If we find a match, we replace it using the replacement pattern.

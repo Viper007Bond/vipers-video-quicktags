@@ -50,7 +50,7 @@ function vvq_videoWMP(objectID, videoWidth, videoHeight, videoURL) {
 }
 
 function vvq_videoNoWMP(objectID, videoWidth, videoHeight, videoURL, mimeType) {
-	document.getElementById(objectID).innerHTML = '<object type="' + mimeType + '" data="' + videoURL + '" width="' + videoWidth + '" height="' + videoHeight + '" class="vvqbox vvqvideo"><param name="src" value="' + videoURL + '" /><param name="allowchangedisplaysize" value="true" /><param name="autosize" value="true" /><param name="displaysize" value="1" /><param name="showcontrols" value="true" /><param name="showstatusbar" value="true" /><param name="autorewind" value="true" /><param name="autostart" value="false" /><param name="volume" value="100" /></object>';
+	document.getElementById(objectID).innerHTML = '<object type="' + mimeType + '" data="' + videoURL + '" width="' + videoWidth + '" height="' + videoHeight + '" class="vvqbox vvqvideo"><param name="src" value="' + videoURL + '" /><param name="allowchangedisplaysize" value="true" /><param name="autosize" value="true" /><param name="displaysize" value="1" /><param name="showcontrols" value="true" /><param name="showstatusbar" value="true" /><param name="autorewind" value="true" /><param name="autostart" value="false" /><param name="autoplay" value="false" /><param name="volume" value="100" /></object>';
 }
 
 
