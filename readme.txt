@@ -132,6 +132,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.1.4**
+
+* Missed a regex expression for the international YouTube handling, whoops!
+
 **Version 5.1.3**
 
 * YouTube.com regional support (uk.youtube.com, etc.)

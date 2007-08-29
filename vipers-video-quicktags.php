@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.1.3
+Version: 5.1.4
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.1.3';
+	var $version = '5.1.4';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 
@@ -599,7 +599,7 @@ class VipersVideoQuicktags {
 		$searchpatterns = array (
 			'#\[youtube\]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/watch\?v=([\w-]+)(.*?)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('', 'videoid')),
 			'#\[youtube\]([\w-]+)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('videoid')),
-			'#\[youtube width="(\d+)" height="(\d+)"]http://(www.youtube|youtube)\.com/watch\?v=([\w-]+)(.*?)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', '', 'videoid')),
+			'#\[youtube width="(\d+)" height="(\d+)"]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/watch\?v=([\w-]+)(.*?)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', '', 'videoid')),
 			'#\[youtube width="(\d+)" height="(\d+)"]([\w-]+)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', 'videoid')),
 
 			'#\[googlevideo]http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('', 'videoid')),
