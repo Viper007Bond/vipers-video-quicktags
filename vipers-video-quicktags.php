@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.1.4
+Version: 5.1.5
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.1.4';
+	var $version = '5.1.5';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 
@@ -113,14 +113,19 @@ class VipersVideoQuicktags {
 		// Loads the needed Javascript file
 		if ( TRUE == $this->twopointoneplus ) wp_enqueue_script('vvq', $this->folder . '/vipers-video-quicktags.js', FALSE, $this->version);
 
-		// And lastly, register our hooks and filter
+		# And lastly, register our hooks and filter
 		add_action('admin_menu', array(&$this, 'admin_menu'));
 		add_action('admin_head', array(&$this, 'admin_head'));
 		add_action('edit_form_advanced', array(&$this, 'edit_form'));
 		add_action('edit_page_form', array(&$this, 'edit_form'));
 		add_action('wp_head', array(&$this, 'wp_head'));
+
 		add_filter('the_content', array(&$this, 'replacebbcode'), 1);
 		add_filter('the_content', array(&$this, 'addinlinejs'), 11);
+
+		// Add support for the text widget
+		add_filter('widget_text', array(&$this, 'replacebbcode'), 1);
+		add_filter('widget_text', array(&$this, 'addinlinejs'), 11);
 	}
 
 
