@@ -131,6 +131,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.1.6**
+
+* The default height for YouTube videos has changed, so plugin updated to match.
+
 **Version 5.1.5**
 
 * Plugin now parses the code inside text widges, i.e. you can embed videos in your sidebar!
