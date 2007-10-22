@@ -15,6 +15,10 @@ function vvq_googlevideo(objectID, videoWidth, videoHeight, videoID) {
 	UFO.create(FO, objectID);
 }
 
+function vvq_stage6(objectID, videoWidth, videoHeight, videoID) {
+	document.getElementById(objectID).innerHTML = '<object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab" width="' + videoWidth + '" height="' + videoHeight + '"><param name="autoplay" value="false" /><param name="src" value="http://video.stage6.com/' + videoID + '/.divx" /><param name="custommode" value="Stage6" /><param name="showpostplaybackad" value="false" /><embed type="video/divx" src="http://video.stage6.com/' + videoID + '/.divx" pluginspage="http://go.divx.com/plugin/download/" showpostplaybackad="false" custommode="Stage6" autoplay="false" width="' + videoWidth + '" height="' + videoHeight + '" /></object>';
+}
+
 function vvq_ifilm(objectID, videoWidth, videoHeight, videoID) {
 	var FO = { movie:"http://www.ifilm.com/efp", flashvars:"flvbaseclip=" + videoID, width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
 	UFO.create(FO, objectID);

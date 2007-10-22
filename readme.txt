@@ -1,11 +1,11 @@
 === Viper's Video Quicktags ===
 Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
-Tags: video, quicktags, wysiwyg, tinymce, youtube, google video
+Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, stage6, ifilm, metacafe, myspace, vimeo, quicktime
 Requires at least: 2.0
 Stable tag: trunk
 
-Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
+Allows easy and XHTML valid posting of YouTube, Google Video, Stage6, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
 
 == Description ==
 
@@ -17,6 +17,7 @@ Currently supports these video sites:
 
 * [YouTube](http://www.youtube.com/)
 * [Google Video](http://video.google.com/)
+* [Stage6](http://stage6.divx.com/)
 * [IFILM](http://www.ifilm.com/)
 * [Metacafe](http://www.metacafe.com/)
 * [MySpace](http://www.myspace.com/)
@@ -57,6 +58,7 @@ This should result in the following file structure:
                 | ifilm.png
                 | metacafe.png
                 | myspace.png
+                | stage6.png
                 | quicktime.png
                 | videofile.png
                 | vimeo.png
@@ -130,6 +132,11 @@ If you'd like to add a border for example, try adding something like this to you
 }`
 
 == ChangeLog ==
+
+**Version 5.2.0**
+
+* [Stage6](http://stage6.divx.com/) support.
+* Regex fix for Metacafe.
 
 **Version 5.1.6**
 

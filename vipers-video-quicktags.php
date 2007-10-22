@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.1.6
+Version: 5.2.0
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.1.5';
+	var $version = '5.2.0';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 
@@ -39,6 +39,11 @@ class VipersVideoQuicktags {
 				'button'         => 'on',
 				'width'          => '400',
 				'height'         => '326',
+			),
+			'stage6' => array(
+				'button'         => NULL,
+				'width'          => '512',
+				'height'         => '288',
 			),
 			'ifilm' => array(
 				'button'         => NULL,
@@ -89,6 +94,9 @@ class VipersVideoQuicktags {
 		// Set required options added in later versions for people upgrading
 		if ( empty($this->settings['alignment']) )           $this->settings['alignment']           = $this->defaultsettings['alignment'];
 		if ( empty($this->settings['promptforwh']) )         $this->settings['promptforwh']         = $this->defaultsettings['promptforwh'];
+		if ( empty($this->settings['stage6']['button']) )    $this->settings['stage6']['button']    = $this->defaultsettings['stage6']['button'];
+		if ( empty($this->settings['stage6']['width']) )     $this->settings['stage6']['width']     = $this->defaultsettings['stage6']['width'];
+		if ( empty($this->settings['stage6']['height']) )    $this->settings['stage6']['height']    = $this->defaultsettings['stage6']['height'];
 		if ( empty($this->settings['vimeo']['button']) )     $this->settings['vimeo']['button']     = $this->defaultsettings['vimeo']['button'];
 		if ( empty($this->settings['vimeo']['width']) )      $this->settings['vimeo']['width']      = $this->defaultsettings['vimeo']['width'];
 		if ( empty($this->settings['vimeo']['height']) )     $this->settings['vimeo']['height']     = $this->defaultsettings['vimeo']['height'];
@@ -133,6 +141,7 @@ class VipersVideoQuicktags {
 	function anybuttons() {
 		if ('on' == $this->settings['youtube']['button'] ||
 			'on' == $this->settings['googlevideo']['button'] ||
+			'on' == $this->settings['stage6']['button'] ||
 			'on' == $this->settings['ifilm']['button'] ||
 			'on' == $this->settings['metacafe']['button'] ||
 			'on' == $this->settings['myspace']['button'] ||
@@ -169,6 +178,8 @@ class VipersVideoQuicktags {
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/youtube.png', __('YouTube', 'vvq'), 'VVQInsertVideoSite("' . __('YouTube', 'vvq') . '", "http://www.youtube.com/watch?v=JzqumbhfxRo", "youtube");');
 			if ( 'on' == $this->settings['googlevideo']['button'] )
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/googlevideo.png', __('GVideo', 'vvq'), 'VVQInsertVideoSite("' . __('Google Video', 'vvq') . '", "http://video.google.com/videoplay?docid=3688185030664621355", "googlevideo");');
+			if ( 'on' == $this->settings['stage6']['button'] )
+				buttonsnap_jsbutton($this->fullfolderurl . 'images/stage6.png', __('Stage6', 'vvq'), 'VVQInsertVideoSite("' . __('Stage6', 'vvq') . '", "http://stage6.divx.com/user/stephenh2/video/1258960/Jeremy-Clarkson-reviews-the-TVR-Sagaris", "stage6");');
 			if ( 'on' == $this->settings['ifilm']['button'] )
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/ifilm.png', __('IFILM', 'vvq'), 'VVQInsertVideoSite("' . __('IFILM', 'vvq') . '", "http://www.ifilm.com/video/2710582", "ifilm");');
 			if ( 'on' == $this->settings['metacafe']['button'] )
@@ -209,6 +220,7 @@ class VipersVideoQuicktags {
 
 		if ( 'on' != $this->settings['youtube']['button'] )     echo "	#mce_editor_0_vvq_youtube     { display: none; }\n";
 		if ( 'on' != $this->settings['googlevideo']['button'] ) echo "	#mce_editor_0_vvq_googlevideo { display: none; }\n";
+		if ( 'on' != $this->settings['stage6']['button'] )      echo "	#mce_editor_0_vvq_stage6      { display: none; }\n";
 		if ( 'on' != $this->settings['ifilm']['button'] )       echo "	#mce_editor_0_vvq_ifilm       { display: none; }\n";
 		if ( 'on' != $this->settings['metacafe']['button'] )    echo "	#mce_editor_0_vvq_metacafe    { display: none; }\n";
 		if ( 'on' != $this->settings['myspace']['button'] )     echo "	#mce_editor_0_vvq_myspace     { display: none; }\n";
@@ -243,6 +255,11 @@ class VipersVideoQuicktags {
 						'button'         => $_POST['googlevideo']['button'],
 						'width'          => (int) $_POST['googlevideo']['width'],
 						'height'         => (int) $_POST['googlevideo']['height'],
+					),
+					'stage6' => array(
+						'button'         => $_POST['stage6']['button'],
+						'width'          => (int) $_POST['stage6']['width'],
+						'height'         => (int) $_POST['stage6']['height'],
 					),
 					'ifilm' => array(
 						'button'         => $_POST['ifilm']['button'],
@@ -302,6 +319,7 @@ class VipersVideoQuicktags {
 	widths = {
 		youtube: <?php echo $this->settings['youtube']['width']; ?>,
 		googlevideo: <?php echo $this->settings['googlevideo']['width']; ?>,
+		stage6: <?php echo $this->settings['stage6']['width']; ?>,
 		ifilm: <?php echo $this->settings['ifilm']['width']; ?>,
 		metacafe: <?php echo $this->settings['metacafe']['width']; ?>,
 		myspace: <?php echo $this->settings['myspace']['width']; ?>,
@@ -316,6 +334,7 @@ class VipersVideoQuicktags {
 	heights = {
 		youtube: <?php echo $this->settings['youtube']['height']; ?>,
 		googlevideo: <?php echo $this->settings['googlevideo']['height']; ?>,
+		stage6: <?php echo $this->settings['stage6']['height']; ?>,
 		ifilm: <?php echo $this->settings['ifilm']['height']; ?>,
 		metacafe: <?php echo $this->settings['metacafe']['height']; ?>,
 		myspace: <?php echo $this->settings['myspace']['height']; ?>,
@@ -447,36 +466,42 @@ class VipersVideoQuicktags {
 					<td><input name="googlevideo[height]" id="googlevideoheight" type="text" size="5" value="<?php echo $this->settings['googlevideo']['height']; ?>" /></td>
 				</tr>
 				<tr class="alternate">
+					<td><a href="http://stage6.divx.com/"><?php _e('Stage6', 'vvq'); ?></a></td>
+					<td><input name="stage6[button]" type="checkbox"<?php checked($this->settings['stage6']['button'], 'on'); ?> /></td>
+					<td><input name="stage6[width]" type="text" size="5" value="<?php echo $this->settings['stage6']['width']; ?>" onchange="updateCustomHeight(this, 'stage6height', '<?php echo $this->defaultsettings['stage6']['width']; ?>', '<?php echo $this->defaultsettings['stage6']['height']; ?>')" /></td>
+					<td><input name="stage6[height]" id="stage6height" type="text" size="5" value="<?php echo $this->settings['stage6']['height']; ?>" /></td>
+				</tr>
+				<tr>
 					<td><a href="http://www.ifilm.com/"><?php _e('IFILM', 'vvq'); ?></a></td>
 					<td><input name="ifilm[button]" type="checkbox"<?php checked($this->settings['ifilm']['button'], 'on'); ?> /></td>
 					<td><input name="ifilm[width]" type="text" size="5" value="<?php echo $this->settings['ifilm']['width']; ?>" onchange="updateCustomHeight(this, 'ifilmheight', '<?php echo $this->defaultsettings['ifilm']['width']; ?>', '<?php echo $this->defaultsettings['ifilm']['height']; ?>')" /></td>
 					<td><input name="ifilm[height]" id="ifilmheight" type="text" size="5" value="<?php echo $this->settings['ifilm']['height']; ?>" /></td>
 				</tr>
-				<tr>
+				<tr class="alternate">
 					<td><a href="http://www.metacafe.com/"><?php _e('Metacafe', 'vvq'); ?></a></td>
 					<td><input name="metacafe[button]" type="checkbox"<?php checked($this->settings['metacafe']['button'], 'on'); ?> /></td>
 					<td><input name="metacafe[width]" type="text" size="5" value="<?php echo $this->settings['metacafe']['width']; ?>" onchange="updateCustomHeight(this, 'metacafeheight', '<?php echo $this->defaultsettings['metacafe']['width']; ?>', '<?php echo $this->defaultsettings['metacafe']['height']; ?>')" /></td>
 					<td><input name="metacafe[height]" id="metacafeheight" type="text" size="5" value="<?php echo $this->settings['metacafe']['height']; ?>" /></td>
 				</tr>
-				<tr class="alternate">
+				<tr>
 					<td><a href="http://www.myspace.com/"><?php _e('MySpace', 'vvq'); ?></a></td>
 					<td><input name="myspace[button]" type="checkbox"<?php checked($this->settings['myspace']['button'], 'on'); ?> /></td>
 					<td><input name="myspace[width]" type="text" size="5" value="<?php echo $this->settings['myspace']['width']; ?>" onchange="updateCustomHeight(this, 'myspaceheight', '<?php echo $this->defaultsettings['myspace']['width']; ?>', '<?php echo $this->defaultsettings['myspace']['height']; ?>')" /></td>
 					<td><input name="myspace[height]" id="myspaceheight" type="text" size="5" value="<?php echo $this->settings['myspace']['height']; ?>" /></td>
 				</tr>
-				<tr>
+				<tr class="alternate">
 					<td><a href="http://www.vimeo.com/"><?php _e('Vimeo', 'vvq'); ?></a></td>
 					<td><input name="vimeo[button]" type="checkbox"<?php checked($this->settings['vimeo']['button'], 'on'); ?> /></td>
 					<td><input name="vimeo[width]" type="text" size="5" value="<?php echo $this->settings['vimeo']['width']; ?>" onchange="updateCustomHeight(this, 'vimeoheight', '<?php echo $this->defaultsettings['vimeo']['width']; ?>', '<?php echo $this->defaultsettings['vimeo']['height']; ?>')" /></td>
 					<td><input name="vimeo[height]" id="vimeoheight" type="text" size="5" value="<?php echo $this->settings['vimeo']['height']; ?>" /></td>
 				</tr>
-				<tr class="alternate">
+				<tr>
 					<td><a href="http://www.apple.com/quicktime/"><?php _e('Quicktime', 'vvq'); ?></a></td>
 					<td><input name="quicktime[button]" type="checkbox"<?php checked($this->settings['quicktime']['button'], 'on'); ?> /></td>
 					<td><input name="quicktime[width]" type="text" size="5" value="<?php echo $this->settings['quicktime']['width']; ?>" onchange="updateCustomHeight(this, 'quicktimeheight', 4, 3)" /></td>
 					<td><input name="quicktime[height]" id="quicktimeheight" type="text" size="5" value="<?php echo $this->settings['quicktime']['height']; ?>" /></td>
 				</tr>
-				<tr>
+				<tr class="alternate">
 					<td>
 						<?php _e('Generic Video File', 'vvq'); ?><br />
 						<small>Implementation of this feature isn't<br />perfect and may need some work</small>
@@ -485,7 +510,7 @@ class VipersVideoQuicktags {
 					<td><input name="videofile[width]" type="text" size="5" value="<?php echo $this->settings['videofile']['width']; ?>" onchange="updateCustomHeight(this, 'videofileheight', 4, 3)" /></td>
 					<td><input name="videofile[height]" id="videofileheight" type="text" size="5" value="<?php echo $this->settings['videofile']['height']; ?>" /></td>
 				</tr>
-				<tr class="alternate">
+				<tr>
 					<td><?php _e('Flash Video File (FLV)', 'vvq'); ?></td>
 					<td><input name="flv[button]" type="checkbox"<?php checked($this->settings['flv']['button'], 'on'); ?> /></td>
 					<td><input name="flv[width]" type="text" size="5" value="<?php echo $this->settings['flv']['width']; ?>" onchange="updateCustomHeight(this, 'flvheight', 4, 3)" /></td>
@@ -613,13 +638,16 @@ class VipersVideoQuicktags {
 						=> array('type' => 'googlevideo', 'results' => array('width', 'height', '', 'videoid')),
 			'#\[googlevideo width="(\d+)" height="(\d+)"]([\d-]+)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('width', 'height', 'videoid')),
 
+			'#\[stage6]http://stage6.divx.com/user/(.*?)/video/([0-9]+)/(.*?)\[\/stage6]#i' => array('type' => 'stage6', 'results' => array('', 'videoid')),
+			'#\[stage6 width="(\d+)" height="(\d+)"]http://stage6.divx.com/user/(.*?)/video/([0-9]+)/(.*?)\[\/stage6]#i' => array('type' => 'stage6', 'results' => array('width', 'height', '', 'videoid')),
+
 			'#\[ifilm]http://(www.ifilm|ifilm)\.com/video/([\d-]+)(.*?)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('', 'videoid')),
 			'#\[ifilm]([\d-]+)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('videoid')),
 			'#\[ifilm width="(\d+)" height="(\d+)"]http://(www.ifilm|ifilm)\.com/video/([\d-]+)(.*?)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('width', 'height', '', 'videoid')),
 			'#\[ifilm width="(\d+)" height="(\d+)"]([\d-]+)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('width', 'height', 'videoid')),
 
-			'#\[metacafe]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/([a-z_]+)/\[\/metacafe]#i' => array('type' => 'metacafe', 'results' => array('', 'videoid', 'videoname')),
-			'#\[metacafe width="(\d+)" height="(\d+)"]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/([a-z_]+)/\[\/metacafe]#i'
+			'#\[metacafe]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/(.*?)/\[\/metacafe]#i' => array('type' => 'metacafe', 'results' => array('', 'videoid', 'videoname')),
+			'#\[metacafe width="(\d+)" height="(\d+)"]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/([\d-]+)/\[\/metacafe]#i'
 						=> array('type' => 'metacafe', 'results' => array('width', 'height', '', 'videoid', 'videoname')),
 
 			'#\[myspace]http://vids\.myspace\.com/index\.cfm\?fuseaction=vids\.individual(&|&amp;)videoid=(\d+)\[\/myspace]#i' => array('type' => 'myspace', 'results' => array('', 'videoid')),
@@ -638,6 +666,7 @@ class VipersVideoQuicktags {
 			'#\<!--youtubevideo--><span style="display: none">([\w-]+)</span><!--youtubevideoend-->#i' => array('type' => 'youtube', 'results' => array('videoid')),
 			'#\<!--googlevideovideo--><span style="display: none">([\w-]+)</span><!--googlevideovideoend-->#i' => array('type' => 'googlevideo', 'results' => array('videoid')),
 		);
+
 
 		// Now we loop through each search item and look for matches. If we find a match, we replace it using the replacement pattern.
 		foreach ( $searchpatterns as $regex => $params ) {
@@ -673,6 +702,9 @@ class VipersVideoQuicktags {
 					} elseif ( 'googlevideo' == $params['type'] ) {
 						$url = $linktext = 'http://video.google.com/videoplay?docid=' . $data['videoid'];
 						$this->jsoutput .= '	vvq_googlevideo("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+					} elseif ( 'stage6' == $params['type'] ) {
+						$url = $linktext = 'http://stage6.divx.com/video/' . $data['videoid'] . '/';
+						$this->jsoutput .= '	vvq_stage6("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
 					} elseif ( 'ifilm' == $params['type'] ) {
 						$url = $linktext = 'http://www.ifilm.com/video/' . $data['videoid'];
 						$this->jsoutput .= '	vvq_ifilm("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
