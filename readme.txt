@@ -135,6 +135,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 **Version 5.2.0**
 
+* Support for new Vimeo URL format (no `/clip:XXX`). Thanks to texasellis.
+
+**Version 5.2.0**
+
 * [Stage6](http://stage6.divx.com/) support.
 * Regex fix for Metacafe.
 

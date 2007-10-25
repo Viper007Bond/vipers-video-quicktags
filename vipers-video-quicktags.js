@@ -35,7 +35,7 @@ function vvq_myspace(objectID, videoWidth, videoHeight, videoID) {
 }
 
 function vvq_vimeo(objectID, videoWidth, videoHeight, videoID) {
-	var FO = { movie:"http://www.vimeo.com/moogaloop.swf?clip_id=" + videoID, width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent" };
+	var FO = { movie:"http://www.vimeo.com/moogaloop.swf?clip_id=" + videoID + "&server=vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=01AAEA", width:videoWidth, height:videoHeight, majorversion:"7", build:"0", wmode:"transparent", flashvars:"allowfullscreen=true&scale=showAll" };
 	UFO.create(FO, objectID);
 }
 

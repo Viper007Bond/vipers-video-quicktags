@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.2.0
+Version: 5.2.1
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.2.0';
+	var $version = '5.2.1';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 
@@ -187,7 +187,7 @@ class VipersVideoQuicktags {
 			if ( 'on' == $this->settings['myspace']['button'] )
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/myspace.png', __('MySpace', 'vvq'), 'VVQInsertVideoSite("' . __('MySpace', 'vvq') . '", "http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=1387215221", "myspace");');
 			if ( 'on' == $this->settings['vimeo']['button'] )
-				buttonsnap_jsbutton($this->fullfolderurl . 'images/vimeo.png', __('Vimeo', 'vvq'), 'VVQInsertVideoSite("' . __('Vimeo', 'vvq') . '", "http://www.vimeo.com/clip:27810", "vimeo");');
+				buttonsnap_jsbutton($this->fullfolderurl . 'images/vimeo.png', __('Vimeo', 'vvq'), 'VVQInsertVideoSite("' . __('Vimeo', 'vvq') . '", "http://www.vimeo.com/27810", "vimeo");');
 			if ( 'on' == $this->settings['quicktime']['button'] )
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/quicktime.png', __('QT', 'vvq'), 'VVQInsertVideoFile("' . __('Quicktime', 'vvq') . '", "mov", "quicktime");');
 			if ( 'on' == $this->settings['videofile']['button'] )
@@ -654,9 +654,9 @@ class VipersVideoQuicktags {
 			'#\[myspace width="(\d+)" height="(\d+)"]http://vids\.myspace\.com/index\.cfm\?fuseaction=vids\.individual(&|&amp;)videoid=(\d+)\[\/myspace]#i'
 						=> array('type' => 'ifilm', 'results' => array('width', 'height', '', 'videoid')),
 
-			'#\[vimeo]http://(www.vimeo|vimeo)\.com/clip:([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('', 'videoid')),
+			'#\[vimeo]http://(www.vimeo|vimeo)\.com(/|/clip:)([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('', '', 'videoid')),
 			'#\[vimeo]([\d-]+)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('videoid')),
-			'#\[vimeo width="(\d+)" height="(\d+)"]http://(www.vimeo|vimeo)\.com/clip:([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', '', 'videoid')),
+			'#\[vimeo width="(\d+)" height="(\d+)"]http://(www.vimeo|vimeo)\.com(/|/clip:)([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', '', '', 'videoid')),
 			'#\[vimeo width="(\d+)" height="(\d+)"]([\d-]+)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', 'videoid')),
 
 			'#\[flv](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('videoid')),
@@ -715,7 +715,7 @@ class VipersVideoQuicktags {
 						$url = $linktext = 'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=' . $data['videoid'];
 						$this->jsoutput .= '	vvq_myspace("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
 					} elseif ( 'vimeo' == $params['type'] ) {
-						$url = $linktext = 'http://www.vimeo.com/clip:' . $data['videoid'];
+						$url = $linktext = 'http://www.vimeo.com/' . $data['videoid'];
 						$this->jsoutput .= '	vvq_vimeo("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
 					} elseif ( 'flv' == $params['type'] ) {
 						$data['height'] = $data['height'] + 20; // Account for the player controls
