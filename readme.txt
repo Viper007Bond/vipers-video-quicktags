@@ -133,7 +133,11 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
-**Version 5.2.0**
+**Version 5.2.2**
+
+* Support for the `http://www,youtube.com/w/?v=JzqumbhfxRo` URL format for YouTube due to popular request.
+
+**Version 5.2.1**
 
 * Support for new Vimeo URL format (no `/clip:XXX`). Thanks to texasellis.
 
