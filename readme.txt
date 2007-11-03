@@ -133,6 +133,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.2.3**
+
+* When a custom width is entered into the prompt, use math to suggest a matching height value.
+
 **Version 5.2.2**
 
 * Support for the `http://www,youtube.com/w/?v=JzqumbhfxRo` URL format for YouTube due to popular request.
