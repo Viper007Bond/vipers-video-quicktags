@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.2.3
+Version: 5.3.0
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,13 +12,14 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.2.3';
+	var $version = '5.3.0';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 	var $settings = array();
 	var $defaultsettings = array();
 	var $twopointoneplus;
 	var $jsoutput;
+	var $searchpatterns = array();
 
 
 	// Don't start this plugin until all other plugins have started up
@@ -123,19 +124,63 @@ class VipersVideoQuicktags {
 		// Loads the needed Javascript file
 		if ( TRUE == $this->twopointoneplus ) wp_enqueue_script('vvq', $this->folder . '/vipers-video-quicktags.js', FALSE, $this->version);
 
-		# And lastly, register our hooks and filter
+		# Register our hooks and filter
 		add_action('admin_menu', array(&$this, 'admin_menu'));
 		add_action('admin_head', array(&$this, 'admin_head'));
 		add_action('edit_form_advanced', array(&$this, 'edit_form'));
 		add_action('edit_page_form', array(&$this, 'edit_form'));
 		add_action('wp_head', array(&$this, 'wp_head'));
-
 		add_filter('the_content', array(&$this, 'replacebbcode'), 1);
 		add_filter('the_content', array(&$this, 'addinlinejs'), 11);
-
 		// Add support for the text widget
 		add_filter('widget_text', array(&$this, 'replacebbcode'), 1);
 		add_filter('widget_text', array(&$this, 'addinlinejs'), 11);
+
+
+		// This is the regex we use to search and then what order the data will come out in
+		// Format is: 'match regex' => array('type' => 'videotype', results => array( ... ))
+		// The type is used internally and the results array is the order in which the data will be returned (width, height, url, + anything else you want)
+		$this->searchpatterns = array (
+			'#\[youtube\]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/(watch\?v=|w/\?v=)([\w-]+)(.*?)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('', '', 'videoid')),
+			'#\[youtube\]([\w-]+)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('videoid')),
+			'#\[youtube width="(\d+)" height="(\d+)"]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/(watch\?v=|w/\?v=)([\w-]+)(.*?)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', '', '', 'videoid')),
+			'#\[youtube width="(\d+)" height="(\d+)"]([\w-]+)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', 'videoid')),
+
+			'#\[googlevideo]http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('', 'videoid')),
+			'#\[googlevideo]([\d-]+)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('videoid')),
+			'#\[googlevideo width="(\d+)" height="(\d+)"]http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)\[\/googlevideo]#i'
+						=> array('type' => 'googlevideo', 'results' => array('width', 'height', '', 'videoid')),
+			'#\[googlevideo width="(\d+)" height="(\d+)"]([\d-]+)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('width', 'height', 'videoid')),
+
+			'#\[stage6]http://(www.stage6.com|stage6.com|stage6.divx.com)/(.*?)/video/([0-9]+)(.*?)\[\/stage6]#i' => array('type' => 'stage6', 'results' => array('', '', 'videoid')),
+			'#\[stage6 width="(\d+)" height="(\d+)"]http://(www.stage6.com|stage6.com|stage6.divx.com)/(.*?)/video/([0-9]+)(.*?)\[\/stage6]#i' => array('type' => 'stage6', 'results' => array('width', 'height', '', '', 'videoid')),
+
+			'#\[ifilm]http://(www.ifilm|ifilm)\.com/video/([\d-]+)(.*?)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('', 'videoid')),
+			'#\[ifilm]([\d-]+)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('videoid')),
+			'#\[ifilm width="(\d+)" height="(\d+)"]http://(www.ifilm|ifilm)\.com/video/([\d-]+)(.*?)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('width', 'height', '', 'videoid')),
+			'#\[ifilm width="(\d+)" height="(\d+)"]([\d-]+)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('width', 'height', 'videoid')),
+
+			'#\[metacafe]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/(.*?)/\[\/metacafe]#i' => array('type' => 'metacafe', 'results' => array('', 'videoid', 'videoname')),
+			'#\[metacafe width="(\d+)" height="(\d+)"]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/([\d-]+)/\[\/metacafe]#i'
+						=> array('type' => 'metacafe', 'results' => array('width', 'height', '', 'videoid', 'videoname')),
+
+			'#\[myspace]http://vids\.myspace\.com/index\.cfm\?fuseaction=vids\.individual(&|&amp;)videoid=(\d+)\[\/myspace]#i' => array('type' => 'myspace', 'results' => array('', 'videoid')),
+			'#\[myspace width="(\d+)" height="(\d+)"]http://vids\.myspace\.com/index\.cfm\?fuseaction=vids\.individual(&|&amp;)videoid=(\d+)\[\/myspace]#i'
+						=> array('type' => 'ifilm', 'results' => array('width', 'height', '', 'videoid')),
+
+			'#\[vimeo]http://(www.vimeo|vimeo)\.com(/|/clip:)([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('', '', 'videoid')),
+			'#\[vimeo]([\d-]+)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('videoid')),
+			'#\[vimeo width="(\d+)" height="(\d+)"]http://(www.vimeo|vimeo)\.com(/|/clip:)([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', '', '', 'videoid')),
+			'#\[vimeo width="(\d+)" height="(\d+)"]([\d-]+)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', 'videoid')),
+
+			'#\[flv](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('videoid')),
+			'#\[flv width="(\d+)" height="(\d+)"](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('width', 'height', 'videoid')),
+
+			// VERY old (v2.x) placeholder handling
+			'#\<!--youtubevideo--><span style="display: none">([\w-]+)</span><!--youtubevideoend-->#i' => array('type' => 'youtube', 'results' => array('videoid')),
+			'#\<!--googlevideovideo--><span style="display: none">([\w-]+)</span><!--googlevideovideoend-->#i' => array('type' => 'googlevideo', 'results' => array('videoid')),
+		);
+		$this->searchpatterns = apply_filters( 'vvq_searchpatterns', $this->searchpatterns );
 	}
 
 
@@ -181,7 +226,7 @@ class VipersVideoQuicktags {
 			if ( 'on' == $this->settings['googlevideo']['button'] )
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/googlevideo.png', __('GVideo', 'vvq'), 'VVQInsertVideoSite("' . __('Google Video', 'vvq') . '", "http://video.google.com/videoplay?docid=3688185030664621355", "googlevideo");');
 			if ( 'on' == $this->settings['stage6']['button'] )
-				buttonsnap_jsbutton($this->fullfolderurl . 'images/stage6.png', __('Stage6', 'vvq'), 'VVQInsertVideoSite("' . __('Stage6', 'vvq') . '", "http://stage6.divx.com/user/stephenh2/video/1258960/Jeremy-Clarkson-reviews-the-TVR-Sagaris", "stage6");');
+				buttonsnap_jsbutton($this->fullfolderurl . 'images/stage6.png', __('Stage6', 'vvq'), 'VVQInsertVideoSite("' . __('Stage6', 'vvq') . '", "http://www.stage6.com/user/stephenh2/video/1258960/Jeremy-Clarkson-reviews-the-TVR-Sagaris", "stage6");');
 			if ( 'on' == $this->settings['ifilm']['button'] )
 				buttonsnap_jsbutton($this->fullfolderurl . 'images/ifilm.png', __('IFILM', 'vvq'), 'VVQInsertVideoSite("' . __('IFILM', 'vvq') . '", "http://www.ifilm.com/video/2710582", "ifilm");');
 			if ( 'on' == $this->settings['metacafe']['button'] )
@@ -421,11 +466,9 @@ class VipersVideoQuicktags {
 
 	// The contents of the options page
 	function optionspage() {
-		global $wp_db_version;
-
-		if ($_POST['defaults'])
+		if ( !empty($_POST['defaults']) )
 			echo "\n" . '<div id="message" class="updated fade"><p><strong>' . __('Options reset to defaults.', 'vvq') . '</strong></p></div>' . "\n";
-		elseif ($_POST)
+		elseif ( !empty($_POST) )
 			echo "\n" . '<div id="message" class="updated fade"><p><strong>' . __('Options saved.') . '</strong></p></div>' . "\n";
 
 	?>
@@ -472,7 +515,7 @@ class VipersVideoQuicktags {
 					<td><input name="googlevideo[height]" id="googlevideoheight" type="text" size="5" value="<?php echo $this->settings['googlevideo']['height']; ?>" /></td>
 				</tr>
 				<tr class="alternate">
-					<td><a href="http://stage6.divx.com/"><?php _e('Stage6', 'vvq'); ?></a></td>
+					<td><a href="http://www.stage6.com/"><?php _e('Stage6', 'vvq'); ?></a></td>
 					<td><input name="stage6[button]" type="checkbox"<?php checked($this->settings['stage6']['button'], 'on'); ?> /></td>
 					<td><input name="stage6[width]" type="text" size="5" value="<?php echo $this->settings['stage6']['width']; ?>" onchange="updateCustomHeight(this, 'stage6height', '<?php echo $this->defaultsettings['stage6']['width']; ?>', '<?php echo $this->defaultsettings['stage6']['height']; ?>')" /></td>
 					<td><input name="stage6[height]" id="stage6height" type="text" size="5" value="<?php echo $this->settings['stage6']['height']; ?>" /></td>
@@ -626,112 +669,68 @@ class VipersVideoQuicktags {
 
 	// Do the actual regex and replace all BBCode for Flash powered video with HTML
 	function replacebbcode($content) {
-		# First we handle all Flash based videos
-		$this->jsoutput = ''; // Clear it out and set it
+		$this->jsoutput = ''; // Clear it out
 
-		// This is the regex we use to search and then what order the data will come out in
-		// Format is: 'match regex' => array('type' => 'videotype', results => array( ... ))
-		// The type is used internally and the results array is the order in which the data will be returned (width, height, url, + anything else you want)
-		$searchpatterns = array (
-			'#\[youtube\]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/(watch\?v=|w/\?v=)([\w-]+)(.*?)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('', '', 'videoid')),
-			'#\[youtube\]([\w-]+)\[/youtube\]#i' => array('type' => 'youtube', 'results' => array('videoid')),
-			'#\[youtube width="(\d+)" height="(\d+)"]http://(www.youtube|youtube|[A-Za-z]{2}.youtube)\.com/(watch\?v=|w/\?v=)([\w-]+)(.*?)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', '', '', 'videoid')),
-			'#\[youtube width="(\d+)" height="(\d+)"]([\w-]+)\[\/youtube]#i' => array('type' => 'youtube', 'results' => array('width', 'height', 'videoid')),
+		// Flash based videos
+		if ( is_array($this->searchpatterns) && !empty($this->searchpatterns) ) {
+			foreach ( $this->searchpatterns as $regex => $params ) {
+				preg_match_all($regex, $content, $matches, PREG_SET_ORDER);
 
-			'#\[googlevideo]http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('', 'videoid')),
-			'#\[googlevideo]([\d-]+)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('videoid')),
-			'#\[googlevideo width="(\d+)" height="(\d+)"]http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)\[\/googlevideo]#i'
-						=> array('type' => 'googlevideo', 'results' => array('width', 'height', '', 'videoid')),
-			'#\[googlevideo width="(\d+)" height="(\d+)"]([\d-]+)\[\/googlevideo]#i' => array('type' => 'googlevideo', 'results' => array('width', 'height', 'videoid')),
+				if ( $matches ) {
+					// Loop through each result for this regex pattern
+					foreach ( $matches as $match) {
 
-			'#\[stage6]http://stage6.divx.com/user/(.*?)/video/([0-9]+)/(.*?)\[\/stage6]#i' => array('type' => 'stage6', 'results' => array('', 'videoid')),
-			'#\[stage6 width="(\d+)" height="(\d+)"]http://stage6.divx.com/user/(.*?)/video/([0-9]+)/(.*?)\[\/stage6]#i' => array('type' => 'stage6', 'results' => array('width', 'height', '', 'videoid')),
+						// Save the string that matched the regex
+						$matchstring = $match[0];
 
-			'#\[ifilm]http://(www.ifilm|ifilm)\.com/video/([\d-]+)(.*?)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('', 'videoid')),
-			'#\[ifilm]([\d-]+)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('videoid')),
-			'#\[ifilm width="(\d+)" height="(\d+)"]http://(www.ifilm|ifilm)\.com/video/([\d-]+)(.*?)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('width', 'height', '', 'videoid')),
-			'#\[ifilm width="(\d+)" height="(\d+)"]([\d-]+)\[\/ifilm]#i' => array('type' => 'ifilm', 'results' => array('width', 'height', 'videoid')),
+						// Loop through each of the output data
+						$count = 0;
+						unset($data);
+						foreach ( $params['results'] as $name ) {
+							$count++;
+							$data[$name] = addslashes($match[$count]);
+						}
+						unset($data['']); // Remove any blank data
 
-			'#\[metacafe]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/(.*?)/\[\/metacafe]#i' => array('type' => 'metacafe', 'results' => array('', 'videoid', 'videoname')),
-			'#\[metacafe width="(\d+)" height="(\d+)"]http://(www.metacafe|metacafe)\.com/watch/([\d-]+)/([\d-]+)/\[\/metacafe]#i'
-						=> array('type' => 'metacafe', 'results' => array('width', 'height', '', 'videoid', 'videoname')),
+						// If the BBCode didn't have a width or height in it, fill it in with the default value
+						if ( !$data['width'] )  $data['width']  = $this->settings[$params['type']]['width'];
+						if ( !$data['height'] ) $data['height'] = $this->settings[$params['type']]['height'];
 
-			'#\[myspace]http://vids\.myspace\.com/index\.cfm\?fuseaction=vids\.individual(&|&amp;)videoid=(\d+)\[\/myspace]#i' => array('type' => 'myspace', 'results' => array('', 'videoid')),
-			'#\[myspace width="(\d+)" height="(\d+)"]http://vids\.myspace\.com/index\.cfm\?fuseaction=vids\.individual(&|&amp;)videoid=(\d+)\[\/myspace]#i'
-						=> array('type' => 'ifilm', 'results' => array('width', 'height', '', 'videoid')),
+						// Create a unique ID for use as the div ID
+						$objectid = uniqid('vvq');
 
-			'#\[vimeo]http://(www.vimeo|vimeo)\.com(/|/clip:)([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('', '', 'videoid')),
-			'#\[vimeo]([\d-]+)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('videoid')),
-			'#\[vimeo width="(\d+)" height="(\d+)"]http://(www.vimeo|vimeo)\.com(/|/clip:)([\d-]+)(.*?)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', '', '', 'videoid')),
-			'#\[vimeo width="(\d+)" height="(\d+)"]([\d-]+)\[\/vimeo]#i' => array('type' => 'vimeo', 'results' => array('width', 'height', 'videoid')),
+						// Do some stuff for each video type
+						if ( 'youtube' == $params['type'] ) {
+							$url = $linktext = 'http://www.youtube.com/watch?v=' . $data['videoid'];
+							$this->jsoutput .= '	vvq_youtube("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+						} elseif ( 'googlevideo' == $params['type'] ) {
+							$url = $linktext = 'http://video.google.com/videoplay?docid=' . $data['videoid'];
+							$this->jsoutput .= '	vvq_googlevideo("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+						} elseif ( 'stage6' == $params['type'] ) {
+							$url = $linktext = 'http://www.stage6.com/video/' . $data['videoid'] . '/';
+							$this->jsoutput .= '	vvq_stage6("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+						} elseif ( 'ifilm' == $params['type'] ) {
+							$url = $linktext = 'http://www.ifilm.com/video/' . $data['videoid'];
+							$this->jsoutput .= '	vvq_ifilm("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+						} elseif ( 'metacafe' == $params['type'] ) {
+							$url = $linktext = 'http://www.metacafe.com/watch/' . $data['videoid'] . '/' . $data['videoname'] . '/';
+							$this->jsoutput .= '	vvq_metacafe("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '", "' . $data['videoname'] . '");' . "\n";
+						} elseif ( 'myspace' == $params['type'] ) {
+							$url = $linktext = 'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=' . $data['videoid'];
+							$this->jsoutput .= '	vvq_myspace("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+						} elseif ( 'vimeo' == $params['type'] ) {
+							$url = $linktext = 'http://www.vimeo.com/' . $data['videoid'];
+							$this->jsoutput .= '	vvq_vimeo("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
+						} elseif ( 'flv' == $params['type'] ) {
+							$data['height'] = $data['height'] + 20; // Account for the player controls
+							$url = get_bloginfo('wpurl') . $this->folder . '/resources/flvplayer.swf?file=' . urlencode($data['videoid']);
+							$linktext = $data['videoid'];
+							$this->jsoutput .= '	vvq_flv("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . get_bloginfo('wpurl') . $this->folder . '/resources/flvplayer.swf' . '", "' . $data['videoid'] . '");' . "\n";
+						}
 
-			'#\[flv](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('videoid')),
-			'#\[flv width="(\d+)" height="(\d+)"](.*?)\[\/flv]#i' => array('type' => 'flv', 'results' => array('width', 'height', 'videoid')),
-
-			// VERY old (v2.x) placeholder handling
-			'#\<!--youtubevideo--><span style="display: none">([\w-]+)</span><!--youtubevideoend-->#i' => array('type' => 'youtube', 'results' => array('videoid')),
-			'#\<!--googlevideovideo--><span style="display: none">([\w-]+)</span><!--googlevideovideoend-->#i' => array('type' => 'googlevideo', 'results' => array('videoid')),
-		);
-
-
-		// Now we loop through each search item and look for matches. If we find a match, we replace it using the replacement pattern.
-		foreach ( $searchpatterns as $regex => $params ) {
-			preg_match_all($regex, $content, $matches, PREG_SET_ORDER);
-
-			if ( $matches ) {
-				// Loop through each result for this regex pattern
-				foreach ( $matches as $match) {
-
-					// Save the string that matched the regex
-					$matchstring = $match[0];
-
-					// Loop through each of the output data
-					$count = 0;
-					unset($data);
-					foreach ( $params['results'] as $name ) {
-						$count++;
-						$data[$name] = addslashes($match[$count]);
+						// Replace the first occurance of the $matchstring with some HTML
+						$content = preg_replace('/' . preg_quote($matchstring, '/') . '/', '<div id="' . $objectid . '" class="vvqbox vvq' . $params['type'] . '" style="width:' . $data['width'] . 'px;height:' . $data['height'] . 'px;"><p><a href="' . $url . '">' . $linktext . '</a></p></div>', $content, 1);
 					}
-					unset($data['']); // Remove any blank data
-
-					// If the BBCode didn't have a width or height in it, fill it in with the default value
-					if ( !$data['width'] )  $data['width']  = $this->settings[$params['type']]['width'];
-					if ( !$data['height'] ) $data['height'] = $this->settings[$params['type']]['height'];
-
-					// Create a unique ID for use as the div ID
-					$objectid = uniqid('vvq');
-
-					// Do some stuff for each video type
-					if ( 'youtube' == $params['type'] ) {
-						$url = $linktext = 'http://www.youtube.com/watch?v=' . $data['videoid'];
-						$this->jsoutput .= '	vvq_youtube("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
-					} elseif ( 'googlevideo' == $params['type'] ) {
-						$url = $linktext = 'http://video.google.com/videoplay?docid=' . $data['videoid'];
-						$this->jsoutput .= '	vvq_googlevideo("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
-					} elseif ( 'stage6' == $params['type'] ) {
-						$url = $linktext = 'http://stage6.divx.com/video/' . $data['videoid'] . '/';
-						$this->jsoutput .= '	vvq_stage6("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
-					} elseif ( 'ifilm' == $params['type'] ) {
-						$url = $linktext = 'http://www.ifilm.com/video/' . $data['videoid'];
-						$this->jsoutput .= '	vvq_ifilm("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
-					} elseif ( 'metacafe' == $params['type'] ) {
-						$url = $linktext = 'http://www.metacafe.com/watch/' . $data['videoid'] . '/' . $data['videoname'] . '/';
-						$this->jsoutput .= '	vvq_metacafe("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '", "' . $data['videoname'] . '");' . "\n";
-					} elseif ( 'myspace' == $params['type'] ) {
-						$url = $linktext = 'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=' . $data['videoid'];
-						$this->jsoutput .= '	vvq_myspace("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
-					} elseif ( 'vimeo' == $params['type'] ) {
-						$url = $linktext = 'http://www.vimeo.com/' . $data['videoid'];
-						$this->jsoutput .= '	vvq_vimeo("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . $data['videoid'] . '");' . "\n";
-					} elseif ( 'flv' == $params['type'] ) {
-						$data['height'] = $data['height'] + 20; // Account for the player controls
-						$url = get_bloginfo('wpurl') . $this->folder . '/resources/flvplayer.swf?file=' . urlencode($data['videoid']);
-						$linktext = $data['videoid'];
-						$this->jsoutput .= '	vvq_flv("' . $objectid . '", "' . $data['width'] . '", "' . $data['height'] . '", "' . get_bloginfo('wpurl') . $this->folder . '/resources/flvplayer.swf' . '", "' . $data['videoid'] . '");' . "\n";
-					}
-
-					// Replace the first occurance of the $matchstring with some HTML
-					$content = preg_replace('/' . preg_quote($matchstring, '/') . '/', '<div id="' . $objectid . '" class="vvqbox vvq' . $params['type'] . '" style="width:' . $data['width'] . 'px;height:' . $data['height'] . 'px;"><p><a href="' . $url . '">' . $linktext . '</a></p></div>', $content, 1);
 				}
 			}
 		}

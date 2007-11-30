@@ -40,7 +40,7 @@ var TinyMCE_VipersVideoQuicktags = {
 				VVQInsertVideoSite('Google Video', 'http://video.google.com/videoplay?docid=3688185030664621355', 'googlevideo');
 				return true;
 			case 'vvq_stage6':
-				VVQInsertVideoSite('Stage6', 'http://stage6.divx.com/user/stephenh2/video/1258960/Jeremy-Clarkson-reviews-the-TVR-Sagaris', 'stage6');
+				VVQInsertVideoSite('Stage6', 'http://www.stage6.com/user/stephenh2/video/1258960/Jeremy-Clarkson-reviews-the-TVR-Sagaris', 'stage6');
 				return true;
 			case 'vvq_ifilm':
 				VVQInsertVideoSite('IFILM', 'http://www.ifilm.com/video/2710582', 'ifilm');

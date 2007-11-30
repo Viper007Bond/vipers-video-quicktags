@@ -133,6 +133,12 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.3.0**
+
+* Manjor and multiple Stage6 improvements. Props Randy A. for pointing out that it wasn't working in some cases.
+* The regex can now be filtered via `vvq_searchpatterns`. This means plugins can add in new BBCodes without having to edit the plugin. See plugin source for format.
+* Other minor improvements.
+
 **Version 5.2.3**
 
 * When a custom width is entered into the prompt, use math to suggest a matching height value.
