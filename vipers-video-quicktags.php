@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.3.0
+Version: 5.3.1
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -131,7 +131,9 @@ class VipersVideoQuicktags {
 		add_action('edit_page_form', array(&$this, 'edit_form'));
 		add_action('wp_head', array(&$this, 'wp_head'));
 		add_filter('the_content', array(&$this, 'replacebbcode'), 1);
+		add_filter('get_the_excerpt', array(&$this, 'replacebbcode'), 1);
 		add_filter('the_content', array(&$this, 'addinlinejs'), 11);
+		add_filter('get_the_excerpt', array(&$this, 'addinlinejs'), 11);
 		// Add support for the text widget
 		add_filter('widget_text', array(&$this, 'replacebbcode'), 1);
 		add_filter('widget_text', array(&$this, 'addinlinejs'), 11);

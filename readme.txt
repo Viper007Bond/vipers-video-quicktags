@@ -133,6 +133,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.3.1**
+
+* Replace BBCode with the video in the excerpt.
+
 **Version 5.3.0**
 
 * Manjor and multiple Stage6 improvements. Props Randy A. for pointing out that it wasn't working in some cases.
