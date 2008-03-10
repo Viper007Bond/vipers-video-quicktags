@@ -274,7 +274,7 @@ class VipersVideoQuicktags {
 	}
 	function tinymce_before_init() {
 		// WordPress 2.1
-		echo 'tinyMCE.loadPlugin("vipersvideoquicktags", "' . $this->fullfolderurl . 'resources/tinymce/");';
+		echo 'tinyMCE.loadPlugin("vipersvideoquicktags", "' . $this->fullfolderurl . 'resources/tinymce2/");';
 	}
 
 
