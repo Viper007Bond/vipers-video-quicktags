@@ -68,7 +68,11 @@ This should result in the following file structure:
             - resources
                 | buttonsnap.php
                 | flvplayer.swf
-                - tinymce
+                - tinymce2
+                    | editor_plugin.js
+                    - langs
+                        | en.js
+                - tinymce3
                     | editor_plugin.js
                     - langs
                         | en.js`
