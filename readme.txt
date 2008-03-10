@@ -138,7 +138,8 @@ This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A
 
 * Updated to support WordPress 2.5 and it's TinyMCE 3 (required a whole new TinyMCE plugin to be written).
 * Switched from UFO to SWFObject for the embedding of Flash video (YouTube, etc.) since UFO is deprecated.
-* Removed Stage6 UI elements due to site shutdown. Left the BBCode parsing for backwards compatibility.
+* Update of FLV player SWF file.
+* Removed Stage6 due to site shutdown. BBCode usage now displays an error message.
 
 **Version 5.3.1**
 
