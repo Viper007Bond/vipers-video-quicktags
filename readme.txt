@@ -87,9 +87,9 @@ To configure this plugin, visit it's options page. It can be found under the "Op
 
 == Frequently Asked Questions ==
 
-= Where can I get support for this plugin? =
+= Where are the buttons for embedding Quicktime and regular video files in TinyMCE in WordPress 2.5+? =
 
-I provide support via [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23), although just because you post a request for help doesn't mean I will have time to answer your question. This is a free plugin and as such, you aren't guaranteed support. Then again, I'll help as much as I can and have time for.
+TinyMCE 3.x supports this by itself (click the "Advanced Toolbar" button), so I've opted to let it handle this since my plugin's support of those filetypes aren't perfect.
 
 = The playback of generic video files is buggy / won't work in my browser / etc. =
 
@@ -106,6 +106,10 @@ There are few possible reasons for this:
 = Does this plugin support other languages? =
 
 Yes, it does. Included in the `localization` folder is the translation template you can use to translate the plugin. See the [WordPress Codex](http://codex.wordpress.org/Translating_WordPress) for details. You may also be able to find some translations listed at [this plugin's homepage](http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/#translations) if any exist.
+
+= Where can I get additional support for this plugin? =
+
+I provide support via [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23), although just because you post a request for help doesn't mean I will have time to answer your question. This is a free plugin and as such, you aren't guaranteed support. Then again, I'll help as much as I can and have time for.
 
 = I love your plugin! Can I donate to you? =
 

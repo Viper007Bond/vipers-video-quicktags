@@ -267,7 +267,7 @@ class VipersVideoQuicktags {
 			if ( 1 == $this->settings['tinymce_linenumber'] ) array_push($buttons, 'separator');
 			array_push( $buttons, 'vipersvideoquicktags' );
 		} else {
-			array_push( $buttons, 'vvqYouTube', 'vvqGoogleVideo', 'vvqIFILM', 'vvqMetaCafe', 'vvqMySpace', 'vvqVimeo', 'vvqQuicktime', 'vvqVideoFile', 'vvqFLV' );
+			array_push( $buttons, 'vvqYouTube', 'vvqGoogleVideo', 'vvqIFILM', 'vvqMetaCafe', 'vvqMySpace', 'vvqVimeo', /*'vvqQuicktime', 'vvqVideoFile',*/ 'vvqFLV' );
 		}
 
 		return $buttons;
