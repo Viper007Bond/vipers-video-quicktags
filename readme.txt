@@ -1,11 +1,12 @@
 === Viper's Video Quicktags ===
 Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
-Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, stage6, ifilm, metacafe, myspace, vimeo, quicktime
+Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, ifilm, metacafe, myspace, vimeo, quicktime
 Requires at least: 2.0
+Tested up to: 2.5
 Stable tag: trunk
 
-Allows easy and XHTML valid posting of YouTube, Google Video, Stage6, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
+Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
 
 == Description ==
 
@@ -17,7 +18,6 @@ Currently supports these video sites:
 
 * [YouTube](http://www.youtube.com/)
 * [Google Video](http://video.google.com/)
-* [Stage6](http://stage6.divx.com/)
 * [IFILM](http://www.ifilm.com/)
 * [Metacafe](http://www.metacafe.com/)
 * [MySpace](http://www.myspace.com/)
@@ -58,7 +58,6 @@ This should result in the following file structure:
                 | ifilm.png
                 | metacafe.png
                 | myspace.png
-                | stage6.png
                 | quicktime.png
                 | videofile.png
                 | vimeo.png
@@ -132,6 +131,14 @@ If you'd like to add a border for example, try adding something like this to you
 }`
 
 == ChangeLog ==
+
+**Version 5.4.0**
+
+This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A minor recode of this plugin is planned to improve it, mainly the video file support.
+
+* Updated to support WordPress 2.5 and it's TinyMCE 3 (required a whole new TinyMCE plugin to be written).
+* Switched from UFO to SWFObject for the embedding of Flash video (YouTube, etc.) since UFO is deprecated.
+* Removed Stage6 UI elements due to site shutdown. Left the BBCode parsing for backwards compatibility.
 
 **Version 5.3.1**
 

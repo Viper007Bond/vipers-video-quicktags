@@ -17,7 +17,6 @@ var TinyMCE_VipersVideoQuicktags = {
 			case 'vipersvideoquicktags':
 				buttons =           tinyMCE.getButtonHTML('vvq_youtube', 'lang_vipersvideoquicktags_youtube', '{$pluginurl}/../../images/youtube.png', 'vvq_youtube');
 				buttons = buttons + tinyMCE.getButtonHTML('vvq_googlevideo', 'lang_vipersvideoquicktags_googlevideo', '{$pluginurl}/../../images/googlevideo.png', 'vvq_googlevideo');
-				buttons = buttons + tinyMCE.getButtonHTML('vvq_stage6', 'lang_vipersvideoquicktags_stage6', '{$pluginurl}/../../images/stage6.png', 'vvq_stage6');
 				buttons = buttons + tinyMCE.getButtonHTML('vvq_ifilm', 'lang_vipersvideoquicktags_ifilm', '{$pluginurl}/../../images/ifilm.png', 'vvq_ifilm');
 				buttons = buttons + tinyMCE.getButtonHTML('vvq_metacafe', 'lang_vipersvideoquicktags_metacafe', '{$pluginurl}/../../images/metacafe.png', 'vvq_metacafe');
 				buttons = buttons + tinyMCE.getButtonHTML('vvq_myspace', 'lang_vipersvideoquicktags_myspace', '{$pluginurl}/../../images/myspace.png', 'vvq_myspace');
@@ -38,9 +37,6 @@ var TinyMCE_VipersVideoQuicktags = {
 				return true;
 			case 'vvq_googlevideo':
 				VVQInsertVideoSite('Google Video', 'http://video.google.com/videoplay?docid=3688185030664621355', 'googlevideo');
-				return true;
-			case 'vvq_stage6':
-				VVQInsertVideoSite('Stage6', 'http://www.stage6.com/user/stephenh2/video/1258960/Jeremy-Clarkson-reviews-the-TVR-Sagaris', 'stage6');
 				return true;
 			case 'vvq_ifilm':
 				VVQInsertVideoSite('IFILM', 'http://www.ifilm.com/video/2710582', 'ifilm');
