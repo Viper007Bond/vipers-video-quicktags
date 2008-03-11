@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.4.0
+Version: 5.4.1
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.4.0';
+	var $version = '5.4.1';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 	var $settings = array();
@@ -781,7 +781,7 @@ class VipersVideoQuicktags {
 						do_action( 'vvq_flashprereplace' );
 
 						// Replace the first occurance of the $matchstring with some HTML
-						$content = preg_replace('/' . preg_quote($matchstring, '/') . '/', '<div id="' . $objectid . '" class="vvqbox vvq' . $params['type'] . '" style="width:' . $data['width'] . 'px;height:' . $data['height'] . 'px;"><p><a href="' . $url . '">' . $linktext . '</a></p></div>', $content, 1);
+						$content = preg_replace('/' . preg_quote($matchstring, '/') . '/', '<div class="vvqbox vvq' . $params['type'] . '" style="width:' . $data['width'] . 'px;height:' . $data['height'] . 'px;"><p id="' . $objectid . '"><a href="' . $url . '">' . $linktext . '</a></p></div>', $content, 1);
 					}
 				}
 			}
@@ -835,7 +835,7 @@ class VipersVideoQuicktags {
 				if ( 'on' == $this->settings['usewmp'] && FALSE !== strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') ) {
 					$height = $height + 64; // Compensate for the player controls
 
-					$content = str_replace($matchstring, '<div id="' . $objectid . '" class="vvqbox vvqvideo" style="width:' . $width . 'px;height:' . $height . 'px;"><a href="' . $url . '">' . $url . '</a></div>', $content);
+					$content = str_replace($matchstring, '<div class="vvqbox vvqvideo" style="width:' . $width . 'px;height:' . $height . 'px;"><p id="' . $objectid . '"><a href="' . $url . '">' . $url . '</a></p></div>', $content);
 
 					$this->jsoutput .= '	vvq_videoWMP("' . $objectid . '", "' . $width . '", "' . $height . '", "' . $url . '");' . "\n";
 				} else {
@@ -851,7 +851,7 @@ class VipersVideoQuicktags {
 					$mimetype = $mimetypes[array_pop(explode('.', $url))];
 					if ( empty($mimetype) ) $mimetype = 'video/mpeg'; // If we don't know the MIME type, just pick something (MPEG)
 
-					$content = str_replace($matchstring, '<div id="' . $objectid . '" class="vvqbox vvqvideo" style="width:' . $width . 'px;height:' . $height . 'px;"><a href="' . $url . '">' . $url . '</a></div>', $content);
+					$content = str_replace($matchstring, '<div class="vvqbox vvqvideo" style="width:' . $width . 'px;height:' . $height . 'px;"><p id="' . $objectid . '"><a href="' . $url . '">' . $url . '</a></p></div>', $content);
 
 					$this->jsoutput .= '	vvq_videoNoWMP("' . $objectid . '", "' . $width . '", "' . $height . '", "' . $url . '");' . "\n";
 				}

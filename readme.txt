@@ -140,6 +140,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.4.1**
+
+* Video alignment wasn't working due to the switch to SWFObject. This has been fixed. Props to [zerocrash](http://www.zerocrash.dk/) for the bug report.
+
 **Version 5.4.0**
 
 This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A minor recode of this plugin is planned to improve it, mainly the video file support.
