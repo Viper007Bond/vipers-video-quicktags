@@ -142,6 +142,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.4.3*
+
+* More code changes to try and fix hard-to-reproduce bugs under WordPress 2.5. Thanks to everyone that helped me debug including [Maciek](http://ibex.pl).
+
 **Version 5.4.2*
 
 * Some code to hopefully fix some seemingly random bugs under WordPress 2.5.
