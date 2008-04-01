@@ -10,7 +10,7 @@ Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, M
 
 == Description ==
 
-*Having trouble with this plugin in WordPress 2.5? See [this post](http://www.viper007bond.com/archives/2008/03/31/vipers-video-quicktags-wordpress-25/) on my blog!*
+*This plugin has been tested successfully using WordPress 2.5. However, if you're having activation trouble with it under 2.5, make sure you're running the latest version and then post details on [this post](http://www.viper007bond.com/archives/2008/03/31/vipers-video-quicktags-wordpress-25/) on my blog.*
 
 Tired of copying and pasting the embed HTML from sites like YouTube into posts on your site? Well then this plugin is for you.
 
@@ -141,6 +141,11 @@ If you'd like to add a border for example, try adding something like this to you
 }`
 
 == ChangeLog ==
+
+**Version 5.4.2*
+
+* Some code to hopefully fix some seemingly random bugs under WordPress 2.5.
+* Other minor code improvements.
 
 **Version 5.4.1**
 

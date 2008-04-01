@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.4.1
+Version: 5.4.2
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.4.1';
+	var $version = '5.4.2';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 	var $settings = array();
@@ -278,7 +278,7 @@ class VipersVideoQuicktags {
 	}
 
 
-	// Hide TinnyMCE buttons the user doesn't want to see in WP v2.1+
+	// Hide TinyMCE buttons the user doesn't want to see in WP v2.1+
 	function buttonhider() {
 		echo "<style type='text/css'>\n";
 
@@ -621,6 +621,7 @@ class VipersVideoQuicktags {
 					</select>
 				</td>
 			</tr>
+<?php if ( $this->wpversion < 2.5 ) : ?>
 			<tr valign="top">
 				<th scope="row">
 					<?php _e('TinyMCE Buttons', 'vvq'); ?><br />
@@ -631,6 +632,7 @@ class VipersVideoQuicktags {
 					<?php _e("You may need to clear your browser's cache after changing this value.", 'vvq'); ?>
 				</td>
 			</tr>
+<?php endif; ?>
 			<tr valign="top">
 				<th scope="row"><?php _e('Hosted Video Files', 'vvq'); ?></th>
 				<td>
@@ -874,7 +876,9 @@ class VipersVideoQuicktags {
 
 $VipersVideoQuicktags = new VipersVideoQuicktags();
 
+global $VipersVideoQuicktags; // For WordPress 2.5+
+
 // ButtonSnap needs to be loaded outside the class in order to work right
-require(ABSPATH . $VipersVideoQuicktags->folder . '/resources/buttonsnap.php');
+if ( !class_exists('buttonsnap') ) require_once( ABSPATH . $VipersVideoQuicktags->folder . '/resources/buttonsnap.php' );
 
 ?>

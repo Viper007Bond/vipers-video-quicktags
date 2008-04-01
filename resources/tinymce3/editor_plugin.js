@@ -100,7 +100,7 @@
 		getInfo : function() {
 			return {
 				longname : "Viper's Video Quicktags",
-				author : 'Some Viper007Bond',
+				author : 'Viper007Bond',
 				authorurl : 'http://www.viper007bond.com/',
 				infourl : 'http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/',
 				version : "5.4.0"
