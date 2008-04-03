@@ -10,8 +10,6 @@ Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, M
 
 == Description ==
 
-*This plugin has been tested successfully using WordPress 2.5. However, if you're having activation trouble with it under 2.5, make sure you're running the latest version and then post details on [this post](http://www.viper007bond.com/archives/2008/03/31/vipers-video-quicktags-wordpress-25/) on my blog.*
-
 Tired of copying and pasting the embed HTML from sites like YouTube into posts on your site? Well then this plugin is for you.
 
 Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, alignment on the page) and much more. Best of all, it won't break your page's (X)HTML validation.
