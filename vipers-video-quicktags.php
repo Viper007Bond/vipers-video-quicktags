@@ -2,7 +2,7 @@
 
 Plugin Name: Viper's Video Quicktags
 Plugin URI: http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
-Version: 5.4.3
+Version: 5.4.4
 Description: Allows you to embed various video types, including those hosted at <a href="http://www.youtube.com/">YouTube</a> and <a href="http://video.google.com/">Google Video</a> as well as videos you host yourself, into WordPress. <strong>Credits:</strong> <a href="http://asymptomatic.net">Owen Winkler</a> for <a href="http://redalt.com/wiki/ButtonSnap">ButtonSnap</a> and <a href="http://an-archos.com/">An-archos</a> for help with WP 2.1+ button code.
 Author: Viper007Bond
 Author URI: http://www.viper007bond.com/
@@ -12,7 +12,7 @@ Author URI: http://www.viper007bond.com/
 # Nothing to see here! Please use the plugin's options page. You can configure everything there.
 
 class VipersVideoQuicktags {
-	var $version = '5.4.3';
+	var $version = '5.4.4';
 	var $folder = '/wp-content/plugins/vipers-video-quicktags'; // You shouldn't need to change this ;)
 	var $fullfolderurl;
 	var $settings = array();
@@ -267,7 +267,7 @@ class VipersVideoQuicktags {
 			if ( 1 == $this->settings['tinymce_linenumber'] ) array_push($buttons, 'separator');
 			array_push( $buttons, 'vipersvideoquicktags' );
 		} else {
-			array_push( $buttons, 'vvqYouTube', 'vvqGoogleVideo', 'vvqIFILM', 'vvqMetaCafe', 'vvqMySpace', 'vvqVimeo', /*'vvqQuicktime', 'vvqVideoFile',*/ 'vvqFLV' );
+			array_push( $buttons, 'vvqYouTube', 'vvqGoogleVideo', 'vvqIFILM', 'vvqMetaCafe', 'vvqMySpace', 'vvqVimeo', 'vvqQuicktime', 'vvqVideoFile', 'vvqFLV' );
 		}
 
 		return $buttons;

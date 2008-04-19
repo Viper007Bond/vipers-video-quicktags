@@ -140,6 +140,10 @@ If you'd like to add a border for example, try adding something like this to you
 
 == ChangeLog ==
 
+**Version 5.4.4*
+
+* Add the Quicktime and generic video buttons back to TinyMCE for users who prefer them over the native TinyMCE embedder.
+
 **Version 5.4.3*
 
 * More code changes to try and fix hard-to-reproduce bugs under WordPress 2.5. Thanks to everyone that helped me debug including [Maciek](http://ibex.pl).
