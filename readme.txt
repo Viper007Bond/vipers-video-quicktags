@@ -1,34 +1,45 @@
 === Viper's Video Quicktags ===
 Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
-Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, ifilm, metacafe, myspace, vimeo, quicktime
-Requires at least: 2.0
+Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
+Requires at least: 2.6
 Stable tag: trunk
 
-Allows easy and XHTML valid posting of YouTube, Google Video, IFILM, Metacafe, MySpace, FLV, Quicktime, and generic video files into posts.
+Allows easy and XHTML valid posting of videos from various websites such as YouTube, DailyMotion, Vimeo, and more.
 
 == Description ==
 
-Tired of copying and pasting the embed HTML from sites like YouTube into posts on your site? Well then this plugin is for you.
+Tired of copying and pasting the embed HTML from sites like YouTube only to find it's broken your page's validation? Then this plugin is for you.
 
-Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, alignment on the page) and much more. Best of all, it won't break your page's (X)HTML validation.
+Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, colors, alignment on the page) and much more.
 
 Currently supports these video sites:
 
-* [YouTube](http://www.youtube.com/)
+* [YouTube](http://www.youtube.com/) (including playlists)
 * [Google Video](http://video.google.com/)
-* [IFILM](http://www.ifilm.com/)
-* [Metacafe](http://www.metacafe.com/)
-* [MySpace](http://www.myspace.com/)
+* [DailyMotion](http://www.dailymotion.com/)
 * [Vimeo](http://www.vimeo.com/)
+* [Veoh](http://www.veoh.com/)
+* [Viddler](http://www.viddler.com/)
+* [Metacafe](http://www.metacafe.com/)
+* [Blip.tv](http://blip.tv/)
+* [Flickr](http://www.flickr.com/) videos
+* [Spike.com/IFILM](http://www.spike.com/)
+* [MySpaceTV](http://vids.myspace.com/)
 
 As well as these file types:
 
+* Flash Video Files (FLV)
 * QuickTime (MOV, etc.)
 * Generic video files (AVI, MPEG, WMV, etc.)
-* Flash Video Files (FLV)
+
+You can also use the `[flash]` shortcode to Flash-based video from **any** website (see Help section after installing for details).
 
 If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get me to include it.
+
+**Legacy Version**
+
+This plugin now requires WordPress 2.6.0 or newer. If for some reason you are running an old version of WordPress (which I **strongly** discourage), you can download the legacy version [right here](http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip).
 
 == Installation ==
 
@@ -38,43 +49,7 @@ To upgrade from a previous version of this plugin, delete the entire folder and 
 
 ###Installing The Plugin###
 
-Extract all files from the ZIP file, making sure to keep the file structure intact, and then upload it to `/wp-content/plugins/`.
-
-This should result in the following file structure:
-
-`- wp-content
-    - plugins
-        - vipers-video-quicktags
-            | readme.txt
-            | screenshot-1.png
-            | screenshot-2.png
-            | screenshot-3.png
-            | vipers-video-quicktags.js
-            | vipers-video-quicktags.php
-            - images
-                | flv.png
-                | googlevideo.png
-                | ifilm.png
-                | metacafe.png
-                | myspace.png
-                | quicktime.png
-                | videofile.png
-                | vimeo.png
-                | youtube.png
-            - localization
-                | get_translations.txt
-                | template.po
-            - resources
-                | buttonsnap.php
-                | flvplayer.swf
-                - tinymce2
-                    | editor_plugin.js
-                    - langs
-                        | en.js
-                - tinymce3
-                    | editor_plugin.js
-                    - langs
-                        | en.js`
+Extract all files from the ZIP file, **making sure to keep the file structure intact**, and then upload it to `/wp-content/plugins/`. This should result in multiple subfolders and files.
 
 Then just visit your admin area and activate the plugin.
 
@@ -82,29 +57,25 @@ Then just visit your admin area and activate the plugin.
 
 ###Plugin Configuration###
 
-To configure this plugin, visit it's options page. It can be found under the "Options" tab in your admin area, titled "Video Quicktags".
+To configure this plugin, visit it's settings page. It can be found under the "Settings" tab in your admin area, titled "Video Quicktags".
 
 == Frequently Asked Questions ==
 
-= Where are the buttons for embedding Quicktime and regular video files in TinyMCE in WordPress 2.5+? =
+= I have the plugin running, but I have some questions about how to use it. =
 
-TinyMCE 3.x supports this by itself (click the "Advanced Toolbar" button), so I've opted to let it handle this since my plugin's support of those filetypes aren't perfect.
-
-= The playback of generic video files is buggy / won't work in my browser / etc. =
-
-Oh I'm not surprised. Little documentation exists on how to properly embed a video into a page while staying XHTML valid and having it work in all browsers. I've done the best that I can, but it may still need some work. Use that part of your plugin at your own risk.
+A help section is now included with this plugin. Please visit your admin area -> Settings -> Video Quicktags -> Help.
 
 = Why doesn't this plugin support such-and-such site? =
 
 There are few possible reasons for this:
 
 * I may have never heard of the site and simply linking it to me on [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23) may make me include it in a future release
-* The URL at which the video can be viewed has nothing in common with the embed URL (i.e. giving the plugin the URL in your address bar won't help it). If this is the case, you might as well just use the HTML code that they give you as you'd have to dig through it either way.
+* The URL at which the video can be viewed has nothing in common with the embed URL. This means my plugin can't do anything with the URL you give it. Support for fetching the emded URL from the website may be added in a future version though, we'll see.
 * I have deemed the site not popular enough to warrant being added to my plugin. I don't wish to bloat my plugin with tiny little sites that only one or two people will use. However, I like supporting as many sites as I can as you can hide sites you don't use via the options page, so this is rarely the case.
 
 = Does this plugin support other languages? =
 
-Yes, it does. Included in the `localization` folder is the translation template you can use to translate the plugin. See the [WordPress Codex](http://codex.wordpress.org/Translating_WordPress) for details. You may also be able to find some translations listed at [this plugin's homepage](http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/#translations) if any exist.
+Yes, it does. Included in the `localization` folder is the translation template you can use to translate the plugin. See the [WordPress Codex](http://codex.wordpress.org/Translating_WordPress) for details. When you're done translating it, please [send me](http://www.viper007bond.com/contact/) the translation file so I can include it with the plugin.
 
 = Where can I get additional support for this plugin? =
 
@@ -116,38 +87,31 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Screenshots ==
 
-1. Plugin prompt with plain editor buttons in the background
-2. Plugin prompt with rich editor (TinyMCE) buttons in the background
-3. Plugin configuration page
-
-== Custom Video Resolutions ==
-
-If you would like to override the width and height values specifed on the options page of this plugin on a video-by-video basis, you can do so via the BBCode. Just use this format to specify the width and height that you would like to use.
-
-`[youtube width="320" height="240"]http://www.youtube.com/watch?v=JzqumbhfxRo[/youtube]`
-
-== Styling The Videos ==
-
-All videos are wrapped in a `<div>` with the CSS class `vvqbox` as well as a class for the type of video it is (such as `vvqyoutube` or `vvqgooglevideo`).
-
-If you'd like to add a border for example, try adding something like this to your theme's stylesheet:
-
-`.vvqbox {
-	border: 3px solid red;
-	padding: 5px;
-}`
+1. TinyMCE, the plugin's buttons, and the plugin's dialog window.
+2. YouTube configuration page.
+2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == ChangeLog ==
 
-**Version 5.4.4*
+**Version 6.0.0**
+
+Complete recode literally from scratch (all new code):
+
+* Support for new video sites.
+* Settings page greatly expanded.
+* Video configuration abilities greatly expanded (colors, etc.)
+* YouTube playlists
+* And so very, very much more.
+
+**Version 5.4.4**
 
 * Add the Quicktime and generic video buttons back to TinyMCE for users who prefer them over the native TinyMCE embedder.
 
-**Version 5.4.3*
+**Version 5.4.3**
 
 * More code changes to try and fix hard-to-reproduce bugs under WordPress 2.5. Thanks to everyone that helped me debug including [Maciek](http://ibex.pl).
 
-**Version 5.4.2*
+**Version 5.4.2**
 
 * Some code to hopefully fix some seemingly random bugs under WordPress 2.5.
 * Other minor code improvements.

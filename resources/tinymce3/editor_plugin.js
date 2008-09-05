@@ -12,67 +12,104 @@
 		 * @param {string} url Absolute URL to where the plugin is located.
 		 */
 		init : function(ed, url) {
+			if ( typeof VVQButtonClick == 'undefined' ) return;
+
 			ed.addButton('vvqYouTube', {
 				title : 'vipersvideoquicktags.youtube',
-				image : url + '/../../images/youtube.png',
+				image : url + '/../../buttons/youtube.png',
 				onclick : function() {
-					VVQInsertVideoSite('YouTube', 'http://www.youtube.com/watch?v=JzqumbhfxRo', 'youtube');
+					VVQButtonClick('youtube');
 				}
 			});
 			ed.addButton('vvqGoogleVideo', {
 				title : 'vipersvideoquicktags.googlevideo',
-				image : url + '/../../images/googlevideo.png',
+				image : url + '/../../buttons/googlevideo.png',
 				onclick : function() {
-					VVQInsertVideoSite('Google Video', 'http://video.google.com/videoplay?docid=3688185030664621355', 'googlevideo');
+					VVQButtonClick('googlevideo');
 				}
 			});
-			ed.addButton('vvqIFILM', {
-				title : 'vipersvideoquicktags.ifilm',
-				image : url + '/../../images/ifilm.png',
+			ed.addButton('vvqDailyMotion', {
+				title : 'vipersvideoquicktags.dailymotion',
+				image : url + '/../../buttons/dailymotion.png',
 				onclick : function() {
-					VVQInsertVideoSite('IFILM', 'http://www.ifilm.com/video/2710582', 'ifilm');
-				}
-			});
-			ed.addButton('vvqMetaCafe', {
-				title : 'vipersvideoquicktags.metacafe',
-				image : url + '/../../images/metacafe.png',
-				onclick : function() {
-					VVQInsertVideoSite('Metacafe', 'http://www.metacafe.com/watch/299980/italian_police_lamborghini/', 'metacafe');
-				}
-			});
-			ed.addButton('vvqMySpace', {
-				title : 'vipersvideoquicktags.myspace',
-				image : url + '/../../images/myspace.png',
-				onclick : function() {
-					VVQInsertVideoSite('MySpace', 'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=1387215221', 'myspace');
+					VVQButtonClick('dailymotion');
 				}
 			});
 			ed.addButton('vvqVimeo', {
 				title : 'vipersvideoquicktags.vimeo',
-				image : url + '/../../images/vimeo.png',
+				image : url + '/../../buttons/vimeo.png',
 				onclick : function() {
-					VVQInsertVideoSite('Vimeo', 'http://www.vimeo.com/clip:27810', 'vimeo');
+					VVQButtonClick('vimeo');
 				}
 			});
-			ed.addButton('vvqQuicktime', {
-				title : 'vipersvideoquicktags.quicktime',
-				image : url + '/../../images/quicktime.png',
+			ed.addButton('vvqVeoh', {
+				title : 'vipersvideoquicktags.veoh',
+				image : url + '/../../buttons/veoh.png',
 				onclick : function() {
-					VVQInsertVideoFile('Quicktime', 'mov', 'quicktime');
+					VVQButtonClick('veoh');
 				}
 			});
-			ed.addButton('vvqVideoFile', {
-				title : 'vipersvideoquicktags.videofile',
-				image : url + '/../../images/videofile.png',
+			ed.addButton('vvqViddler', {
+				title : 'vipersvideoquicktags.viddler',
+				image : url + '/../../buttons/viddler.png',
 				onclick : function() {
-					VVQInsertVideoFile('', 'avi', 'video');
+					VVQButtonClick('viddler');
+				}
+			});
+			ed.addButton('vvqMetacafe', {
+				title : 'vipersvideoquicktags.metacafe',
+				image : url + '/../../buttons/metacafe.png',
+				onclick : function() {
+					VVQButtonClick('metacafe');
+				}
+			});
+			ed.addButton('vvqBlipTV', {
+				title : 'vipersvideoquicktags.bliptv',
+				image : url + '/../../buttons/bliptv.png',
+				onclick : function() {
+					VVQButtonClick('bliptv');
+				}
+			});
+			ed.addButton('vvqFlickrVideo', {
+				title : 'vipersvideoquicktags.flickrvideo',
+				image : url + '/../../buttons/flickrvideo.png',
+				onclick : function() {
+					VVQButtonClick('flickrvideo');
+				}
+			});
+			ed.addButton('vvqSpike', {
+				title : 'vipersvideoquicktags.spike',
+				image : url + '/../../buttons/spike.png',
+				onclick : function() {
+					VVQButtonClick('spike');
+				}
+			});
+			ed.addButton('vvqMySpace', {
+				title : 'vipersvideoquicktags.myspace',
+				image : url + '/../../buttons/myspace.png',
+				onclick : function() {
+					VVQButtonClick('myspace');
 				}
 			});
 			ed.addButton('vvqFLV', {
 				title : 'vipersvideoquicktags.flv',
-				image : url + '/../../images/flv.png',
+				image : url + '/../../buttons/flv.png',
 				onclick : function() {
-					VVQInsertVideoFile('FLV', 'flv', 'flv');
+					VVQButtonClick('flv');
+				}
+			});
+			ed.addButton('vvqQuicktime', {
+				title : 'vipersvideoquicktags.quicktime',
+				image : url + '/../../buttons/quicktime.png',
+				onclick : function() {
+					VVQButtonClick('quicktime');
+				}
+			});
+			ed.addButton('vvqVideoFile', {
+				title : 'vipersvideoquicktags.videofile',
+				image : url + '/../../buttons/videofile.png',
+				onclick : function() {
+					VVQButtonClick('videofile');
 				}
 			});
 		},
@@ -103,7 +140,7 @@
 				author : 'Viper007Bond',
 				authorurl : 'http://www.viper007bond.com/',
 				infourl : 'http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/',
-				version : "5.4.0"
+				version : "6.0"
 			};
 		}
 	});
