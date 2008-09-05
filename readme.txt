@@ -9,9 +9,9 @@ Allows easy and XHTML valid posting of videos from various websites such as YouT
 
 == Description ==
 
-Tired of copying and pasting the embed HTML from sites like YouTube only to find it's broken your page's validation? Then this plugin is for you.
+Tired of copying and pasting the embed HTML from sites like YouTube? Then this plugin is for you.
 
-Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, colors, alignment on the page) and much more.
+Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, colors, alignment on the page) and much more. Your site will even stay (X)HTML valid unlike with the code provided by most video sites.
 
 Currently supports these video sites:
 
