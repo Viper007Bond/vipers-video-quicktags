@@ -97,11 +97,15 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.0.2**
+
+* Fix Write -> Page (forgot to hook in)
+* Remove FLV notice from WPMU.
+* Add help item about the red in YouTube (hovering over icons).
+
 **Version 6.0.1**
 
 * Fixed a PHP error.
-* Remove FLV notice from WPMU.
-* Add help item about the red in YouTube (hovering over icons).
 
 **Version 6.0.0**
 
