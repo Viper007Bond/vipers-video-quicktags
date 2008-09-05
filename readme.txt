@@ -55,6 +55,10 @@ Then just visit your admin area and activate the plugin.
 
 **See Also:** ["Installing Plugins" article on the WP Codex](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
 
+###Installing For WPMU###
+
+Install as stated above to `plugins`, but place `vipers-video-quicktags.php` in the `mu-plugins` folder. Just that file, nothing else.
+
 ###Plugin Configuration###
 
 To configure this plugin, visit it's settings page. It can be found under the "Settings" tab in your admin area, titled "Video Quicktags".
@@ -96,6 +100,8 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 **Version 6.0.1**
 
 * Fixed a PHP error.
+* Remove FLV notice from WPMU.
+* Add help item about the red in YouTube (hovering over icons).
 
 **Version 6.0.0**
 

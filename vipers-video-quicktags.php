@@ -2008,6 +2008,12 @@ class VipersVideoQuicktags {
 				<p><?php printf( __('This plugin does have the ability to embed any Flash file though. See the <a href="%s" class="expandolink">Flash shortcode question</a> for details on that.', 'vipers-video-quicktags'), '#vvq-flashcodehelp'); ?></p>
 			</div>
 		</li>
+		<li>
+			<p class="vvq-help-title"><?php _e("There are still red bits (hovering over buttons) in my YouTube embed. What gives?", 'vipers-video-quicktags'); ?></p>
+			<div>
+				<p><?php _e('YouTube does not provide a method to change that color.', 'vipers-video-quicktags'); ?></p>
+			</div>
+		</li>
 		<li id="vvq-parameters">
 			<p class="vvq-help-title"><?php _e('How can I change the size, colors, etc. for a specific video?', 'vipers-video-quicktags'); ?></p>
 			<div>
@@ -2234,6 +2240,7 @@ class VipersVideoQuicktags {
 				}
 				jQuery(this).parents("tr").find(".vvq-width").val( Math.round( height * ( jQuery(this).parents("tr").find(".vvq-width-default").val() / heightdefault ) ) );
 			});
+<?php if ( empty($wpmu_version) ) : ?>
 
 			// Agree to the CC non-commercial license before showing FLV button
 			jQuery("#vvq-flvbutton").click(function(){
@@ -2241,6 +2248,7 @@ class VipersVideoQuicktags {
 				var agree = confirm("<?php echo js_escape( __("Do you agree to the Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported license? A link to it can be found to the left.\n\nIn short though, you cannot use JW's FLV Media Player on a commercial site without purchasing a commercial license.", 'vipers-video-quicktags') ); ?>");
 				if ( true != agree ) return false;
 			});
+<?php endif; ?>
 		});
 	// ]]>
 	</script>
@@ -2394,7 +2402,12 @@ class VipersVideoQuicktags {
 				<td><input name="vvq[myspace][aspectratio]" class="vvq-aspectratio" type="checkbox" value="1"<?php checked($this->settings['myspace']['aspectratio'], 1); ?> /></td>
 			</tr>
 			<tr>
-				<td style="text-align:left"><?php echo __('Flash Video (FLV)', 'vipers-video-quicktags') . '<br /><small>' . sprintf( __('<a href="%1$s">JW\'s FLV Media Player</a> is covered by the <a href="%2$s">Creative Commons Noncommercial<br />license</a> which means you cannot use it on a <a href="%3$s">commerical website</a>.', 'vipers-video-quicktags'), 'http://www.jeroenwijering.com/?item=JW_FLV_Media_Player', 'http://creativecommons.org/licenses/by-nc-sa/3.0/', 'http://www.jeroenwijering.com/?page=order' ); ?></small></td>
+				<td style="text-align:left"><?php
+					_e('Flash Video (FLV)', 'vipers-video-quicktags');
+
+					if ( empty($wpmu_version) )
+						echo '<br /><small>' . sprintf( __('<a href="%1$s">JW\'s FLV Media Player</a> is covered by the <a href="%2$s">Creative Commons Noncommercial<br />license</a> which means you cannot use it on a <a href="%3$s">commerical website</a>.', 'vipers-video-quicktags'), 'http://www.jeroenwijering.com/?item=JW_FLV_Media_Player', 'http://creativecommons.org/licenses/by-nc-sa/3.0/', 'http://www.jeroenwijering.com/?page=order' );
+				?></small></td>
 				<td><input name="vvq[flv][button]" id="vvq-flvbutton" type="checkbox" value="1"<?php checked($this->settings['flv']['button'], 1); ?> /></td>
 				<td><input name="vvq[flv][width]" type="text" size="5" value="<?php echo $this->settings['flv']['width']; ?>" /></td>
 				<td><input name="vvq[flv][height]" type="text" size="5" value="<?php echo $this->settings['flv']['height']; ?>" /></td>
