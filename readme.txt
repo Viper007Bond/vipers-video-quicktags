@@ -93,6 +93,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.0.1**
+
+* Fixed a PHP error.
+
 **Version 6.0.0**
 
 Complete recode literally from scratch (all new code):
