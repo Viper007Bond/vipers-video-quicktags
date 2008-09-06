@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.0.2
+Version:      6.0.3
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.0.2';
+	var $version = '6.0.3';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -2513,6 +2513,14 @@ class VipersVideoQuicktags {
 	}
 
 
+	// Reverse the parts we care about (and probably some we don't) of wptexturize() which gets applied before shortcodes
+	function wpuntexturize( $text ) {
+		$find = array( '&#8211;', '&#8212;', '&#215;', '&#8230;', '&#8220;', '&#8217;s', '&#8221;',  );
+		$replace = array( '--', '---', 'x', '...', '``', '\'s', '\'\'' );
+		return str_replace( $find, $replace, $text );
+	}
+
+
 	// Show an error for Stage6
 	function shortcode_stage6() {
 		return '<em>[' . __('Stage6 is no more, so this Stage6-hosted video cannot be displayed.', 'vipers-video-quicktags') . ']</em>';
@@ -2521,6 +2529,7 @@ class VipersVideoQuicktags {
 
 	// Handle YouTube shortcodes
 	function shortcode_youtube( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		// Handle WordPress.com shortcode format
 		if ( isset($atts[0]) ) {
@@ -2597,6 +2606,7 @@ class VipersVideoQuicktags {
 
 	// Handle Google Video shortcodes
 	function shortcode_googlevideo( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		// Handle WordPress.com shortcode format
 		if ( isset($atts[0]) ) {
@@ -2643,6 +2653,7 @@ class VipersVideoQuicktags {
 
 	// Handle DailyMotion shortcodes
 	function shortcode_dailymotion( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube') ) );
 
@@ -2693,6 +2704,7 @@ class VipersVideoQuicktags {
 
 	// Handle Vimeo shortcodes
 	function shortcode_vimeo( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		// Handle malformed WordPress.com shortcode format
 		if ( isset($atts[0]) ) {
@@ -2747,6 +2759,7 @@ class VipersVideoQuicktags {
 
 	// Handle Veoh shortcodes
 	function shortcode_veoh( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Veoh') ) );
 
@@ -2811,6 +2824,7 @@ class VipersVideoQuicktags {
 
 	// Handle Metacafe shortcodes
 	function shortcode_metacafe( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Metacafe') ) );
 
@@ -2873,6 +2887,7 @@ class VipersVideoQuicktags {
 
 	// Handle Flickr videos
 	function shortcode_flickrvideo( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		// Handle WordPress.com shortcode format
 		if ( isset($atts[0]) ) {
@@ -2919,6 +2934,7 @@ class VipersVideoQuicktags {
 
 	// Handle IFILM aka Spike shortcodes for backwards compatibility
 	function shortcode_ifilm( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('IFILM/Spike') ) );
 
@@ -2953,6 +2969,7 @@ class VipersVideoQuicktags {
 
 	// Handle MySpace videos
 	function shortcode_myspace( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('MySpace') ) );
 
@@ -2987,6 +3004,7 @@ class VipersVideoQuicktags {
 
 	// Handle FLV videos
 	function shortcode_flv( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('FLV') ) );
 
@@ -3036,6 +3054,7 @@ class VipersVideoQuicktags {
 
 	// Handle major pain in the ass Quicktime video files
 	function shortcode_quicktime( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('Quicktime') ) );
 
@@ -3069,6 +3088,7 @@ class VipersVideoQuicktags {
 
 	// Handle super-duper pain in the ass regular video files
 	function shortcode_videofile( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic video') ) );
 
@@ -3109,6 +3129,7 @@ class VipersVideoQuicktags {
 
 	// Generic Flash embed allowing you to embed any type of Flash-based video
 	function shortcode_flash( $atts, $content = '' ) {
+		$content = $this->wpuntexturize( $content );
 
 		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic Flash embed') ) );
 

@@ -97,6 +97,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.0.3**
+
+* Undo formatting applied by `wptexturize()` to the URLs of videos. Props to [nukerojo](http://freddiemercury.com.ar/) for reporting.
+
 **Version 6.0.2**
 
 * Fix Write -> Page (forgot to hook in)
