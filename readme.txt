@@ -55,7 +55,7 @@ Then just visit your admin area and activate the plugin.
 
 **See Also:** ["Installing Plugins" article on the WP Codex](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
 
-###Installing For WPMU###
+###Installing For [WordPress MU](http://mu.wordpress.org/)###
 
 Install as stated above to `plugins`, but place `vipers-video-quicktags.php` in the `mu-plugins` folder. Just that file, nothing else.
 
@@ -96,6 +96,23 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == ChangeLog ==
+
+**Version 6.1.0**
+
+* YouTube: Can now choose between high quality FLV and high quality MP4 formats.
+* FLV: Bundled skins.
+* FLV: Improvements on how custom colors are set.
+* TinyMCE: Can now choose what line number to display the buttons on.
+* TinyMCE: Automatic browser cache breaking when the plugin is (de)activated or the line number is changed.
+* General: SWFObject calls moved to bottom of posts rather than theme footer.
+* General: Admin notice warning about automatic plugin upgrade breaking SWF files, etc. (ASCII vs. binary).
+* General: Ability to set custom feed text via settings page.
+* General: Image pre-cache URL fix.
+* General: Settings page improvements for users without Javascript.
+* General: More translations and translators added to credits page.
+* General: Redid admin warning message for users without the head hook.
+* Flash: Aliased "kml_flashembed" shortcode and "movie" parameter now used if it's there. This is to support Anarchy Media Player.
+* Other various bug fixes.
 
 **Version 6.0.3**
 
