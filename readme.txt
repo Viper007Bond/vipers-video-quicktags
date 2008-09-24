@@ -97,21 +97,27 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.1**
+
+* **Vimeo:** Fixed embeds. Vimeo apparently doesn't like having `&amp;`s in it's embed URLs, so I've switched to using Flashvars.
+* **Viddler:** Decode TinyMCE's `&` to `&amp;` conversions which were breaking the embeds.
+* **Flash:** Decode TinyMCE's `&` to `&amp;` conversions which were breaking the embeds.
+
 **Version 6.1.0**
 
-* YouTube: Can now choose between high quality FLV and high quality MP4 formats.
-* FLV: Bundled skins.
-* FLV: Improvements on how custom colors are set.
-* TinyMCE: Can now choose what line number to display the buttons on.
-* TinyMCE: Automatic browser cache breaking when the plugin is (de)activated or the line number is changed.
-* General: SWFObject calls moved to bottom of posts rather than theme footer.
-* General: Admin notice warning about automatic plugin upgrade breaking SWF files, etc. (ASCII vs. binary).
-* General: Ability to set custom feed text via settings page.
-* General: Image pre-cache URL fix.
-* General: Settings page improvements for users without Javascript.
-* General: More translations and translators added to credits page.
-* General: Redid admin warning message for users without the head hook.
-* Flash: Aliased "kml_flashembed" shortcode and "movie" parameter now used if it's there. This is to support Anarchy Media Player.
+* **YouTube:** Can now choose between high quality FLV and high quality MP4 formats.
+* **FLV:** Bundled skins.
+* **FLV:** Improvements on how custom colors are set.
+* **TinyMCE:** Can now choose what line number to display the buttons on.
+* **TinyMCE:** Automatic browser cache breaking when the plugin is (de)activated or the line number is changed.
+* **General:** SWFObject calls moved to bottom of posts rather than theme footer.
+* **General:** Admin notice warning about automatic plugin upgrade breaking SWF files, etc. (ASCII vs. binary).
+* **General:** Ability to set custom feed text via settings page.
+* **General:** Image pre-cache URL fix.
+* **General:** Settings page improvements for users without Javascript.
+* **General:** More translations and translators added to credits page.
+* **General:** Redid admin warning message for users without the head hook.
+* **Flash:** Aliased "kml_flashembed" shortcode and "movie" parameter now used if it's there. This is to support Anarchy Media Player.
 * Other various bug fixes.
 
 **Version 6.0.3**

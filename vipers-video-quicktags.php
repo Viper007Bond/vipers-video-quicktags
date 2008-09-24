@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.0
+Version:      6.1.1
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.0';
+	var $version = '6.1.1';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -2919,8 +2919,6 @@ class VipersVideoQuicktags {
 		}
 
 		// Setup the parameters
-		$color = '';
-		if ( '' != $atts['color'] && $this->defaultsettings['vimeo']['color'] != $atts['color'] ) $color = '&color=' . str_replace( '#', '', $atts['color'] );
 		$portrait   = ( 1 == $atts['portrait'] )   ? '1' : '0';
 		$title      = ( 1 == $atts['title'] )      ? '1' : '0';
 		$byline     = ( 1 == $atts['byline'] )     ? '1' : '0';
@@ -2929,7 +2927,19 @@ class VipersVideoQuicktags {
 
 		$objectid = uniqid('vvq');
 
-		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.vimeo.com/moogaloop.swf?server=www.vimeo.com&clip_id=' . $videoid . $color . '&show_portrait=' . $portrait . '&show_title=' . $title . '&show_byline=' . $byline . '&fullscreen=' . $fullscreen );
+		// Gotta pass these via flashvars rather than the URL to keep for valid XHTML (Vimeo doesn't like &amp;'s)
+		$flashvars = array(
+			'server'        => 'www.vimeo.com',
+			'clip_id'       => $videoid,
+			'show_portrait' => $portrait,
+			'show_title'    => $title,
+			'show_byline'   => $byline,
+			'fullscreen'    => $fullscreen,
+		);
+		if ( '' != $atts['color'] && $this->defaultsettings['vimeo']['color'] != $atts['color'] )
+			$flashvars['color'] = str_replace( '#', '', $atts['color'] );
+
+		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.vimeo.com/moogaloop.swf', 'flashvars' => $flashvars );
 
 		return '<span class="vvqbox vvqvimeo" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="http://www.vimeo.com/' . $videoid . '">http://www.vimeo.com/' . $videoid . '</a></span></span>';
 	}
@@ -2984,7 +2994,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Parse WordPress.com shortcode format
-		preg_match( '#(.*?)(&|&\#038;)w=(\d+)(&|&\#038;)h=(\d+)#i', $atts['id'], $matches );
+		preg_match( '#(.*?)(&|&\#038;|&amp;)w=(\d+)(&|&\#038;|&amp;)h=(\d+)#i', $atts['id'], $matches );
 		$videoid = $matches[1];
 		$width = $matches[3];
 		$height = $matches[5];
@@ -3346,7 +3356,7 @@ class VipersVideoQuicktags {
 		// Create Flashvars
 		$flashvars = array();
 		if ( !empty($atts['flashvars']) ) {
-			$atts['flashvars'] = str_replace( '#038;', '&', $atts['flashvars'] ); // Fix formatting applied by WordPress
+			$atts['flashvars'] = str_replace( array('#038;', '&amp;'), '&', $atts['flashvars'] ); // Fix formatting applied by WordPress
 			parse_str( $atts['flashvars'], $params );
 			foreach ( $params as $key => $value )
 				$flashvars[$key] = $value;
