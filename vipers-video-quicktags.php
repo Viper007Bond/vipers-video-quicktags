@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.1
+Version:      6.1.2
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.1';
+	var $version = '6.1.2';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -487,7 +487,7 @@ class VipersVideoQuicktags {
 
 	// Hide TinyMCE buttons the user doesn't want to see + some misc editor CSS
 	function EditorCSS() {
-		echo "<style type='text/css'>\n";
+		echo "<style type='text/css'>\n	#vvq-precacher { display: none; }\n";
 
 		// Attempt to match the dialog box to the admin colors
 		$color = ( 'classic' == get_user_option('admin_color', $user_id) ) ? '#CFEBF7' : '#EAF3FA';
@@ -2366,7 +2366,7 @@ class VipersVideoQuicktags {
 		<!--<li><?php printf( __('<strong>Dutch:</strong> %s', 'vipers-video-quicktags'), '<a href="http://hofhuis.org/">Mark Hofhuis</a>' ); ?></li>-->
 		<li><?php printf( __('<strong>Italian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://gidibao.net/">Gianni Diurno</a>' ); ?></li>
 		<!--<li><?php printf( __('<strong>Polish:</strong> %s', 'vipers-video-quicktags'), '<a href="http://www.brt12.eu/">Bartosz Sobczyk</a>' ); ?></li>-->
-		<!--<li><?php printf( __('<strong>Russian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://handynotes.ru/">Dennis Bri</a>' ); ?></li>-->
+		<li><?php printf( __('<strong>Russian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://handynotes.ru/">Dennis Bri</a>' ); ?></li>
 	</ul>
 
 	<p><?php printf( __('If you\'d like to use this plugin in another language and have your name listed here, just translate the strings in the provided <a href="%1$s">template file</a> located in this plugin\'s &quot;<code>localization</code>&quot; folder and then <a href="%2$s">send it to me</a>. For help, see the <a href="%3$s">WordPress Codex</a>.', 'vipers-video-quicktags'), plugins_url('/vipers-video-quicktags/localization/_vipers-video-quicktags-template.po'), 'http://www.viper007bond.com/contact/', 'http://codex.wordpress.org/Translating_WordPress' ); ?></p>
@@ -2734,6 +2734,9 @@ class VipersVideoQuicktags {
 			'quality'  => $this->settings['youtube']['quality'],
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'youtube' );
+
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 
@@ -2804,6 +2807,9 @@ class VipersVideoQuicktags {
 			'autoplay' => $this->settings['googlevideo']['autoplay'],
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'googlevideo' );
+
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)#i', $content, $matches );
@@ -2848,6 +2854,9 @@ class VipersVideoQuicktags {
 			'autoplay'        => $this->settings['dailymotion']['autoplay'],
 			'related'         => $this->settings['dailymotion']['related'],
 		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'dailymotion' );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -2906,6 +2915,9 @@ class VipersVideoQuicktags {
 			'fullscreen' => $this->settings['vimeo']['fullscreen'],
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'vimeo' );
+
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.vimeo|vimeo)\.com(/|/clip:)(\d+)(.*?)#i', $content, $matches );
@@ -2960,6 +2972,9 @@ class VipersVideoQuicktags {
 			'autoplay' => 0,
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'veoh' );
+
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.veoh|veoh)\.com/videos/([0-9a-zA-Z]+)(.*?)#i', $content, $matches );
@@ -2993,6 +3008,9 @@ class VipersVideoQuicktags {
 			'id'            => '',
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'viddler' );
+
 		// Parse WordPress.com shortcode format
 		preg_match( '#(.*?)(&|&\#038;|&amp;)w=(\d+)(&|&\#038;|&amp;)h=(\d+)#i', $atts['id'], $matches );
 		$videoid = $matches[1];
@@ -3023,6 +3041,9 @@ class VipersVideoQuicktags {
 			'width'    => $this->settings['metacafe']['width'],
 			'height'   => $this->settings['metacafe']['height'],
 		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'metacafe' );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3059,6 +3080,9 @@ class VipersVideoQuicktags {
 			'height'        => $this->settings['bliptv']['height'],
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'bliptv' );
+
 		// Parse WordPress.com shortcode format
 		parse_str( $atts[0], $params );
 		if ( empty($params['?posts_id']) ) return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('Blip.tv', 'vipers-video-quicktags') ) );
@@ -3094,6 +3118,9 @@ class VipersVideoQuicktags {
 			'height'      => $this->settings['flickrvideo']['height'],
 			'showinfobox' => 1,
 		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flickrvideo' );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3134,6 +3161,9 @@ class VipersVideoQuicktags {
 			'height'   => $this->settings['spike']['height'],
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'spike' );
+
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.ifilm|ifilm|www.spike|spike)\.com/(.+)/(\d+)#i', $content, $matches );
@@ -3168,6 +3198,9 @@ class VipersVideoQuicktags {
 			'width'    => $this->settings['myspace']['width'],
 			'height'   => $this->settings['myspace']['height'],
 		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'myspace' );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3204,7 +3237,7 @@ class VipersVideoQuicktags {
 		$atts = shortcode_atts(array(
 			'width'        => $this->settings['flv']['width'],
 			'height'       => $this->settings['flv']['height'],
-			'image'        => str_replace( '.flv', '.jpg', $content ),
+			'image'        => FALSE,
 			'customcolors' => $this->settings['flv']['customcolors'],
 			'backcolor'    => $this->settings['flv']['backcolor'],
 			'frontcolor'   => $this->settings['flv']['frontcolor'],
@@ -3213,6 +3246,13 @@ class VipersVideoQuicktags {
 			'volume'       => 100,
 			'flashvars'    => '',
 		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flv' );
+
+		// Default image is the URL to the video but .jpg instead of .flv
+		if ( FALSE === $atts['image'] )
+			$atts['image'] = str_replace( '.flv', '.jpg', $content );
 
 
 		// Setup the flashvars using the parameters as well as the "flashvars" value
@@ -3280,6 +3320,9 @@ class VipersVideoQuicktags {
 
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'quicktime' );
+
 
 		if ( 1 == $atts['useplaceholder'] && !empty($atts['placeholder']) ) {
 			$mov = $atts['placeholder'];
@@ -3309,6 +3352,9 @@ class VipersVideoQuicktags {
 			'height'         => $this->settings['videofile']['height'],
 			'usewmp'         => $this->settings['videofile']['usewmp'],
 		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'videofile' );
 
 
 		// This is semi-temporary. Embedding generic video files is a major pain in the ass, so this part of the plugin is kinda half-heartedly coded.
@@ -3353,6 +3399,10 @@ class VipersVideoQuicktags {
 			'flashvars' => '',
 		), $atts);
 
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flash' );
+
+
 		// Create Flashvars
 		$flashvars = array();
 		if ( !empty($atts['flashvars']) ) {
@@ -3375,23 +3425,10 @@ class VipersVideoQuicktags {
 	function SWFObjectCalls( $content ) {
 		global $wpmu_version;
 
-		if ( empty($this->swfobjects) ) return $content;
+		if ( is_feed() || empty($this->swfobjects) ) return $content;
 
 		// Abort if wp_head() is missing from the theme
-		if ( FALSE == $this->wpheadrun ) {
-
-			// Output JS to show an alert() to admins
-			if ( FALSE == $this->adminwarned && empty($wpmu_version) && current_user_can('edit_themes') ) {
-				$this->adminwarned = TRUE;
-
-				$content .= "\n<script type=\"text/javascript\">\n<!--\n";
-				$content .= '	alert("' . $this->js_escape( __('Site Administrator: Your theme is missing <?php wp_head(); ?> inside of it\'s <head> which is required for Viper\'s Video Quicktags. Please edit your theme\'s header.php and add it right before </head>.', 'vipers-video-quicktags') ) . '");';
-				$content .= "\n-->\n</script>\n";
-			}
-
-			return $content;
-		}
-
+		if ( FALSE == $this->wpheadrun ) return $content;
 
 		$content .= "\n<script type=\"text/javascript\">\n";
 		//$content .= "// <![CDATA[\n";

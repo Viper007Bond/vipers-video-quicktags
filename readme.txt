@@ -65,6 +65,10 @@ To configure this plugin, visit it's settings page. It can be found under the "S
 
 == Frequently Asked Questions ==
 
+= The videos won't show up. Only a YouTube image or a link to the video does. =
+
+Your theme lacks the `<?php wp_head(); ?>` hook. Please add it.
+
 = I have the plugin running, but I have some questions about how to use it. =
 
 A help section is now included with this plugin. Please visit your admin area -> Settings -> Video Quicktags -> Help.
@@ -96,6 +100,13 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == ChangeLog ==
+
+**Version 6.1.2**
+
+* **General:** Remove wp_head() warning for admins. Doesn't work in themes like K2. Plugin's FAQ should cover this.
+* **General:** Add a filter to the shortcode attributes. This means plugins/themes can adjust things like the width automatically.
+* **General:** Russian translation thanks to [Dennis Bri](http://handynotes.ru/)
+* **General:** Properly hide some images in the admin that are there for pre-loading.
 
 **Version 6.1.1**
 
