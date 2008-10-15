@@ -285,9 +285,9 @@ class VipersVideoQuicktags {
 		add_action( 'admin_post_vvqsettings', array(&$this, 'POSTHandler') );
 		add_action( 'wp_head', array(&$this, 'Head') );
 		add_action( 'admin_head', array(&$this, 'Head') );
-		add_action( 'the_content', array(&$this, 'SWFObjectCalls'), 15 );
+		add_action( 'the_content', array(&$this, 'SWFObjectCalls'), 50 );
 		add_filter( 'widget_text', 'do_shortcode', 11 ); // Videos in the text widget
-		add_action( 'widget_text', array(&$this, 'SWFObjectCalls'), 15 );
+		add_action( 'widget_text', array(&$this, 'SWFObjectCalls'), 50 );
 		if ( $wp_db_version < 8990 && 'update.php' == basename( $_SERVER['PHP_SELF'] ) && 'upgrade-plugin' == $_GET['action'] && FALSE !== strstr( $_GET['plugin'], 'vipers-video-quicktags' ) )
 			add_action( 'admin_notices', array(&$this, 'AutomaticUpgradeNotice') );
 
