@@ -101,9 +101,14 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.3**
+
+* **General:** Actually remove the `wp_head()` check (I failed to do it properly in 6.1.2).
+* **General:** Don't show the binary FTP warning for WordPress 2.7 (the bug should be fixed).
+
 **Version 6.1.2**
 
-* **General:** Remove wp_head() warning for admins. Doesn't work in themes like K2. Plugin's FAQ should cover this.
+* **General:** Remove `wp_head()` warning for admins. Doesn't work in themes like K2. Plugin's FAQ should cover this.
 * **General:** Add a filter to the shortcode attributes. This means plugins/themes can adjust things like the width automatically.
 * **General:** Russian translation thanks to [Dennis Bri](http://handynotes.ru/)
 * **General:** Properly hide some images in the admin that are there for pre-loading.

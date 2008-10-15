@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.2
+Version:      6.1.3
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.2';
+	var $version = '6.1.3';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -288,7 +288,7 @@ class VipersVideoQuicktags {
 		add_action( 'the_content', array(&$this, 'SWFObjectCalls'), 15 );
 		add_filter( 'widget_text', 'do_shortcode', 11 ); // Videos in the text widget
 		add_action( 'widget_text', array(&$this, 'SWFObjectCalls'), 15 );
-		if ( 'update.php' == basename( $_SERVER['PHP_SELF'] ) && 'upgrade-plugin' == $_GET['action'] && FALSE !== strstr( $_GET['plugin'], 'vipers-video-quicktags' ) )
+		if ( $wp_db_version < 8990 && 'update.php' == basename( $_SERVER['PHP_SELF'] ) && 'upgrade-plugin' == $_GET['action'] && FALSE !== strstr( $_GET['plugin'], 'vipers-video-quicktags' ) )
 			add_action( 'admin_notices', array(&$this, 'AutomaticUpgradeNotice') );
 
 		// Register editor button hooks
@@ -3428,7 +3428,7 @@ class VipersVideoQuicktags {
 		if ( is_feed() || empty($this->swfobjects) ) return $content;
 
 		// Abort if wp_head() is missing from the theme
-		if ( FALSE == $this->wpheadrun ) return $content;
+		//if ( FALSE == $this->wpheadrun ) return $content;
 
 		$content .= "\n<script type=\"text/javascript\">\n";
 		//$content .= "// <![CDATA[\n";
