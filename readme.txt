@@ -101,6 +101,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.4**
+
+* **Veoh:** Fix broken embeds.
+
 **Version 6.1.3**
 
 * **General:** Actually remove the `wp_head()` check (I failed to do it properly in 6.1.2).

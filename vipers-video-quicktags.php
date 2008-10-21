@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.3
+Version:      6.1.4
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.3';
+	var $version = '6.1.4';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -2990,7 +2990,16 @@ class VipersVideoQuicktags {
 
 		$objectid = uniqid('vvq');
 
-		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.veoh.com/veohplayer.swf?permalinkId=' . $videoid . '&id=anonymous&player=videodetailsembedded&affiliateId=&videoAutoPlay=' . $atts['autoplay'] );
+		// Gotta pass these via flashvars rather than the URL to keep for valid XHTML (Veoh doesn't like &amp;'s)
+		$flashvars = array(
+			'permalinkId'   => $videoid,
+			'id'            => 'anonymous',
+			'player'        => 'videodetailsembedded',
+			'affiliateId'   => '',
+			'videoAutoPlay' => $atts['autoplay'],
+		);
+
+		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.veoh.com/veohplayer.swf', 'flashvars' => $flashvars );
 
 		return '<span class="vvqbox vvqveoh" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="http://www.veoh.com/videos/' . $videoid . '">http://www.veoh.com/videos/' . $videoid . '</a></span></span>';
 	}
