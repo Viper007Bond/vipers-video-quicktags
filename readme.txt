@@ -206,7 +206,7 @@ This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A
 
 **Version 5.2.2**
 
-* Support for the `http://www,youtube.com/w/?v=JzqumbhfxRo` URL format for YouTube due to popular request.
+* Support for the `http://www.youtube.com/w/?v=JzqumbhfxRo` URL format for YouTube due to popular request.
 
 **Version 5.2.1**
 
