@@ -101,6 +101,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.6**
+
+* **YouTube:** Default to low quality videos (what YouTube's standard embed code does). The high quality video "hack" can result in "This video is not available" on certain videos.
+
 **Version 6.1.5**
 
 * **Veoh:** Support for a default image in the `[flv]` shortcode when using a `.mp4` video file.
