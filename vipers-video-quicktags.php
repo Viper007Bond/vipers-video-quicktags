@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.6
+Version:      6.1.7
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.6';
+	var $version = '6.1.7';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -1156,7 +1156,7 @@ class VipersVideoQuicktags {
 
 	</ul>
 
-	<form id="vvqsettingsform" method="post" action="admin-post.php">
+	<form id="vvqsettingsform" method="post" action="admin-post.php" style="clear:both">
 
 	<?php wp_nonce_field('vipers-video-quicktags'); ?>
 
@@ -1475,9 +1475,9 @@ class VipersVideoQuicktags {
 				<select name="vvq-youtube-quality" id="vvq-youtube-quality">
 <?php
 					$qualities = apply_filters( 'vvq_youtubequalities', array(
-						0  => __('Low Quality FLV (smallest download) &#8212; YouTube Default', 'vipers-video-quicktags'),
-						18 => __('High Quality MP4 (medium download) &#8212; Plugin Default', 'vipers-video-quicktags'),
-						6  => __('High Quality FLV (largest download)', 'vipers-video-quicktags'),
+						0  => __('Low Quality FLV (smaller download) &#8212; YouTube default', 'vipers-video-quicktags'),
+						//18 => __('High Quality MP4 (medium download)', 'vipers-video-quicktags'),
+						6  => __('High Quality FLV (larger download) &#8212; May not work for all videos', 'vipers-video-quicktags'),
 					) );
 					foreach ( $qualities as $quality => $name ) {
 						echo '					<option value="' . $quality . '"';

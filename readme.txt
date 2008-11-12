@@ -101,6 +101,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.7**
+
+* **General:** CSS tweak for WordPress 2.7. Probably will need more updating, but I'll wait for 2.7 to be done first.
+* **YouTube:** Remove MP4 option from settings page (you can't seek properly with it it seems), plus it's meant for the iPhone.
+
 **Version 6.1.6**
 
 * **YouTube:** Default to low quality videos (what YouTube's standard embed code does). The high quality video "hack" can result in "This video is not available" on certain videos.
