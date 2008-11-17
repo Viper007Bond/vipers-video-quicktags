@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.7
+Version:      6.1.8
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.7';
+	var $version = '6.1.8';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -3056,7 +3056,7 @@ class VipersVideoQuicktags {
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
-			preg_match( '#http://(www.metacafe|metacafe)\.com/watch/(\d+)/(.*?)#i', $content, $matches );
+			preg_match( '#http://(www.metacafe|metacafe)\.com/watch/(.*?)/(.*?)#i', $content, $matches );
 			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Metacafe') ) );
 
 			$videoid = $matches[2];

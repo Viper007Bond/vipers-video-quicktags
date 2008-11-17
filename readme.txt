@@ -101,6 +101,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.8**
+
+* **Metacafe:** Update regex to match new URL format. Props penalty.
+
 **Version 6.1.7**
 
 * **General:** CSS tweak for WordPress 2.7. Probably will need more updating, but I'll wait for 2.7 to be done first.
