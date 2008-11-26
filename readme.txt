@@ -101,6 +101,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.9**
+
+* **YouTube:** Add support for YouTube's new experimental HD-ish video.
+* **General:** Don't right-position the PayPal button as it covers up the "Help" tab in WordPress 2.7.
+
 **Version 6.1.8**
 
 * **Metacafe:** Update regex to match new URL format. Props penalty.

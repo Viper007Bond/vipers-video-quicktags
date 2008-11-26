@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.8
+Version:      6.1.9
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.8';
+	var $version = '6.1.9';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -1111,15 +1111,15 @@ class VipersVideoQuicktags {
 	<input type="hidden" name="lc" value="US" />
 	<input type="hidden" name="bn" value="PP-DonationsBF" />
 
-	<h2 style="position:relative">
+	<h2>
 <?php
+
+	_e("Viper's Video Quicktags", 'vipers-video-quicktags');
 
 	// Want to get rid of the donate button? Alright, if you insist. :(
 	// Use the "vvq_donatebutton" filter to return FALSE and it'll go away (much better than editing this file).
 	if ( TRUE === apply_filters( 'vvq_donatebutton', TRUE ) )
-		echo '		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" name="submit" alt="Donate" title="' . attribute_escape( __('Donate to Viper007Bond for this plugin via PayPal', 'vipers-video-quicktags') ) . '" style="position:absolute;top:0;right:0;" />' . "\n";
-
-	_e("Viper's Video Quicktags", 'vipers-video-quicktags');
+		echo '		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" name="submit" alt="Donate" title="' . attribute_escape( __('Donate to Viper007Bond for this plugin via PayPal', 'vipers-video-quicktags') ) . '" style="vertical-align:middle;" />' . "\n";
 
 ?>
 	</h2>
@@ -1475,9 +1475,10 @@ class VipersVideoQuicktags {
 				<select name="vvq-youtube-quality" id="vvq-youtube-quality">
 <?php
 					$qualities = apply_filters( 'vvq_youtubequalities', array(
-						0  => __('Low Quality FLV (smaller download) &#8212; YouTube default', 'vipers-video-quicktags'),
+						0  => __('Low Quality (smallest download) &#8212; YouTube default', 'vipers-video-quicktags'),
 						//18 => __('High Quality MP4 (medium download)', 'vipers-video-quicktags'),
-						6  => __('High Quality FLV (larger download) &#8212; May not work for all videos', 'vipers-video-quicktags'),
+						6  => __('High Quality (larger download) &#8212; May not work for all videos', 'vipers-video-quicktags'),
+						22 => __('HD Quality (huge download) &#8212; Experimental, will revert to lowest quality for most videos', 'vipers-video-quicktags'),
 					) );
 					foreach ( $qualities as $quality => $name ) {
 						echo '					<option value="' . $quality . '"';
