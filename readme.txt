@@ -101,6 +101,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.10**
+
+* **General:** Icon for WordPress 2.7.
+
 **Version 6.1.9**
 
 * **YouTube:** Add support for YouTube's new experimental HD-ish video.
