@@ -104,6 +104,9 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 **Version 6.1.10**
 
 * **General:** Icon for WordPress 2.7.
+* **General:** Translation and notice bugfixes from Laurent Duretz.
+* **General:** French translation thanks to Laurent Duretz.
+* **General:** Dutch translation thanks to Sypie.
 
 **Version 6.1.9**
 

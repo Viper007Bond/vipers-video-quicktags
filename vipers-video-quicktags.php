@@ -92,7 +92,7 @@ class VipersVideoQuicktags {
 		}
 
 		// Redirect the old settings page to the new one for any old links
-		if ( is_admin() && 'vipers-video-quicktags.php' == $_GET['page'] ) {
+		if ( is_admin() && isset($_GET['page']) && 'vipers-video-quicktags.php' == $_GET['page'] ) {
 			wp_redirect( admin_url( 'options-general.php?page=vipers-video-quicktags' ) );
 			exit();
 		}
@@ -336,7 +336,7 @@ class VipersVideoQuicktags {
 		wp_register_script( 'qtobject', plugins_url('/vipers-video-quicktags/resources/qtobject.js'), array(), '1.0.2' );
 		if ( is_admin() ) {
 			// Settings page only
-			if ( 'vipers-video-quicktags' == $_GET['page'] ) {
+			if ( isset($_GET['page']) && 'vipers-video-quicktags' == $_GET['page'] ) {
 				add_action( 'admin_head', array(&$this, 'StyleTweaks' ) );
 				wp_enqueue_script( 'farbtastic', plugins_url('/vipers-video-quicktags/resources/farbtastic/farbtastic.js'), array('jquery'), '1.2' );
 				wp_enqueue_style( 'farbtastic', plugins_url('/vipers-video-quicktags/resources/farbtastic/farbtastic.css'), array(), '1.2', 'screen' );
@@ -440,7 +440,7 @@ class VipersVideoQuicktags {
 		if( empty($this_plugin) ) $this_plugin = plugin_basename(__FILE__);
 
 		if ( $file == $this_plugin ) {
-			$settings_link = '<a href="' . admin_url( 'options-general.php?page=vipers-video-quicktags' ) . '">' . __('Settings') . '</a>';
+			$settings_link = '<a href="' . admin_url( 'options-general.php?page=vipers-video-quicktags' ) . '">' . __('Settings', 'vipers-video-quicktags') . '</a>';
 			array_unshift( $links, $settings_link );
 		}
 
@@ -2365,7 +2365,8 @@ class VipersVideoQuicktags {
 	<p><?php _e('The following people have been nice enough to translate this plugin into other languages:', 'vipers-video-quicktags'); ?></p>
 
 	<ul>
-		<!--<li><?php printf( __('<strong>Dutch:</strong> %s', 'vipers-video-quicktags'), '<a href="http://hofhuis.org/">Mark Hofhuis</a>' ); ?></li>-->
+		<li><?php printf( __('<strong>Dutch:</strong> %s', 'vipers-video-quicktags'), 'Sypie' ); ?></li>
+		<li><?php printf( __('<strong>French:</strong> %s', 'vipers-video-quicktags'), '<a href="http://www.duretz.net/">Laurent Duretz</a>' ); ?></li>
 		<li><?php printf( __('<strong>Italian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://gidibao.net/">Gianni Diurno</a>' ); ?></li>
 		<!--<li><?php printf( __('<strong>Polish:</strong> %s', 'vipers-video-quicktags'), '<a href="http://www.brt12.eu/">Bartosz Sobczyk</a>' ); ?></li>-->
 		<li><?php printf( __('<strong>Russian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://handynotes.ru/">Dennis Bri</a>' ); ?></li>
@@ -2572,7 +2573,7 @@ class VipersVideoQuicktags {
 					_e('Flash Video (FLV)', 'vipers-video-quicktags');
 
 					if ( empty($wpmu_version) )
-						echo '<br /><small>' . sprintf( __('<a href="%1$s">JW\'s FLV Media Player</a> is covered by the <a href="%2$s">Creative Commons Noncommercial<br />license</a> which means you cannot use it on a <a href="%3$s">commerical website</a>.', 'vipers-video-quicktags'), 'http://www.jeroenwijering.com/?item=JW_FLV_Media_Player', 'http://creativecommons.org/licenses/by-nc-sa/3.0/', 'http://www.jeroenwijering.com/?page=order' );
+						echo '<br /><small>' . sprintf( __('<a href="%1$s">JW\'s FLV Media Player</a> is covered by the <a href="%2$s">Creative Commons Noncommercial<br />license</a> which means you cannot use it on a <a href="%3$s">commercial website</a>.', 'vipers-video-quicktags'), 'http://www.jeroenwijering.com/?item=JW_FLV_Media_Player', 'http://creativecommons.org/licenses/by-nc-sa/3.0/', 'http://www.jeroenwijering.com/?page=order' );
 				?></small></td>
 				<td><input name="vvq[flv][button]" id="vvq-flvbutton" type="checkbox" value="1"<?php checked($this->settings['flv']['button'], 1); ?> /></td>
 				<td><input name="vvq[flv][width]" type="text" size="5" value="<?php echo $this->settings['flv']['width']; ?>" /></td>
@@ -2602,7 +2603,7 @@ class VipersVideoQuicktags {
 
 <?php if ( 'help' != $tab && 'credits' != $tab ) : ?>
 	<p class="submit">
-		<input type="submit" name="vvq-submit" value="<?php _e('Save Changes'); ?>" />
+		<input type="submit" name="vvq-submit" value="<?php _e('Save Changes', 'vipers-video-quicktags'); ?>" />
 		<input type="submit" name="vvq-defaults" id="vvq-defaults" value="<?php _e('Reset Tab To Defaults', 'vipers-video-quicktags'); ?>" />
 	</p>
 <?php endif; ?>
@@ -2798,7 +2799,7 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Google Video') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Google Video', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -2815,7 +2816,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Google Video') ) );
+			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Google Video', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[2];
 		}
@@ -2841,7 +2842,7 @@ class VipersVideoQuicktags {
 	function shortcode_dailymotion( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -2864,7 +2865,7 @@ class VipersVideoQuicktags {
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			//http://www.dailymotion.com/visited/search/top%2Bgear/video/x347lz_bugatti-veyron-407-kmh-la-plus-rapi_shortfilms
 			preg_match( '#http://(www.dailymotion|dailymotion)\.com/(.+)/([0-9a-zA-Z]+)\_(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('DailyMotion') ) );
+			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('DailyMotion', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[3];
 		}
@@ -2902,7 +2903,7 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Vimeo') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Vimeo', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -2923,7 +2924,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.vimeo|vimeo)\.com(/|/clip:)(\d+)(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Vimeo') ) );
+			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Vimeo', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[3];
 		}
@@ -2963,7 +2964,7 @@ class VipersVideoQuicktags {
 	function shortcode_veoh( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Veoh') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Veoh', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -2980,7 +2981,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.veoh|veoh)\.com/videos/([0-9a-zA-Z]+)(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Veoh') ) );
+			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Veoh', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[2];
 		}
@@ -3035,7 +3036,7 @@ class VipersVideoQuicktags {
 
 		$this->swfobjects[$objectid] = array( 'width' => $width, 'height' => $height, 'url' => 'http://www.viddler.com/player/' . $videoid . '/' );
 
-		return '<span class="vvqbox vvqviddler" style="width:' . $width . 'px;height:' . $height . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Viddler') ) . '</em></span></span>';
+		return '<span class="vvqbox vvqviddler" style="width:' . $width . 'px;height:' . $height . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Viddler', 'vipers-video-quicktags') ) . '</em></span></span>';
 	}
 
 
@@ -3043,7 +3044,7 @@ class VipersVideoQuicktags {
 	function shortcode_metacafe( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Metacafe') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Metacafe', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3059,7 +3060,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.metacafe|metacafe)\.com/watch/(.*?)/(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Metacafe') ) );
+			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Metacafe', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[2];
 		}
@@ -3104,7 +3105,7 @@ class VipersVideoQuicktags {
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://blip.tv/scripts/flash/showplayer.swf?file=http://blip.tv/rss/flash/' . $videoid );
 
-		return '<span class="vvqbox vvqbliptv" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Blip.tv') ) . '</em></span></span>';
+		return '<span class="vvqbox vvqbliptv" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Blip.tv', 'vipers-video-quicktags') ) . '</em></span></span>';
 	}
 
 
@@ -3119,7 +3120,7 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Flickr Video') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Flickr Video', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3136,7 +3137,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.flickr|flickr)\.com/photos/(.+)/(\d+)(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Flickr Video') ) );
+			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Flickr Video', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[3];
 		}
@@ -3162,7 +3163,7 @@ class VipersVideoQuicktags {
 	function shortcode_ifilm( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('IFILM/Spike') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('IFILM/Spike', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3178,7 +3179,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(www.ifilm|ifilm|www.spike|spike)\.com/(.+)/(\d+)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('IFILM/Spike') ) );
+			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('IFILM/Spike', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[3];
 		}
@@ -3200,7 +3201,7 @@ class VipersVideoQuicktags {
 	function shortcode_myspace( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('MySpace') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('MySpace', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3216,7 +3217,7 @@ class VipersVideoQuicktags {
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
 			preg_match( '#http://(vids.myspace|myspacetv)\.com/index\.cfm\?fuseaction=vids\.individual(.+)videoid=(\d+)#i', $content, $matches ); // Had issues with the "&"
-			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('MySpace') ) );
+			if ( empty($matches) || empty($matches[3]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('MySpace', 'vipers-video-quicktags') ) );
 
 			$videoid = $matches[3];
 		}
@@ -3238,7 +3239,7 @@ class VipersVideoQuicktags {
 	function shortcode_flv( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('FLV') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('FLV', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3316,7 +3317,7 @@ class VipersVideoQuicktags {
 	function shortcode_quicktime( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('Quicktime') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('Quicktime', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3353,7 +3354,7 @@ class VipersVideoQuicktags {
 	function shortcode_videofile( $atts, $content = '' ) {
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic video') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic video', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3399,7 +3400,7 @@ class VipersVideoQuicktags {
 
 		if ( !empty($atts['movie']) ) $content = $atts['movie'];
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic Flash embed') ) );
+		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic Flash embed', 'vipers-video-quicktags') ) );
 
 		if ( is_feed() ) return $this->postlink();
 
@@ -3428,7 +3429,7 @@ class VipersVideoQuicktags {
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => $content, 'flashvars' => $flashvars );
 
-		return '<span class="vvqbox vvqflash" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Flash') ) . '</em></span></span>';
+		return '<span class="vvqbox vvqflash" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Flash', 'vipers-video-quicktags') ) . '</em></span></span>';
 	}
 
 
