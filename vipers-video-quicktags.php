@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.10
+Version:      6.1.11
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.10';
+	var $version = '6.1.11';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -67,7 +67,7 @@ class VipersVideoQuicktags {
 
 	// Class initialization
 	function VipersVideoQuicktags() {
-		global $wp_db_version, $wpmu_version;
+		global $wp_db_version, $wpmu_version, $shortcode_tags;
 
 		// This version of VVQ requires WordPress 2.6+
 		if ( !function_exists('plugins_url') ) {
@@ -324,12 +324,14 @@ class VipersVideoQuicktags {
 		add_shortcode( 'flv', array(&$this, 'shortcode_flv') );
 		add_shortcode( 'quicktime', array(&$this, 'shortcode_quicktime') );
 		add_shortcode( 'flash', array(&$this, 'shortcode_flash') );
-		add_shortcode( 'kml_flashembed', array(&$this, 'shortcode_flash') ); // Anarchy Media Plugin support
 		add_shortcode( 'videofile', array(&$this, 'shortcode_videofile') );
 		add_shortcode( 'video', array(&$this, 'shortcode_videofile') ); // Legacy
 		add_shortcode( 'avi', array(&$this, 'shortcode_videofile') ); // Legacy
 		add_shortcode( 'mpeg', array(&$this, 'shortcode_videofile') ); // Legacy
 		add_shortcode( 'wmv', array(&$this, 'shortcode_videofile') ); // Legacy
+		// Anarchy Media Plugin / Kimili Flash Embed support but only if those plugins aren't enabled
+		if ( !class_exists('KimiliFlashEmbed') && !function_exists('kml_flashembed') && !isset($shortcode_tags['kml_flashembed']) ) {
+			add_shortcode( 'kml_flashembed', array(&$this, 'shortcode_flash') );
 
 		// Register scripts and styles
 		wp_enqueue_script( 'swfobject', plugins_url('/vipers-video-quicktags/resources/swfobject.js'), array(), '2.1' );

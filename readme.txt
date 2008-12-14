@@ -102,6 +102,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.11**
+
+* **General:** Don't hijack the `kml_flashembed` shortcode if it's already being processed by other plugin.
+
 **Version 6.1.10**
 
 * **General:** Icon for WordPress 2.7.
