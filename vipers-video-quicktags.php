@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.11
+Version:      6.1.12
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.11';
+	var $version = '6.1.12';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -330,7 +330,7 @@ class VipersVideoQuicktags {
 		add_shortcode( 'mpeg', array(&$this, 'shortcode_videofile') ); // Legacy
 		add_shortcode( 'wmv', array(&$this, 'shortcode_videofile') ); // Legacy
 		// Anarchy Media Plugin / Kimili Flash Embed support but only if those plugins aren't enabled
-		if ( !class_exists('KimiliFlashEmbed') && !function_exists('kml_flashembed') && !isset($shortcode_tags['kml_flashembed']) ) {
+		if ( !class_exists('KimiliFlashEmbed') && !function_exists('kml_flashembed') && !isset($shortcode_tags['kml_flashembed']) )
 			add_shortcode( 'kml_flashembed', array(&$this, 'shortcode_flash') );
 
 		// Register scripts and styles
