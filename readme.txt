@@ -102,6 +102,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.14**
+
+* Google Video:** Show the fullscreen button by default, add option to disable it.
+
 **Version 6.1.13**
 
 * YouTube:** Remove the new search box by default. Option to enable it is on the settings page.

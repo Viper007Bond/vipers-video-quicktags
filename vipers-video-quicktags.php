@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.13
+Version:      6.1.14
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.13';
+	var $version = '6.1.14';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -131,6 +131,7 @@ class VipersVideoQuicktags {
 				'width'           => 400,
 				'height'          => 326,
 				'autoplay'        => 0,
+				'fs'              => 1,
 				'previewurl'      => 'http://video.google.com/videoplay?docid=-6006084025483872237',
 				'aspectratio'     => 1,
 			),
@@ -924,6 +925,7 @@ class VipersVideoQuicktags {
 				$usersettings['googlevideo']['width']       = (int) $_POST['vvq-googlevideo-width'];
 				$usersettings['googlevideo']['height']      = (int) $_POST['vvq-googlevideo-height'];
 				$usersettings['googlevideo']['autoplay']    = (int) $_POST['vvq-googlevideo-autoplay'];
+				$usersettings['googlevideo']['fs']          = (int) $_POST['vvq-googlevideo-fs'];
 				$usersettings['googlevideo']['aspectratio'] = (int) $_POST['vvq-googlevideo-aspectratio'];
 
 				// Fill in an missing items with the defaults
@@ -1524,9 +1526,11 @@ class VipersVideoQuicktags {
 
 				// Generate the URL and do the preview
 				var Autoplay = "";
+				var FS = "";
 				if ( true == jQuery("#vvq-googlevideo-autoplay").attr("checked") ) { var Autoplay = "&autoplay=1"; }
+				if ( true == jQuery("#vvq-googlevideo-fs").attr("checked") ) { var FS = "&fs=true"; }
 				swfobject.embedSWF(
-					"http://video.google.com/googleplayer.swf?docid=" + PreviewID + Autoplay,
+					"http://video.google.com/googleplayer.swf?docid=" + PreviewID + Autoplay + FS,
 					"vvqvideopreview",
 					jQuery("#vvq-width").val(),
 					jQuery("#vvq-height").val(),
@@ -1571,6 +1575,7 @@ class VipersVideoQuicktags {
 		<tr valign="top">
 			<th scope="row"><?php _e('Other', 'vipers-video-quicktags'); ?></th>
 			<td>
+				<label><input type="checkbox" name="vvq-googlevideo-fs" id="vvq-googlevideo-fs" value="1"<?php checked($this->settings['googlevideo']['fs'], 1); ?> /> <?php _e('Show fullscreen button', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-googlevideo-autoplay" id="vvq-googlevideo-autoplay" value="1"<?php checked($this->settings['googlevideo']['autoplay'], 1); ?> /> <?php _e('Autoplay video (not recommended)', 'vipers-video-quicktags'); ?></label>
 			</td>
 		</tr>
@@ -2821,6 +2826,7 @@ class VipersVideoQuicktags {
 			'width'    => $this->settings['googlevideo']['width'],
 			'height'   => $this->settings['googlevideo']['height'],
 			'autoplay' => $this->settings['googlevideo']['autoplay'],
+			'fs'       => $this->settings['googlevideo']['fs'],
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
@@ -2839,13 +2845,14 @@ class VipersVideoQuicktags {
 		}
 
 		// Setup the parameters
-		$autoplay = '';
-		if ( 1 == $atts['autoplay'] ) $autoplay = '&autoplay=1';
+		$flashvars = array();
+		if ( 1 == $atts['autoplay'] ) $flashvars['autoplay'] = '1';
+		if ( 1 == $atts['fs'] )       $flashvars['fs']       = 'true';
 
 
 		$objectid = uniqid('vvq');
 
-		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://video.google.com/googleplayer.swf?docid=' . $videoid . $autoplay );
+		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://video.google.com/googleplayer.swf?docid=' . $videoid, 'flashvars' => $flashvars );
 
 		return '<span class="vvqbox vvqgooglevideo" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="http://video.google.com/videoplay?docid=' . $videoid . '">http://video.google.com/videoplay?docid=' . $videoid . '</a></span></span>';
 	}
