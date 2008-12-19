@@ -102,13 +102,18 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.15**
+
+* **FLV:** Support (and detect) RTMP streams. Props axelseaa.
+* **General:** Tweak the redirect that occurs after saving the settings.
+
 **Version 6.1.14**
 
-* Google Video:** Show the fullscreen button by default, add option to disable it.
+* **Google Video:** Show the fullscreen button by default, add option to disable it.
 
 **Version 6.1.13**
 
-* YouTube:** Remove the new search box by default. Option to enable it is on the settings page.
+* **YouTube:** Remove the new search box by default. Option to enable it is on the settings page.
 
 **Version 6.1.12**
 

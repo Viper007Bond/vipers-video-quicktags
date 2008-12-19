@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.14
+Version:      6.1.15
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.14';
+	var $version = '6.1.15';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -1043,14 +1043,10 @@ class VipersVideoQuicktags {
 
 		update_option( 'vvq_options', $usersettings );
 
-		// Redirect back to the place we came from
-		$url = admin_url( 'options-general.php?page=vipers-video-quicktags&tab=' . urlencode($_POST['vvq-tab']) );
-		if ( TRUE == $defaults )
-			$redirectto = add_query_arg( 'defaults', 'true', $url );
-		else
-			$redirectto = add_query_arg( 'updated', 'true', $url );
-
-		wp_redirect( $redirectto );
+		// Redirect back to where we came from
+		$redirectto = wp_get_referer();
+		$redirectto = ( TRUE == $defaults ) ? add_query_arg( 'defaults', 'true', $redirectto ) : add_query_arg( 'updated', 'true', $redirectto );
+		wp_safe_redirect( $redirectto );
 	}
 
 
@@ -3294,6 +3290,13 @@ class VipersVideoQuicktags {
 			'bufferlength' => 15,
 			'volume'       => 100,
 		);
+
+		// Check if link is a RTMP stream and adjust accordingly if so
+		if ( 'rtmp' == substr( $content, 0 ,4 ) ) {
+			$flv_pos = strrpos( $content, '/' );
+			$flashvars['file'] = substr( $content, $flv_pos + 1 );
+			$flashvars['streamer'] = substr( $content, 0, $flv_pos );
+		}
 
 		// Skin
 		if ( !empty($this->settings['flv']['skin']) && !empty($this->flvskins[$this->settings['flv']['skin']]) )
