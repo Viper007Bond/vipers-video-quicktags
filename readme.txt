@@ -2,7 +2,7 @@
 Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
-Requires at least: 2.6
+Requires at least: 2.7
 Tested up to: 2.7
 Stable tag: trunk
 
