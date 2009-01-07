@@ -38,10 +38,6 @@ You can also use the `[flash]` shortcode to Flash-based video from **any** websi
 
 If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get me to include it.
 
-**Legacy Version**
-
-This plugin now requires WordPress 2.6.0 or newer. If for some reason you are running an old version of WordPress (which I **strongly** discourage), you can download the legacy version [right here](http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip).
-
 == Installation ==
 
 ###Updgrading From A Previous Version###
