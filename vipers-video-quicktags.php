@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.15
+Version:      6.1.16
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.15';
+	var $version = '6.1.16';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -123,6 +123,7 @@ class VipersVideoQuicktags {
 				'loop'            => 0,
 				'quality'         => 0,
 				'showsearch'      => 0,
+				'showinfo'        => 0,
 				'previewurl'      => 'http://www.youtube.com/watch?v=stdJd598Dtg',
 				'aspectratio'     => 1,
 			),
@@ -491,12 +492,23 @@ class VipersVideoQuicktags {
 
 	// Hide TinyMCE buttons the user doesn't want to see + some misc editor CSS
 	function EditorCSS() {
+		global $user_id;
+
 		echo "<style type='text/css'>\n	#vvq-precacher { display: none; }\n";
 
 		// Attempt to match the dialog box to the admin colors
-		$color = ( 'classic' == get_user_option('admin_color', $user_id) ) ? '#CFEBF7' : '#EAF3FA';
-		$color = apply_filters( 'vvq_titlebarcolor', $color ); // Use this hook for custom admin colors
-		echo "	.ui-dialog-titlebar { background: $color; }\n";
+		if ( 'classic' == get_user_option('admin_color', $user_id) ) {
+			$color = '#093E56';
+			$background = '#EAF2FA';
+		} else {
+			$color = '#464646';
+			$background = '#DFDFDF';
+		}
+		// Allow plugins with custom admin colors to set their own colors
+		$color      = apply_filters( 'vvq_titlebarcolor',      $color );
+		$background = apply_filters( 'vvq_titlebarbackground', $background );
+
+		echo "	.ui-dialog-titlebar { color: $color; background: $background; }\n";
 
 		$buttons2hide = array();
 		if ( 1 != $this->settings['youtube']['button'] )     $buttons2hide[] = 'YouTube';
@@ -635,11 +647,11 @@ class VipersVideoQuicktags {
 
 	// Set default heights (IE sucks)
 	if ( jQuery.browser.msie ) {
-		var VVQDialogDefaultHeight = 289;
-		var VVQDialogDefaultExtraHeight = 125;
+		var VVQDialogDefaultHeight = 254;
+		var VVQDialogDefaultExtraHeight = 114;
 	} else {
-		var VVQDialogDefaultHeight = 258;
-		var VVQDialogDefaultExtraHeight = 108;
+		var VVQDialogDefaultHeight = 246;
+		var VVQDialogDefaultExtraHeight = 106;
 	}
 	
 	// This function is run when a button is clicked. It creates a dialog box for the user to input the data.
@@ -652,8 +664,8 @@ class VipersVideoQuicktags {
 		VVQDialogHeight = VVQDialogDefaultHeight;
 		VVQDialogMaxHeight = VVQDialogDefaultHeight + VVQDialogDefaultExtraHeight;
 		if ( "bliptv" == tag ) {
-			VVQDialogHeight = VVQDialogDefaultHeight + 18;
-			VVQDialogMaxHeight = VVQDialogMaxHeight + 18;
+			VVQDialogHeight = VVQDialogDefaultHeight + 16;
+			VVQDialogMaxHeight = VVQDialogMaxHeight + 16;
 		} else if ( "viddler" == tag ) {
 			VVQDialogMaxHeight = VVQDialogDefaultHeight;
 		}
@@ -896,6 +908,7 @@ class VipersVideoQuicktags {
 				$usersettings['youtube']['autoplay']    = (int) $_POST['vvq-youtube-autoplay'];
 				$usersettings['youtube']['loop']        = (int) $_POST['vvq-youtube-loop'];
 				$usersettings['youtube']['showsearch']  = (int) $_POST['vvq-youtube-showsearch'];
+				$usersettings['youtube']['showinfo']    = (int) $_POST['vvq-youtube-showinfo'];
 				$usersettings['youtube']['quality']     = (int) $_POST['vvq-youtube-quality'];
 				$usersettings['youtube']['aspectratio'] = (int) $_POST['vvq-youtube-aspectratio'];
 
@@ -1044,7 +1057,7 @@ class VipersVideoQuicktags {
 		update_option( 'vvq_options', $usersettings );
 
 		// Redirect back to where we came from
-		$redirectto = wp_get_referer();
+		$redirectto = remove_query_arg( 'defaults', remove_query_arg( 'updated', wp_get_referer() ) );
 		$redirectto = ( TRUE == $defaults ) ? add_query_arg( 'defaults', 'true', $redirectto ) : add_query_arg( 'updated', 'true', $redirectto );
 		wp_safe_redirect( $redirectto );
 	}
@@ -1054,8 +1067,12 @@ class VipersVideoQuicktags {
 	function StyleTweaks() { ?>
 <style type="text/css">
 	.widefat td { vertical-align: middle; }
+	#vvqsettingsform ul li {
+		margin-left: 20px;
+		list-style: disc;
+	}
 	.vvqwide { width: 98%; }
-	.vvqnarrow { width: 65px; }
+	.vvqnarrow { width: 75px; }
 	.vvq-picker-wrap {
 		position: absolute;
 		display: none;
@@ -1360,6 +1377,7 @@ class VipersVideoQuicktags {
 				var Autoplay = "";
 				var Loop = "";
 				var ShowSearch = "";
+				var ShowInfo = "";
 				if ( "" != Color1Val && "<?php echo $this->defaultsettings['youtube']['color1']; ?>" != Color1Val ) var Color1 = "&color1=0x" + Color1Val.replace(/#/, "");
 				if ( "" != Color2Val && "<?php echo $this->defaultsettings['youtube']['color2']; ?>" != Color2Val ) var Color2 = "&color2=0x" + Color2Val.replace(/#/, "");
 				if ( 0 != jQuery("#vvq-youtube-quality").val() ) { var Quality = "&ap=%2526fmt%3D" + jQuery("#vvq-youtube-quality").val(); }
@@ -1369,8 +1387,9 @@ class VipersVideoQuicktags {
 				if ( true == jQuery("#vvq-youtube-autoplay").attr("checked") ) { var Autoplay = "&autoplay=1"; }
 				if ( true == jQuery("#vvq-youtube-loop").attr("checked") ) { var Loop = "&loop=1"; }
 				if ( true == jQuery("#vvq-youtube-showsearch").attr("checked") ) { var ShowSearch = "1"; } else { var ShowSearch = "0"; }
+				if ( true == jQuery("#vvq-youtube-showinfo").attr("checked") ) { var ShowInfo = "1"; } else { var ShowInfo = "0"; }
 				swfobject.embedSWF(
-					"http://www.youtube.com/v/" + PreviewID + Color1 + Color2 + Autoplay + Loop + Border + "&rel=" + Rel + "&showsearch=" + ShowSearch + FS + Quality,
+					"http://www.youtube.com/v/" + PreviewID + Color1 + Color2 + Autoplay + Loop + Border + "&rel=" + Rel + "&showsearch=" + ShowSearch + "&showinfo=" + ShowInfo + FS + Quality,
 					"vvqvideopreview",
 					jQuery("#vvq-width").val(),
 					jQuery("#vvq-height").val(),
@@ -1481,8 +1500,8 @@ class VipersVideoQuicktags {
 <?php
 					$qualities = apply_filters( 'vvq_youtubequalities', array(
 						0  => __('Low Quality (smallest download) &#8212; YouTube default', 'vipers-video-quicktags'),
-						//18 => __('High Quality MP4 (medium download)', 'vipers-video-quicktags'),
-						6  => __('High Quality (larger download) &#8212; May not work for all videos', 'vipers-video-quicktags'),
+						6  => __('High Quality FLV (medium download) &#8212; May not work for all videos', 'vipers-video-quicktags'),
+						18 => __("High Quality MP4 (medium download) &#8212; May not work for all videos, try if HQ FLV doesn't work", 'vipers-video-quicktags'),
 						22 => __('HD Quality (huge download) &#8212; Experimental, will revert to lowest quality for most videos', 'vipers-video-quicktags'),
 					) );
 					foreach ( $qualities as $quality => $name ) {
@@ -1501,6 +1520,7 @@ class VipersVideoQuicktags {
 				<label><input type="checkbox" name="vvq-youtube-fs" id="vvq-youtube-fs" value="1"<?php checked($this->settings['youtube']['fs'], 1); ?> /> <?php _e('Show fullscreen button', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-youtube-border" id="vvq-youtube-border" value="1"<?php checked($this->settings['youtube']['border'], 1); ?> /> <?php _e('Show border', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-youtube-showsearch" id="vvq-youtube-showsearch" value="1"<?php checked($this->settings['youtube']['showsearch'], 1); ?> /> <?php _e('Show the search box', 'vipers-video-quicktags'); ?></label><br />
+				<label><input type="checkbox" name="vvq-youtube-showinfo" id="vvq-youtube-showinfo" value="1"<?php checked($this->settings['youtube']['showinfo'], 1); ?> /> <?php _e('Show the video title and rating', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-youtube-autoplay" id="vvq-youtube-autoplay" value="1"<?php checked($this->settings['youtube']['autoplay'], 1); ?> /> <?php _e('Autoplay video (not recommended)', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-youtube-loop" id="vvq-youtube-loop" value="1"<?php checked($this->settings['youtube']['loop'], 1); ?> /> <?php _e('Loop video playback', 'vipers-video-quicktags'); ?></label>
 			</td>
@@ -2340,10 +2360,10 @@ class VipersVideoQuicktags {
 			<p class="vvq-help-title"><?php _e("How can I embed a generic Flash file or a video from a website this plugin doesn't support?", 'vipers-video-quicktags'); ?></p>
 			<div>
 				<p><?php printf( __('This plugin has a %s shortcode that can be used to embed <strong>any</strong> Flash file. Here is the format:', 'vipers-video-quicktags'), '<code>[flash]</code>' ); ?></p>
-				<p><code>[flash width="123" height="456" flashvars="name1=value1&name2=value2"]http://site.com/path/to/file.swf[/flash]</code></p>
+				<p><code>[flash width=&quot;123&quot; height=&quot;456&quot; flashvars=&quot;name1=value1&name2=value2&quot;]http://site.com/path/to/file.swf[/flash]</code></p>
 			</div>
 		</li>
-		<li>
+		<li id="vvq-videofilepoor">
 			<p class="vvq-help-title"><?php _e("Why does your plugin embed Quicktime and other regular video files so poorly? Can't you do a better job?", 'vipers-video-quicktags'); ?></p>
 			<div>
 				<p><?php printf( __('Embedding Quiktime and other regular video files is a major pain in the ass and it\'s incredibly hard to get it to work in all browsers and operating systems. I <strong>strongly</strong> suggest converting the video to <a href="%1$s">Flash Video</a> format or even <a href="%2$s">H.264</a> format and then using the Flash Video (FLV) embed type. There are free converters out there for both formats and doing so will create a much better experience for your visitors.', 'vipers-video-quicktags'), 'http://en.wikipedia.org/wiki/Flash_Video', 'http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC' ); ?></p>
@@ -2596,7 +2616,7 @@ class VipersVideoQuicktags {
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td style="text-align:left"><?php echo __('Generic Video File', 'vipers-video-quicktags') . '<br /><small>' . __("This part of the plugin is very buggy as embedding video files can be hard.<br />Consider trying TinyMCE's native video embedder instead.", 'vipers-video-quicktags') . '</small>'; ?></td>
+				<td style="text-align:left"><?php echo __('Generic Video File', 'vipers-video-quicktags') . '<br /><small>' . sprintf( __("This part of the plugin is fairly buggy as embedding video files is complex.<br />Consider trying TinyMCE's native video embedder instead. <a href='%s'>Why?</a>", 'vipers-video-quicktags'), admin_url('options-general.php?page=vipers-video-quicktags&amp;tab=help#vvq-videofilepoor') ) . '</small>'; ?></td>
 				<td><input name="vvq[videofile][button]" type="checkbox" value="1"<?php checked($this->settings['videofile']['button'], 1); ?> /></td>
 				<td><input name="vvq[videofile][width]" type="text" size="5" value="<?php echo $this->settings['videofile']['width']; ?>" /></td>
 				<td><input name="vvq[videofile][height]" type="text" size="5" value="<?php echo $this->settings['videofile']['height']; ?>" /></td>
@@ -2743,7 +2763,10 @@ class VipersVideoQuicktags {
 			'autoplay'   => $this->settings['youtube']['autoplay'],
 			'loop'       => $this->settings['youtube']['loop'],
 			'showsearch' => $this->settings['youtube']['showsearch'],
-			'quality'    => $this->settings['youtube']['quality'],
+			'showinfo'   => $this->settings['youtube']['showinfo'],
+			'format'     => $this->settings['youtube']['quality'],
+			'fmt'        => $this->settings['youtube']['quality'], // Alias for "format"
+			'quality'    => $this->settings['youtube']['quality'], // Parameter name deprecated in favor of "format"
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
@@ -2778,16 +2801,36 @@ class VipersVideoQuicktags {
 		}
 
 		// Setup the parameters
-		$color1 = $color2 = $border = $quality = $autoplay = $loop = $showsearch = '';
-		if ( '' != $atts['color1'] && $this->defaultsettings['youtube']['color1'] != $atts['color1'] ) $color1 = '&color1=0x' . str_replace( '#', '', $atts['color1'] );
-		if ( '' != $atts['color2'] && $this->defaultsettings['youtube']['color2'] != $atts['color2'] ) $color2 = '&color2=0x' . str_replace( '#', '', $atts['color2'] );
-		if ( $atts['border'] ) $border = '&border=1';
-		$rel = ( 1 == $atts['rel'] ) ? '1' : '0';
-		$fs = ( 1 == $atts['fs'] ) ? '1' : '0';
-		if ( !empty($atts['quality']) && 0 != $atts['quality'] ) $quality = '&ap=%2526fmt%3D' . $atts['quality'];
-		if ( $atts['autoplay'] ) $autoplay = '&autoplay=1';
-		if ( $atts['loop'] ) $loop = '&loop=1';
+		$color1 = $color2 = $border = $quality = $autoplay = $loop = $showsearch = $showinfo = '';
+
+		if ( '' != $atts['color1'] && $this->defaultsettings['youtube']['color1'] != $atts['color1'] )
+			$color1 = '&color1=0x' . str_replace( '#', '', $atts['color1'] );
+
+		if ( '' != $atts['color2'] && $this->defaultsettings['youtube']['color2'] != $atts['color2'] )
+			$color2 = '&color2=0x' . str_replace( '#', '', $atts['color2'] );
+
+		if ( $atts['border'] )
+			$border = '&border=1';
+
+		if ( !empty($atts['quality']) && 0 != $atts['quality'] )
+			$quality = '&ap=%2526fmt%3D' . $atts['quality'];
+
+		if ( !empty($atts['fmt']) && 0 != $atts['fmt'] )
+			$quality = '&ap=%2526fmt%3D' . $atts['quality'];
+
+		if ( !empty($atts['format']) && 0 != $atts['format'] )
+			$quality = '&ap=%2526fmt%3D' . $atts['quality'];
+
+		if ( $atts['autoplay'] )
+			$autoplay = '&autoplay=1';
+
+		if ( $atts['loop'] )
+			$loop = '&loop=1';
+
+		$rel        = ( 1 == $atts['rel'] ) ? '1' : '0';
+		$fs         = ( 1 == $atts['fs'] ) ? '1' : '0';
 		$showsearch = ( 1 == $atts['showsearch'] ) ? '1' : '0';
+		$showinfo   = ( 1 == $atts['showinfo'] ) ? '1' : '0';
 
 
 		$objectid = uniqid('vvq');
@@ -2795,7 +2838,7 @@ class VipersVideoQuicktags {
 		$this->swfobjects[$objectid] = array(
 			'width' => $atts['width'],
 			'height' => $atts['height'],
-			'url' => 'http://www.youtube.com/' . $embedpath . $color1 . $color2 . $border . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . $autoplay . $loop . $quality,
+			'url' => 'http://www.youtube.com/' . $embedpath . $color1 . $color2 . $border . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop . $quality,
 		);
 
 		return '<span class="vvqbox vvqyoutube" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="' . $fallbacklink . '">' . $fallbackcontent . '</a></span></span>';
@@ -2996,10 +3039,22 @@ class VipersVideoQuicktags {
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
-			preg_match( '#http://(www.veoh|veoh)\.com/videos/([0-9a-zA-Z]+)(.*?)#i', $content, $matches );
-			if ( empty($matches) || empty($matches[2]) ) return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Veoh', 'vipers-video-quicktags') ) );
+			$videoid = null;
 
-			$videoid = $matches[2];
+			// Old format
+			preg_match( '#http://(www.veoh|veoh)\.com/videos/([0-9a-zA-Z]+)(.*?)#i', $content, $matches );
+			if ( !empty($matches) && !empty($matches[2]) )
+				$videoid = $matches[2];
+
+			// Must be the new format then
+			if ( empty($videoid) ) {
+				preg_match( '#http://(www.veoh|veoh)\.com/(.*?)/watch/([0-9a-zA-Z]+)(.*?)#i', $content, $matches );
+				if ( !empty($matches) && !empty($matches[3]) )
+					$videoid = $matches[3];
+			}
+
+			if ( empty($videoid) )
+				return $this->error( sprintf( __('Unable to parse URL, check for correct %s format', 'vipers-video-quicktags'), __('Veoh', 'vipers-video-quicktags') ) );
 		}
 		// If a URL wasn't passed, assume a video ID was passed instead
 		else {
@@ -3348,7 +3403,8 @@ class VipersVideoQuicktags {
 		$atts = shortcode_atts(array(
 			'width'          => $this->settings['quicktime']['width'],
 			'height'         => $this->settings['quicktime']['height'],
-			'autostart'      => 0,
+			'autostart'      => 0, // Deprecated (wrong name)
+			'autoplay'       => 0,
 			'useplaceholder' => 0,
 			'placeholder'    => str_replace( '.mov', '.jpg', $content ),
 			'controller'     => 1,
@@ -3366,10 +3422,15 @@ class VipersVideoQuicktags {
 			$mov = $content;
 			$href = '';
 		}
-		$autostart = ( 1 == $atts['autostart'] ) ? 'true' : 'false';
+
+		if ( 1 == $atts['autostart'] )
+			$autoplay = 'true';
+		else
+			$autoplay = ( 1 == $atts['autoplay'] ) ? 'true' : 'false';
+
 		$controller = ( 1 == $atts['controller'] ) ? 'true' : 'false';
 
-		return '<span class="vvqbox vvqquicktime" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><script type="text/javascript">var myQTObject = new QTObject("' . $mov . '", "' . uniqid('vvq') . '", "' . $atts['width'] . '", "' . $atts['height'] . '");' . $href . ' myQTObject.addParam("autostart", "' . $autostart . '"); myQTObject.addParam("controller", "' . $controller . '"); myQTObject.write();</script></span>';
+		return '<span class="vvqbox vvqquicktime" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><script type="text/javascript">var myQTObject = new QTObject("' . $mov . '", "' . uniqid('vvq') . '", "' . $atts['width'] . '", "' . $atts['height'] . '");' . $href . ' myQTObject.addParam("autoplay", "' . $autoplay . '"); myQTObject.addParam("controller", "' . $controller . '"); myQTObject.write();</script></span>';
 	}
 
 

@@ -98,6 +98,12 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.16**
+
+* **YouTube:** Add option to disable the video title and ratings display.
+* **Veoh:** Add support for the new URL format.
+* **General:** Additional styling updates for WordPress 2.7.
+
 **Version 6.1.15**
 
 * **FLV:** Support (and detect) RTMP streams. Props axelseaa.
