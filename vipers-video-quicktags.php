@@ -121,7 +121,6 @@ class VipersVideoQuicktags {
 				'fs'              => 1,
 				'autoplay'        => 0,
 				'loop'            => 0,
-				'quality'         => 0,
 				'showsearch'      => 0,
 				'showinfo'        => 0,
 				'previewurl'      => 'http://www.youtube.com/watch?v=stdJd598Dtg',
@@ -264,12 +263,6 @@ class VipersVideoQuicktags {
 		}
 		if ( -1 == version_compare($this->settings['version'], '6.1.0') ) {
 			$usersettings = (array) get_option('vvq_options');
-
-			// Convert quality toggle to new format
-			if ( isset($this->settings['highqual']) ) {
-				unset($usersettings['highqual']);
-				if ( 0 == $this->settings['highqual'] ) $usersettings['quality'] = 0; // If the user wanted low quality videos
-			}
 
 			// Custom FLV colors
 			$colors = array( 'backcolor', 'frontcolor', 'lightcolor', 'screencolor' );
@@ -909,7 +902,6 @@ class VipersVideoQuicktags {
 				$usersettings['youtube']['loop']        = (int) $_POST['vvq-youtube-loop'];
 				$usersettings['youtube']['showsearch']  = (int) $_POST['vvq-youtube-showsearch'];
 				$usersettings['youtube']['showinfo']    = (int) $_POST['vvq-youtube-showinfo'];
-				$usersettings['youtube']['quality']     = (int) $_POST['vvq-youtube-quality'];
 				$usersettings['youtube']['aspectratio'] = (int) $_POST['vvq-youtube-aspectratio'];
 
 				// Fill in an missing items with the defaults
@@ -1371,7 +1363,6 @@ class VipersVideoQuicktags {
 				// Generate the URL and do the preview
 				var Color1 = "";
 				var Color2 = "";
-				var Quality = "";
 				var FS = "";
 				var Border = "";
 				var Autoplay = "";
@@ -1380,7 +1371,6 @@ class VipersVideoQuicktags {
 				var ShowInfo = "";
 				if ( "" != Color1Val && "<?php echo $this->defaultsettings['youtube']['color1']; ?>" != Color1Val ) var Color1 = "&color1=0x" + Color1Val.replace(/#/, "");
 				if ( "" != Color2Val && "<?php echo $this->defaultsettings['youtube']['color2']; ?>" != Color2Val ) var Color2 = "&color2=0x" + Color2Val.replace(/#/, "");
-				if ( 0 != jQuery("#vvq-youtube-quality").val() ) { var Quality = "&ap=%2526fmt%3D" + jQuery("#vvq-youtube-quality").val(); }
 				if ( true == jQuery("#vvq-youtube-border").attr("checked") ) { var Border = "&border=1"; }
 				if ( true == jQuery("#vvq-youtube-rel").attr("checked") ) { var Rel = "1"; } else { var Rel = "0"; }
 				if ( true == jQuery("#vvq-youtube-fs").attr("checked") ) { var FS = "&fs=1"; }
@@ -1389,7 +1379,7 @@ class VipersVideoQuicktags {
 				if ( true == jQuery("#vvq-youtube-showsearch").attr("checked") ) { var ShowSearch = "1"; } else { var ShowSearch = "0"; }
 				if ( true == jQuery("#vvq-youtube-showinfo").attr("checked") ) { var ShowInfo = "1"; } else { var ShowInfo = "0"; }
 				swfobject.embedSWF(
-					"http://www.youtube.com/v/" + PreviewID + Color1 + Color2 + Autoplay + Loop + Border + "&rel=" + Rel + "&showsearch=" + ShowSearch + "&showinfo=" + ShowInfo + FS + Quality,
+					"http://www.youtube.com/v/" + PreviewID + Color1 + Color2 + Autoplay + Loop + Border + "&rel=" + Rel + "&showsearch=" + ShowSearch + "&showinfo=" + ShowInfo + FS,
 					"vvqvideopreview",
 					jQuery("#vvq-width").val(),
 					jQuery("#vvq-height").val(),
@@ -1493,28 +1483,6 @@ class VipersVideoQuicktags {
 			<th scope="row"><?php _e('Color Presets', 'vipers-video-quicktags'); ?></th>
 			<td id="vvq-youtube-presets">&nbsp;</td>
 		</tr>
-<!--
-		<tr valign="top">
-			<th scope="row"><label for="vvq-youtube-quality"><?php _e('Video Format', 'vipers-video-quicktags'); ?></label></th>
-			<td>
-				<select name="vvq-youtube-quality" id="vvq-youtube-quality">
-<?php
-					$qualities = apply_filters( 'vvq_youtubequalities', array(
-						0  => __('Low Quality (smallest download) &#8212; YouTube default', 'vipers-video-quicktags'),
-						6  => __('High Quality FLV (medium download) &#8212; May not work for all videos', 'vipers-video-quicktags'),
-						18 => __("High Quality MP4 (medium download) &#8212; May not work for all videos, try if HQ FLV doesn't work", 'vipers-video-quicktags'),
-						22 => __('HD Quality (huge download) &#8212; Experimental, will revert to lowest quality for most videos', 'vipers-video-quicktags'),
-					) );
-					foreach ( $qualities as $quality => $name ) {
-						echo '					<option value="' . $quality . '"';
-						selected( $this->settings['youtube']['quality'], $quality );
-						echo '>' . $name . "</option>\n";
-					}
-?>
-				</select>
-			</td>
-		</tr>
--->
 		<tr valign="top">
 			<th scope="row"><?php _e('Miscellaneous', 'vipers-video-quicktags'); ?></th>
 			<td>
@@ -2225,7 +2193,6 @@ class VipersVideoQuicktags {
 					<li><?php printf( __('%s &#8212; show fullscreen button (<code>0</code> or <code>1</code>)', 'vipers-video-quicktags'), '<code>fs</code>' ); ?></li>
 					<li><?php printf( __('%s &#8212; automatically start playing (<code>0</code> or <code>1</code>)', 'vipers-video-quicktags'), '<code>autoplay</code>' ); ?></li>
 					<li><?php printf( __('%s &#8212; loop playback (<code>0</code> or <code>1</code>)', 'vipers-video-quicktags'), '<code>loop</code>' ); ?></li>
-					<li><?php printf( __('%s &#8212; quality value for video playback (<code>0</code> for low quality FLV, <code>18</code> for high quality MP4, <code>6</code> for high quality FLV)', 'vipers-video-quicktags'), '<code>quality</code>' ); ?></li>
 				</ul>
 			</div>
 		</li>
@@ -2766,9 +2733,6 @@ class VipersVideoQuicktags {
 			'loop'       => $this->settings['youtube']['loop'],
 			'showsearch' => $this->settings['youtube']['showsearch'],
 			'showinfo'   => $this->settings['youtube']['showinfo'],
-			'format'     => 0, //$this->settings['youtube']['quality'],
-			'fmt'        => 0, //$this->settings['youtube']['quality'], // Alias for "format"
-			'quality'    => 0, //$this->settings['youtube']['quality'], // Parameter name deprecated in favor of "format"
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
@@ -2803,7 +2767,7 @@ class VipersVideoQuicktags {
 		}
 
 		// Setup the parameters
-		$color1 = $color2 = $border = $quality = $autoplay = $loop = $showsearch = $showinfo = '';
+		$color1 = $color2 = $border = $autoplay = $loop = $showsearch = $showinfo = '';
 
 		if ( '' != $atts['color1'] && $this->defaultsettings['youtube']['color1'] != $atts['color1'] )
 			$color1 = '&color1=0x' . str_replace( '#', '', $atts['color1'] );
@@ -2813,15 +2777,6 @@ class VipersVideoQuicktags {
 
 		if ( $atts['border'] )
 			$border = '&border=1';
-
-		if ( !empty($atts['quality']) && 0 != $atts['quality'] )
-			$quality = '&ap=%2526fmt%3D' . $atts['quality'];
-
-		if ( !empty($atts['fmt']) && 0 != $atts['fmt'] )
-			$quality = '&ap=%2526fmt%3D' . $atts['quality'];
-
-		if ( !empty($atts['format']) && 0 != $atts['format'] )
-			$quality = '&ap=%2526fmt%3D' . $atts['quality'];
 
 		if ( $atts['autoplay'] )
 			$autoplay = '&autoplay=1';
@@ -2840,7 +2795,7 @@ class VipersVideoQuicktags {
 		$this->swfobjects[$objectid] = array(
 			'width' => $atts['width'],
 			'height' => $atts['height'],
-			'url' => 'http://www.youtube.com/' . $embedpath . $color1 . $color2 . $border . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop . $quality,
+			'url' => 'http://www.youtube.com/' . $embedpath . $color1 . $color2 . $border . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop,
 		);
 
 		return '<span class="vvqbox vvqyoutube" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="' . $fallbacklink . '">' . $fallbackcontent . '</a></span></span>';

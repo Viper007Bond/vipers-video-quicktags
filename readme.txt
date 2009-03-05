@@ -100,7 +100,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 **Version 6.1.17**
 
-* **YouTube:** Temporarily disable all YouTube quality hacks and leave it as the default until I sort out what currently works and what doesn't (YouTube has been making a lot of changes).
+* **YouTube:** Removed all quality related features/options. YouTube now natively supports a high quality toggle in it's embed allowing the user to toggle (if the video supports it). Haven't found a way to make high quality the default yet though.
 
 **Version 6.1.16**
 
