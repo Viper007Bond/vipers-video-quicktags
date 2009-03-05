@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.16
+Version:      6.1.17
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.16';
+	var $version = '6.1.17';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -1493,6 +1493,7 @@ class VipersVideoQuicktags {
 			<th scope="row"><?php _e('Color Presets', 'vipers-video-quicktags'); ?></th>
 			<td id="vvq-youtube-presets">&nbsp;</td>
 		</tr>
+<!--
 		<tr valign="top">
 			<th scope="row"><label for="vvq-youtube-quality"><?php _e('Video Format', 'vipers-video-quicktags'); ?></label></th>
 			<td>
@@ -1513,6 +1514,7 @@ class VipersVideoQuicktags {
 				</select>
 			</td>
 		</tr>
+-->
 		<tr valign="top">
 			<th scope="row"><?php _e('Miscellaneous', 'vipers-video-quicktags'); ?></th>
 			<td>
@@ -2764,9 +2766,9 @@ class VipersVideoQuicktags {
 			'loop'       => $this->settings['youtube']['loop'],
 			'showsearch' => $this->settings['youtube']['showsearch'],
 			'showinfo'   => $this->settings['youtube']['showinfo'],
-			'format'     => $this->settings['youtube']['quality'],
-			'fmt'        => $this->settings['youtube']['quality'], // Alias for "format"
-			'quality'    => $this->settings['youtube']['quality'], // Parameter name deprecated in favor of "format"
+			'format'     => 0, //$this->settings['youtube']['quality'],
+			'fmt'        => 0, //$this->settings['youtube']['quality'], // Alias for "format"
+			'quality'    => 0, //$this->settings['youtube']['quality'], // Parameter name deprecated in favor of "format"
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)

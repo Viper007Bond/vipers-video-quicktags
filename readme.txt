@@ -98,6 +98,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.17**
+
+* **YouTube:** Temporarily disable all YouTube quality hacks and leave it as the default until I sort out what currently works and what doesn't (YouTube has been making a lot of changes).
+
 **Version 6.1.16**
 
 * **YouTube:** Add option to disable the video title and ratings display.
