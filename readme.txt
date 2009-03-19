@@ -98,6 +98,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.18**
+
+* **YouTube:** Added support for the URL format used in the YouTube RSS feed: http://youtube.com/?v=XXXXXXXXXX
+
 **Version 6.1.17**
 
 * **YouTube:** Removed all quality related features/options. YouTube now natively supports a high quality toggle in it's embed allowing the user to toggle (if the video supports it). Haven't found a way to make high quality the default yet though.
