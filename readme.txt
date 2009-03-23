@@ -98,6 +98,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.19**
+
+* **Quicktime:** Added "scale=aspect" setting as apparently it's best to have.
+
 **Version 6.1.18**
 
 * **YouTube:** Added support for the URL format used in the YouTube RSS feed: http://youtube.com/?v=XXXXXXXXXX
