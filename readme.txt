@@ -101,6 +101,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 **Version 6.1.20**
 
 * **Translations:** Added Danish transation thanks to Georg.
+* **Translations:** Updated Italian translation thanks to Gianni Diurno.
 
 **Version 6.1.19**
 
