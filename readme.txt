@@ -98,6 +98,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.20**
+
+* **Translations:** Added Danish transation thanks to Georg.
+
 **Version 6.1.19**
 
 * **Quicktime:** Added "scale=aspect" setting as apparently it's best to have.
@@ -141,8 +145,8 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 * **General:** Icon for WordPress 2.7.
 * **General:** Translation and notice bugfixes from Laurent Duretz.
-* **General:** French translation thanks to Laurent Duretz.
-* **General:** Dutch translation thanks to Sypie.
+* **Translations:** French translation thanks to Laurent Duretz.
+* **Translations:** Dutch translation thanks to Sypie.
 
 **Version 6.1.9**
 
@@ -179,7 +183,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 * **General:** Remove `wp_head()` warning for admins. Doesn't work in themes like K2. Plugin's FAQ should cover this.
 * **General:** Add a filter to the shortcode attributes. This means plugins/themes can adjust things like the width automatically.
-* **General:** Russian translation thanks to [Dennis Bri](http://handynotes.ru/)
+* **Translations:** Russian translation thanks to [Dennis Bri](http://handynotes.ru/)
 * **General:** Properly hide some images in the admin that are there for pre-loading.
 
 **Version 6.1.1**
