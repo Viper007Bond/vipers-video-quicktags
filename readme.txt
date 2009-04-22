@@ -98,6 +98,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.21**
+
+* **General:** Use a predictable ID for the placeholders and videos rather than a randomly generated one.
+* **General:** PHP notice fixes.
+
 **Version 6.1.20**
 
 * **Translations:** Added Danish transation thanks to Georg.

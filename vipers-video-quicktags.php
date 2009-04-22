@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.20
+Version:      6.1.21
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.20';
+	var $version = '6.1.21';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -613,7 +613,7 @@ class VipersVideoQuicktags {
 			),
 		);
 
-		$buttonhtml = $datajs = '';
+		$buttonshtml = $datajs = '';
 		foreach ( $types as $type => $strings ) {
 			// HTML for quicktag button
 			if ( 1 == $this->settings[$type]['button'] )
@@ -2692,6 +2692,26 @@ class VipersVideoQuicktags {
 	}
 
 
+	// Generate a placeholder ID
+	function videoid( $type ) {
+		global $post;
+
+		if ( empty($post) || empty($post->ID) ) {
+			$objectid = uniqid("vvq-$type-");
+		} else {
+			$count = 1;
+			$objectid = 'vvq-' . $post->ID . '-' . $type . '-' . $count;
+
+			while ( !empty($this->swfobjects[$objectid]) ) {
+				$count++;
+				$objectid = 'vvq-' . $post->ID . '-' . $type . '-' . $count;
+			}
+		}
+
+		return $objectid;
+	}
+
+
 	// Reverse the parts we care about (and probably some we don't) of wptexturize() which gets applied before shortcodes
 	function wpuntexturize( $text ) {
 		$find = array( '&#8211;', '&#8212;', '&#215;', '&#8230;', '&#8220;', '&#8217;s', '&#8221;', '&#038;' );
@@ -2791,7 +2811,7 @@ class VipersVideoQuicktags {
 		$showinfo   = ( 1 == $atts['showinfo'] ) ? '1' : '0';
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('youtube');
 
 		$this->swfobjects[$objectid] = array(
 			'width' => $atts['width'],
@@ -2847,7 +2867,7 @@ class VipersVideoQuicktags {
 		if ( 1 == $atts['fs'] )       $flashvars['fs']       = 'true';
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('googlevideo');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://video.google.com/googleplayer.swf?docid=' . $videoid, 'flashvars' => $flashvars );
 
@@ -2901,7 +2921,7 @@ class VipersVideoQuicktags {
 		$related = ( 1 == $atts['related'] ) ? '1' : '0';
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('dailymotion');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.dailymotion.com/swf/' . $videoid . '&colors=' . $backgroundcolor . $glowcolor . $foregroundcolor . $seekbarcolor . '&autoPlay=' . $autoplay . '&related=' . $related );
 
@@ -2957,7 +2977,7 @@ class VipersVideoQuicktags {
 		$fullscreen = ( 1 == $atts['fullscreen'] ) ? '1' : '0';
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('vimeo');
 
 		// Gotta pass these via flashvars rather than the URL to keep for valid XHTML (Vimeo doesn't like &amp;'s)
 		$flashvars = array(
@@ -3020,7 +3040,7 @@ class VipersVideoQuicktags {
 		}
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('veoh');
 
 		// Gotta pass these via flashvars rather than the URL to keep for valid XHTML (Veoh doesn't like &amp;'s)
 		$flashvars = array(
@@ -3061,7 +3081,7 @@ class VipersVideoQuicktags {
 		if ( empty($videoid) || empty($width) || empty($height) ) return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('Viddler', 'vipers-video-quicktags') ) );
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('viddler');
 
 		$this->swfobjects[$objectid] = array( 'width' => $width, 'height' => $height, 'url' => 'http://www.viddler.com/player/' . $videoid . '/' );
 
@@ -3099,7 +3119,7 @@ class VipersVideoQuicktags {
 		}
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('metacafe');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.metacafe.com/fplayer/' . $videoid . '/vipers_video_quicktags.swf' );
 
@@ -3130,7 +3150,7 @@ class VipersVideoQuicktags {
 		$videoid = $params['?posts_id'];
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('bliptv');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://blip.tv/scripts/flash/showplayer.swf?file=http://blip.tv/rss/flash/' . $videoid );
 
@@ -3180,7 +3200,7 @@ class VipersVideoQuicktags {
 		$showinfobox = ( 1 == $atts['showinfobox'] ) ? 'true' : 'false';
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('flickrvideo');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.flickr.com/apps/video/stewart.swf?v=1.161', 'flashvars' => array( 'photo_id' => $videoid, 'flickr_show_info_box' => $showinfobox ) );
 
@@ -3218,7 +3238,7 @@ class VipersVideoQuicktags {
 		}
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('ifilm');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.spike.com/efp', 'flashvars' => array( 'flvbaseclip' => $videoid ) );
 
@@ -3256,7 +3276,7 @@ class VipersVideoQuicktags {
 		}
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('myspace');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://mediaservices.myspace.com/services/media/embed.aspx/m=' . $videoid );
 
@@ -3339,7 +3359,7 @@ class VipersVideoQuicktags {
 		}
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('flv');
 
 		$swfurl = plugins_url('/vipers-video-quicktags/resources/jw-flv-player/player.swf');
 
@@ -3388,7 +3408,7 @@ class VipersVideoQuicktags {
 
 		$controller = ( 1 == $atts['controller'] ) ? 'true' : 'false';
 
-		return '<span class="vvqbox vvqquicktime" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><script type="text/javascript">var myQTObject = new QTObject("' . $mov . '", "' . uniqid('vvq') . '", "' . $atts['width'] . '", "' . $atts['height'] . '");' . $href . ' myQTObject.addParam("autoplay", "' . $autoplay . '"); myQTObject.addParam("controller", "' . $controller . '"); myQTObject.addParam("scale", "aspect"); myQTObject.write();</script></span>';
+		return '<span class="vvqbox vvqquicktime" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><script type="text/javascript">var myQTObject = new QTObject("' . $mov . '", "' . $this->videoid('quicktime') . '", "' . $atts['width'] . '", "' . $atts['height'] . '");' . $href . ' myQTObject.addParam("autoplay", "' . $autoplay . '"); myQTObject.addParam("controller", "' . $controller . '"); myQTObject.addParam("scale", "aspect"); myQTObject.write();</script></span>';
 	}
 
 
@@ -3467,7 +3487,7 @@ class VipersVideoQuicktags {
 		}
 
 
-		$objectid = uniqid('vvq');
+		$objectid = $this->videoid('flash');
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => $content, 'flashvars' => $flashvars );
 
@@ -3529,6 +3549,6 @@ class VipersVideoQuicktags {
 }
 
 // Start this plugin once all other plugins are fully loaded
-add_action( 'plugins_loaded', 'VipersVideoQuicktags' ); function VipersVideoQuicktags() { global $VipersVideoQuicktags; $VipersVideoQuicktags = new VipersVideoQuicktags(); }
+add_action( 'init', 'VipersVideoQuicktags' ); function VipersVideoQuicktags() { global $VipersVideoQuicktags; $VipersVideoQuicktags = new VipersVideoQuicktags(); }
 
 ?>
