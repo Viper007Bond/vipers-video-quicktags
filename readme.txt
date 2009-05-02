@@ -98,6 +98,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.22**
+
+* **General:** Wrap the default feed placeholder text in paragraph tags (the vast majority of people place videos on their own line).
+
 **Version 6.1.21**
 
 * **General:** Use a predictable ID for the placeholders and videos rather than a randomly generated one.

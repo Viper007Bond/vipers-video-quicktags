@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.21
+Version:      6.1.22
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.21';
+	var $version = '6.1.22';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -64,6 +64,7 @@ class VipersVideoQuicktags {
 	var $flvskins = array();
 	var $wpheadrun = FALSE;
 	var $adminwarned = FALSE;
+	var $customfeedtext;
 
 	// Class initialization
 	function VipersVideoQuicktags() {
@@ -233,6 +234,9 @@ class VipersVideoQuicktags {
 			'customcss'           => '',
 			'customfeedtext'      => '',
 		) );
+
+		// Default customfeedtext. Change it via the settings page.
+		$this->customfeedtext = '<p><em>' . __( 'Click here to view the embedded video.', 'vipers-video-quicktags' ) . '</em></p>';
 
 		// Setup the settings by using the default as a base and then adding in any changed values
 		// This allows settings arrays from old versions to be used even though they are missing values
@@ -2041,7 +2045,7 @@ class VipersVideoQuicktags {
 			<th scope="row"><label for="vvq-customfeedtext"><?php _e('Feed Text', 'vipers-video-quicktags'); ?></label></th>
 			<td>
 				<input type="text" name="vvq-customfeedtext" id="vvq-customfeedtext" value="<?php echo attribute_escape($this->settings['customfeedtext']); ?>" size="50" class="vvqwide" /><br />
-				<?php printf( __("Optionally enter some custom text to show in your feed in place of videos (as you can't embed videos in feeds). If left blank, it will default to:<br />%s", 'vipers-video-quicktags'), '<code>&lt;em&gt;' . __( 'Click here to view the embedded video.', 'vipers-video-quicktags' ) . '&lt;/em&gt;</code>' ); ?>
+				<?php printf( __("Optionally enter some custom text to show in your feed in place of videos (as you can't embed videos in feeds). If left blank, it will default to:<br />%s", 'vipers-video-quicktags'), '<code>' . htmlspecialchars($this->customfeedtext) . '</code>' ); ?>
 			</td>
 		</tr>
 		<tr valign="top">
@@ -2672,7 +2676,7 @@ class VipersVideoQuicktags {
 
 		if ( empty($post->ID) ) return ''; // This should never happen (I hope)
 
-		$text = ( !empty($this->settings['customfeedtext']) ) ? $this->settings['customfeedtext'] : '<em>' . __( 'Click here to view the embedded video.', 'vipers-video-quicktags' ) . '</em>';
+		$text = ( !empty($this->settings['customfeedtext']) ) ? $this->settings['customfeedtext'] : $this->customfeedtext;
 
 		return apply_filters( 'vvq_feedoutput', '<a href="' . get_permalink( $post->ID ) . '">' . $text . '</a>' );
 	}
