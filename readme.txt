@@ -2,7 +2,7 @@
 Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
-Requires at least: 2.7
+Requires at least: 2.7.1
 Tested up to: 2.8
 Stable tag: trunk
 
@@ -102,6 +102,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 * **YouTube:** Add the ability to enable "HD" by default. This does not affect the "HQ" button as I don't know of a way to enable that by default. Also remember that not all videos support HD (few do actually, most only support nothing or HQ).
 * **YouTube:** Changed the default preview video to one that supports HD.
+* **General:** Remove many bundled jQuery UI libraries, Farbtastic, and other items that are now bundled with WordPress.
 * **General:** Code improvements and bugfixes.
 
 **Version 6.1.22**

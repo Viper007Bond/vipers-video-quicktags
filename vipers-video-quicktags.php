@@ -347,8 +347,9 @@ class VipersVideoQuicktags {
 			// Settings page only
 			if ( isset($_GET['page']) && 'vipers-video-quicktags' == $_GET['page'] ) {
 				add_action( 'admin_head', array(&$this, 'StyleTweaks' ) );
-				wp_enqueue_script( 'farbtastic', plugins_url('/vipers-video-quicktags/resources/farbtastic/farbtastic.js'), array('jquery'), '1.2' );
-				wp_enqueue_style( 'farbtastic', plugins_url('/vipers-video-quicktags/resources/farbtastic/farbtastic.css'), array(), '1.2', 'screen' );
+
+				wp_enqueue_script( 'farbtastic' );
+				wp_enqueue_style( 'farbtastic' );
 			}
 
 			// Editor pages only
@@ -356,16 +357,8 @@ class VipersVideoQuicktags {
 				add_action( 'admin_head', array(&$this, 'EditorCSS') );
 				add_action( 'admin_footer', array(&$this, 'OutputjQueryDialogDiv') );
 
-				// If old version of jQuery UI, then replace it to fix a bug with the UI core
-				if ( $wp_db_version < 8601 ) {
-					wp_deregister_script( 'jquery-ui-core' );
-					wp_enqueue_script( 'jquery-ui-core', plugins_url('/vipers-video-quicktags/resources/jquery-ui/ui.core.js'), array('jquery'), '1.5.2' );
-				}
-
-				wp_enqueue_script( 'jquery-ui-draggable', plugins_url('/vipers-video-quicktags/resources/jquery-ui/ui.draggable.js'), array('jquery-ui-core'), '1.5.2' );
-				wp_enqueue_script( 'jquery-ui-resizable', plugins_url('/vipers-video-quicktags/resources/jquery-ui/ui.resizable.js'), array('jquery-ui-core'), '1.5.2' );
-				wp_enqueue_script( 'jquery-ui-dialog', plugins_url('/vipers-video-quicktags/resources/jquery-ui/ui.dialog.js'), array('jquery-ui-core'), '1.5.2' );
-				wp_enqueue_style( 'vvq-jquery-ui', plugins_url('/vipers-video-quicktags/resources/jquery-ui/vvq-jquery-ui.css'), array(), $this->version, 'screen' );
+				wp_enqueue_script( 'jquery-ui-dialog' );
+				wp_enqueue_style( 'vvq-jquery-ui', plugins_url('/vipers-video-quicktags/resources/vvq-jquery-ui.css'), array(), $this->version, 'screen' );
 			}
 		}
 		if ( 1 == $this->settings['quicktime']['dynamicload'] )
@@ -1087,7 +1080,7 @@ class VipersVideoQuicktags {
 		z-index: 1000;
 	}
 	.vvq-swatch {
-		padding: 1px 10px;
+		padding: 2px 10px;
 		cursor: pointer;
 		background: transparent url('<?php echo plugins_url('/vipers-video-quicktags/resources/images/color_wheel.png'); ?>') top left no-repeat;
 	}
@@ -1446,7 +1439,7 @@ class VipersVideoQuicktags {
 				if (color2 != undefined) { jQuery('#vvq-youtube-color2').val(color2).keyup(); }
 
 				VVQUpdatePreview();
-			}).tTips();
+			});
 		});
 	// ]]>
 	</script>
