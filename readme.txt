@@ -98,6 +98,12 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.23**
+
+* **YouTube:** Add the ability to enable "HD" by default. This does not affect the "HQ" button as I don't know of a way to enable that by default. Also remember that not all videos support HD (few do actually, most only support nothing or HQ).
+* **YouTube:** Changed the default preview video to one that supports HD.
+* **General:** Code improvements and bugfixes.
+
 **Version 6.1.22**
 
 * **General:** Wrap the default feed placeholder text in paragraph tags (the vast majority of people place videos on their own line).
