@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.23
+Version:      6.1.24
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,10 +55,11 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.23';
+	var $version = '6.1.24';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
+	var $usedids = array();
 	var $standardcss;
 	var $cssalignments;
 	var $flvskins = array();
@@ -139,15 +140,15 @@ class VipersVideoQuicktags {
 			),
 			'dailymotion' => array(
 				'button'          => 1,
-				'width'           => 420,
-				'height'          => 336,
+				'width'           => 480,
+				'height'          => 221,
 				'backgroundcolor' => '#DEDEDE',
 				'glowcolor'       => '#FFFFFF',
 				'foregroundcolor' => '#333333',
 				'seekbarcolor'    => '#FFC300',
 				'autoplay'        => 0,
 				'related'         => 0,
-				'previewurl'      => 'http://www.dailymotion.com/video/x347lz_bugatti-veyron-407-kmh-la-plus-rapi_shortfilms',
+				'previewurl'      => 'http://www.dailymotion.com/video/x4cqyl_ferrari-p45-owner-exclusive-intervi_auto',
 				'aspectratio'     => 1,
 			),
 			'vimeo' => array(
@@ -2711,7 +2712,7 @@ class VipersVideoQuicktags {
 			$count = 1;
 			$objectid = 'vvq-' . $post->ID . '-' . $type . '-' . $count;
 
-			while ( !empty($this->swfobjects[$objectid]) ) {
+			while ( !empty($this->usedids[$objectid]) ) {
 				$count++;
 				$objectid = 'vvq-' . $post->ID . '-' . $type . '-' . $count;
 			}
@@ -3521,6 +3522,8 @@ class VipersVideoQuicktags {
 		//$content .= "// <![CDATA[\n";
 
 		foreach ( $this->swfobjects as $objectid => $embed ) {
+			$this->usedids[$objectid] = true;
+
 			$content .= '	swfobject.embedSWF("' . htmlspecialchars( $embed['url'] ) . '", "' . $objectid . '", "' . $embed['width'] . '", "' . $embed['height'] . '", "9", vvqexpressinstall, ';
 
 			if ( empty($embed['flashvars']) || !is_array($embed['flashvars']) ) {

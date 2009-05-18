@@ -98,6 +98,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.24**
+
+* **General:** Improvements to avoid object ID collisions.
+* **Dailymotion:** Update preview video as old one was removed.
+
 **Version 6.1.23**
 
 * **YouTube:** Add the ability to enable "HD" by default. This does not affect the "HQ" button as I don't know of a way to enable that by default. Also remember that not all videos support HD (few do actually, most only support nothing or HQ).
