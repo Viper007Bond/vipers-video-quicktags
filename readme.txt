@@ -98,6 +98,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.1.25**
+
+* **General:** Fix bug introduced in v6.1.24 that made it impossible to post multiple videos in one post.
+
 **Version 6.1.24**
 
 * **General:** Improvements to avoid object ID collisions.
