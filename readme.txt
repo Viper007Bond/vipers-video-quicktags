@@ -24,6 +24,7 @@ Currently supports these video sites:
 * [Viddler](http://www.viddler.com/)
 * [Metacafe](http://www.metacafe.com/)
 * [Blip.tv](http://blip.tv/)
+* [WordPress.com Video / WordPress.tv](http://support.wordpress.com/videos/) **NEW!**
 * [Flickr](http://www.flickr.com/) videos
 * [Spike.com/IFILM](http://www.spike.com/)
 * [MySpaceTV](http://vids.myspace.com/)
@@ -97,6 +98,13 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == ChangeLog ==
+
+**Version 6.2.0**
+
+* **WordPress.com Video:** Added support for [WordPress.com Video shortcodes](http://support.wordpress.com/videos/).
+* **FLV:** Reorder Flashvar building to properly allow overriding.
+* **FLV:** New skins.
+* **General:** Pass the non-defaulted attributes (i.e. those directly passed to the shortcode function) to the `vvq_shortcodeatts` filter.
 
 **Version 6.1.25**
 

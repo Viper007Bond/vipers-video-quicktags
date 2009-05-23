@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.1.25
+Version:      6.2.0
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.1.25';
+	var $version = '6.2.0';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -138,6 +138,18 @@ class VipersVideoQuicktags {
 				'previewurl'      => 'http://video.google.com/videoplay?docid=-6006084025483872237',
 				'aspectratio'     => 1,
 			),
+			'vimeo' => array(
+				'button'          => 1,
+				'width'           => 400,
+				'height'          => 300,
+				'color'           => '#00ADEF',
+				'portrait'        => 0,
+				'title'           => 1,
+				'byline'          => 1,
+				'fullscreen'      => 1,
+				'previewurl'      => 'http://www.vimeo.com/240975',
+				'aspectratio'     => 1,
+			),
 			'dailymotion' => array(
 				'button'          => 1,
 				'width'           => 480,
@@ -149,18 +161,6 @@ class VipersVideoQuicktags {
 				'autoplay'        => 0,
 				'related'         => 0,
 				'previewurl'      => 'http://www.dailymotion.com/video/x4cqyl_ferrari-p45-owner-exclusive-intervi_auto',
-				'aspectratio'     => 1,
-			),
-			'vimeo' => array(
-				'button'          => 1,
-				'width'           => 400,
-				'height'          => 300,
-				'color'           => '#00ADEF',
-				'portrait'        => 0,
-				'title'           => 1,
-				'byline'          => 1,
-				'fullscreen'      => 1,
-				'previewurl'      => 'http://www.vimeo.com/240975',
 				'aspectratio'     => 1,
 			),
 			'veoh' => array(
@@ -182,6 +182,12 @@ class VipersVideoQuicktags {
 				'button'          => 1,
 				'width'           => 400,
 				'height'          => 330,
+				'aspectratio'     => 1,
+			),
+			'wpvideo' => array(
+				'button'          => 1,
+				'width'           => 400,
+				'height'          => 224,
 				'aspectratio'     => 1,
 			),
 			'flickrvideo' => array(
@@ -323,6 +329,7 @@ class VipersVideoQuicktags {
 		add_shortcode( 'metacafe', array(&$this, 'shortcode_metacafe') );
 		add_shortcode( 'blip.tv', array(&$this, 'shortcode_bliptv') );
 		add_shortcode( 'bliptv', array(&$this, 'shortcode_bliptv') ); // Not the preferred format
+		add_shortcode( 'wpvideo', array(&$this, 'shortcode_wpvideo') ); // WordPress.tv
 		add_shortcode( 'flickr video', array(&$this, 'shortcode_flickrvideo') ); // WordPress.com
 		add_shortcode( 'flickrvideo', array(&$this, 'shortcode_flickrvideo') ); // Normal format
 		add_shortcode( 'ifilm', array(&$this, 'shortcode_ifilm') );
@@ -393,15 +400,20 @@ class VipersVideoQuicktags {
 			''               => __('Default', 'vipers-video-quicktags'),
 			'3dpixelstyle'   => __('3D Pixel Style', 'vipers-video-quicktags'),
 			'atomicred'      => __('Atomic Red', 'vipers-video-quicktags'),
+			'bekle'          => __('Bekle (Overlay)', 'vipers-video-quicktags'),
+			'bluemetal'      => __('Blue Metal', 'vipers-video-quicktags'),
 			'comet'          => __('Comet', 'vipers-video-quicktags'),
 			'controlpanel'   => __('Control Panel', 'vipers-video-quicktags'),
 			'dangdang'       => __('Dang Dang', 'vipers-video-quicktags'),
 			'fashion'        => __('Fashion', 'vipers-video-quicktags'),
 			'festival'       => __('Festival', 'vipers-video-quicktags'),
+			'grungetape'     => __('Grunge Tape', 'vipers-video-quicktags'),
 			'icecreamsneaka' => __('Ice Cream Sneaka', 'vipers-video-quicktags'),
 			'kleur'          => __('Kleur', 'vipers-video-quicktags'),
 			'magma'          => __('Magma', 'vipers-video-quicktags'),
 			'metarby10'      => __('Metarby 10', 'vipers-video-quicktags'),
+			'modieus'        => __('Modieus (Stylish)', 'vipers-video-quicktags'),
+			'modieus_slim'   => __('Modieus (Stylish) Slim', 'vipers-video-quicktags'),
 			'nacht'          => __('Nacht', 'vipers-video-quicktags'),
 			'neon'           => __('Neon', 'vipers-video-quicktags'),
 			'pearlized'      => __('Pearlized', 'vipers-video-quicktags'),
@@ -409,6 +421,7 @@ class VipersVideoQuicktags {
 			'playcasso'      => __('Play Casso', 'vipers-video-quicktags'),
 			'schoon'         => __('Schoon', 'vipers-video-quicktags'),
 			'silverywhite'   => __('Silvery White', 'vipers-video-quicktags'),
+			'simple'         => __('Simple', 'vipers-video-quicktags'),
 			'snel'           => __('Snel', 'vipers-video-quicktags'),
 			'stijl'          => __('Stijl', 'vipers-video-quicktags'),
 			'traganja'       => __('Traganja', 'vipers-video-quicktags'),
@@ -2740,6 +2753,7 @@ class VipersVideoQuicktags {
 
 	// Handle YouTube shortcodes
 	function shortcode_youtube( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
 		// Handle WordPress.com shortcode format
@@ -2749,9 +2763,11 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -2770,7 +2786,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'youtube' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'youtube', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -2841,6 +2857,7 @@ class VipersVideoQuicktags {
 
 	// Handle Google Video shortcodes
 	function shortcode_googlevideo( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
 		// Handle WordPress.com shortcode format
@@ -2850,9 +2867,11 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Google Video', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Google Video', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -2863,7 +2882,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'googlevideo' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'googlevideo', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -2893,11 +2912,14 @@ class VipersVideoQuicktags {
 
 	// Handle DailyMotion shortcodes
 	function shortcode_dailymotion( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('YouTube', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -2912,7 +2934,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'dailymotion' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'dailymotion', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -2947,6 +2969,7 @@ class VipersVideoQuicktags {
 
 	// Handle Vimeo shortcodes
 	function shortcode_vimeo( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
 		// Handle malformed WordPress.com shortcode format
@@ -2956,9 +2979,11 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Vimeo', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Vimeo', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -2972,7 +2997,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'vimeo' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'vimeo', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3015,11 +3040,14 @@ class VipersVideoQuicktags {
 
 	// Handle Veoh shortcodes
 	function shortcode_veoh( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Veoh', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Veoh', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3029,7 +3057,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'veoh' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'veoh', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3075,10 +3103,13 @@ class VipersVideoQuicktags {
 
 	// Handle Viddler shortcodes
 	function shortcode_viddler( $atts, $content = '' ) {
+		$origatts = $atts;
 
-		if ( empty($atts['id']) ) return $this->error( __('Sorry, but the only format that is supported for Viddler is the WordPress.com-style format rather than the URL. You can find it in the &quot;Embed This&quot; window.', 'vipers-video-quicktags') );
+		if ( empty($atts['id']) )
+			return $this->error( __('Sorry, but the only format that is supported for Viddler is the WordPress.com-style format rather than the URL. You can find it in the &quot;Embed This&quot; window.', 'vipers-video-quicktags') );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3086,7 +3117,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'viddler' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'viddler', $origatts );
 
 		// Parse WordPress.com shortcode format
 		preg_match( '#(.*?)(&|&\#038;|&amp;)w=(\d+)(&|&\#038;|&amp;)h=(\d+)#i', $atts['id'], $matches );
@@ -3107,11 +3138,14 @@ class VipersVideoQuicktags {
 
 	// Handle Metacafe shortcodes
 	function shortcode_metacafe( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Metacafe', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Metacafe', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3120,7 +3154,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'metacafe' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'metacafe', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3145,10 +3179,13 @@ class VipersVideoQuicktags {
 
 	// Handle Blip.tv shortcodes
 	function shortcode_bliptv( $atts ) {
+		$origatts = $atts;
 
-		if ( empty($atts[0]) ) return $this->error( __('Sorry, but the only format that is supported for Blip.tv is the WordPress.com-style format. You can find it at Share -&gt; Embed -&gt; WordPress.com.', 'vipers-video-quicktags') );
+		if ( empty($atts[0]) )
+			return $this->error( __('Sorry, but the only format that is supported for Blip.tv is the WordPress.com-style format. You can find it at Share -&gt; Embed -&gt; WordPress.com.', 'vipers-video-quicktags') );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3158,7 +3195,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'bliptv' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'bliptv', $origatts );
 
 		// Parse WordPress.com shortcode format
 		parse_str( $atts[0], $params );
@@ -3174,8 +3211,43 @@ class VipersVideoQuicktags {
 	}
 
 
+	// Handle WordPress.com/WordPress.tv shortcodes
+	function shortcode_wpvideo( $atts ) {
+		$origatts = $atts;
+
+		if ( is_feed() )
+			return $this->postlink();
+
+		// Set any missing $atts items to the defaults
+		$atts = shortcode_atts(array(
+			0               => '',
+			'w'             => false,
+			'width'         => $this->settings['wpvideo']['width'],
+			'height'        => $this->settings['wpvideo']['height'],
+		), $atts);
+
+		// Allow other plugins to modify these values (for example based on conditionals)
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'wpvideo', $origatts );
+
+		if ( empty($atts[0]) )
+			return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('WordPress.com', 'vipers-video-quicktags') ) );
+
+		if ( false !== $atts['w'] ) {
+			$atts['width'] = $atts['w'];
+			$atts['height'] = round( ( $atts['width'] / $this->settings['wpvideo']['width'] ) * $this->settings['wpvideo']['height'] );
+		}
+
+		$objectid = $this->videoid('wpvideo');
+
+		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://v.wordpress.com/' . $atts[0] );
+
+		return '<span class="vvqbox vvqwpvideo" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('WordPress.com', 'vipers-video-quicktags') ) . '</em></span></span>';
+	}
+
+
 	// Handle Flickr videos
 	function shortcode_flickrvideo( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
 		// Handle WordPress.com shortcode format
@@ -3185,9 +3257,11 @@ class VipersVideoQuicktags {
 			unset($atts[0]);
 		}
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Flickr Video', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('Flickr Video', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3197,7 +3271,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flickrvideo' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flickrvideo', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3226,11 +3300,14 @@ class VipersVideoQuicktags {
 
 	// Handle IFILM aka Spike shortcodes for backwards compatibility
 	function shortcode_ifilm( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('IFILM/Spike', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('IFILM/Spike', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3239,7 +3316,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'spike' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'spike', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3264,11 +3341,14 @@ class VipersVideoQuicktags {
 
 	// Handle MySpace videos
 	function shortcode_myspace( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('MySpace', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL or video ID was passed to the %s BBCode', 'vipers-video-quicktags'), __('MySpace', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3277,7 +3357,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'myspace' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'myspace', $origatts );
 
 		// If a URL was passed
 		if ( 'http://' == substr( $content, 0, 7 ) ) {
@@ -3302,50 +3382,39 @@ class VipersVideoQuicktags {
 
 	// Handle FLV videos
 	function shortcode_flv( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('FLV', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('FLV', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
-
-		$origatts = $atts;
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
-		$atts = shortcode_atts(array(
+		$atts = shortcode_atts( array(
 			'width'        => $this->settings['flv']['width'],
 			'height'       => $this->settings['flv']['height'],
-			'image'        => FALSE,
+			'image'        => false,
 			'customcolors' => $this->settings['flv']['customcolors'],
 			'backcolor'    => $this->settings['flv']['backcolor'],
 			'frontcolor'   => $this->settings['flv']['frontcolor'],
 			'lightcolor'   => $this->settings['flv']['lightcolor'],
 			'screencolor'  => $this->settings['flv']['screencolor'],
-			'volume'       => 100,
+			'volume'       => false,
+			'bufferlength' => false,
 			'flashvars'    => '',
-		), $atts);
+		), $atts );
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flv' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flv', $origatts );
 
-		// Default image is the URL to the video but .jpg instead of .flv/.mp4
-		if ( FALSE === $atts['image'] )
-			$atts['image'] = str_replace( array('.flv', '.mp4'), '.jpg', $content );
-
-
-		// Setup the flashvars using the parameters as well as the "flashvars" value
+		// Start setting up the flashvars
 		$flashvars = array(
 			'file'         => $content,
-			'image'        => $atts['image'],
-			'bufferlength' => 15,
 			'volume'       => 100,
+			'bufferlength' => 15,
 		);
-
-		// Check if link is a RTMP stream and adjust accordingly if so
-		if ( 'rtmp' == substr( $content, 0 ,4 ) ) {
-			$flv_pos = strrpos( $content, '/' );
-			$flashvars['file'] = substr( $content, $flv_pos + 1 );
-			$flashvars['streamer'] = substr( $content, 0, $flv_pos );
-		}
 
 		// Skin
 		if ( !empty($this->settings['flv']['skin']) && !empty($this->flvskins[$this->settings['flv']['skin']]) )
@@ -3361,17 +3430,36 @@ class VipersVideoQuicktags {
 		if ( 1 == $atts['customcolors'] || !empty($origatts['screencolor']) )
 			$flashvars['screencolor'] = str_replace( '#', '', $atts['screencolor'] );
 
-		// Copy in any user set default vars
+		// Copy in the defaults from the settings page
 		if ( !empty($this->settings['flv']['flashvars']) ) {
 			parse_str( $this->settings['flv']['flashvars'], $params );
 			$flashvars = array_merge( $flashvars, $params );
 		}
 
-		// Copy in any one-off passed vars
+		// Copy in any one-off passed flashvars added via the "flashvars" parameter
 		if ( !empty($atts['flashvars']) ) {
 			$atts['flashvars'] = $this->wpuntexturize( str_replace( '&amp;', '&', $atts['flashvars'] ) );
 			parse_str( $atts['flashvars'], $params );
 			$flashvars = array_merge( $flashvars, $params );
+		}
+
+		// Add in additional one-off parameters
+		if ( false !== $atts['image'] )
+			$flashvars['image'] = $atts['image'];
+		if ( false !== $atts['volume'] )
+			$flashvars['volume'] = (int) $atts['volume'];
+		if ( false !== $atts['bufferlength'] )
+			$flashvars['bufferlength'] = (int) $atts['bufferlength'];
+
+		// No image yet? Okay, default to the URL to the video but .jpg instead of .flv/.mp4
+		if ( empty($flashvars['image']) )
+			$flashvars['image'] = str_replace( array('.flv', '.mp4'), '.jpg', $content );
+
+		// Check if link is a RTMP stream and adjust accordingly if so
+		if ( 'rtmp' == substr( $content, 0 ,4 ) ) {
+			$flv_pos = strrpos( $content, '/' );
+			$flashvars['file'] = substr( $content, $flv_pos + 1 );
+			$flashvars['streamer'] = substr( $content, 0, $flv_pos );
 		}
 
 
@@ -3387,11 +3475,14 @@ class VipersVideoQuicktags {
 
 	// Handle major pain in the ass Quicktime video files
 	function shortcode_quicktime( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('Quicktime', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('Quicktime', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3406,7 +3497,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'quicktime' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'quicktime', $origatts );
 
 
 		if ( 1 == $atts['useplaceholder'] && !empty($atts['placeholder']) ) {
@@ -3430,11 +3521,14 @@ class VipersVideoQuicktags {
 
 	// Handle super-duper pain in the ass regular video files
 	function shortcode_videofile( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic video', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic video', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3444,7 +3538,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'videofile' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'videofile', $origatts );
 
 
 		// This is semi-temporary. Embedding generic video files is a major pain in the ass, so this part of the plugin is kinda half-heartedly coded.
@@ -3474,13 +3568,17 @@ class VipersVideoQuicktags {
 
 	// Generic Flash embed allowing you to embed any type of Flash-based video
 	function shortcode_flash( $atts, $content = '' ) {
+		$origatts = $atts;
 		$content = $this->wpuntexturize( $content );
 
-		if ( !empty($atts['movie']) ) $content = $atts['movie'];
+		if ( !empty($atts['movie']) )
+			$content = $atts['movie'];
 
-		if ( empty($content) ) return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic Flash embed', 'vipers-video-quicktags') ) );
+		if ( empty($content) )
+			return $this->error( sprintf( __('No URL was passed to the %s BBCode', 'vipers-video-quicktags'), __('generic Flash embed', 'vipers-video-quicktags') ) );
 
-		if ( is_feed() ) return $this->postlink();
+		if ( is_feed() )
+			return $this->postlink();
 
 		// Set any missing $atts items to the defaults
 		$atts = shortcode_atts(array(
@@ -3490,7 +3588,7 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flash' );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'flash', $origatts );
 
 
 		// Create Flashvars
