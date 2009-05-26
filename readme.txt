@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.2.1**
+
+* **General:** Fix broken image URLs. Props marian.
+
 **Version 6.2.0**
 
 * **WordPress.com Video:** Added support for [WordPress.com Video shortcodes](http://support.wordpress.com/videos/).
