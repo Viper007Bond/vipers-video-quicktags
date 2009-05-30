@@ -75,9 +75,9 @@ A help section is now included with this plugin. Please visit your admin area ->
 
 There are few possible reasons for this:
 
-* I may have never heard of the site and simply linking it to me on [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23) may make me include it in a future release
+* I may have never heard of the site and simply linking it to me on [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23) may make me include it in a future release.
 * The URL at which the video can be viewed has nothing in common with the embed URL. This means my plugin can't do anything with the URL you give it. Support for fetching the emded URL from the website may be added in a future version though, we'll see.
-* I have deemed the site not popular enough to warrant being added to my plugin. I don't wish to bloat my plugin with tiny little sites that only one or two people will use. However, I like supporting as many sites as I can as you can hide sites you don't use via the options page, so this is rarely the case.
+* I have deemed the site not popular enough to warrant being added to my plugin. I don't wish to bloat my plugin with tiny little sites that only one or two people will use.
 
 = Does this plugin support other languages? =
 
