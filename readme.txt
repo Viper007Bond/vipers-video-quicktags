@@ -24,7 +24,7 @@ Currently supports these video sites:
 * [Viddler](http://www.viddler.com/)
 * [Metacafe](http://www.metacafe.com/)
 * [Blip.tv](http://blip.tv/)
-* [WordPress.com Video / WordPress.tv](http://support.wordpress.com/videos/) **NEW!**
+* [VideoPress aka WordPress.com Video](http://videopress.com/) **NEW!**
 * [Flickr](http://www.flickr.com/) videos
 * [Spike.com/IFILM](http://www.spike.com/)
 * [MySpaceTV](http://vids.myspace.com/)
@@ -98,6 +98,13 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == ChangeLog ==
+
+**Version 6.2.2**
+
+* **Translations:** Added Brazilian Portuguese translation thanks to Ricardo Martins.
+* **General:** Change `wmode` from `opaque` to `transparent` to allow transparency in FLV skins as well as other embeds.
+* **General:** Enable `allowscriptaccess` so Javascript can interact with the embeds.
+* **FLV:** Fix an upgrade bug with custom colors.
 
 **Version 6.2.1**
 

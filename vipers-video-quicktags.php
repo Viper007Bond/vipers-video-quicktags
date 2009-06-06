@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.1
+Version:      6.2.2
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.1';
+	var $version = '6.2.2';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -277,7 +277,7 @@ class VipersVideoQuicktags {
 			// Custom FLV colors
 			$colors = array( 'backcolor', 'frontcolor', 'lightcolor', 'screencolor' );
 			foreach ( $colors as $color ) {
-				if ( $usersettings['flv'][$color] != $this->defaultsettings['flv'][$color] )
+				if ( !empty($usersettings['flv'][$color]) && $usersettings['flv'][$color] != $this->defaultsettings['flv'][$color] )
 					$usersettings['flv']['customcolors'] = 1;
 			}
 			$upgrade = true;
@@ -1227,7 +1227,7 @@ class VipersVideoQuicktags {
 	// <![CDATA[
 		jQuery(document).ready(function() {
 			var vvqflashvars = {};
-			var vvqparams = { wmode: "opaque", allowfullscreen: "true" };
+			var vvqparams = { wmode: "transparent", allowfullscreen: "true", allowscriptacess: "always" };
 			var vvqattributes = {};
 			var vvqexpressinstall = "<?php echo plugins_url('/vipers-video-quicktags/resources/expressinstall.swf'); ?>";
 
@@ -1860,7 +1860,7 @@ class VipersVideoQuicktags {
 				vvqflvparams["volume"] = "100";
 				vvqflvparams["bufferlength"] = "15";
 				vvqflvparams["skin"] = "<?php echo plugins_url('/vipers-video-quicktags/resources/jw-flv-player/skins/'); ?>" + jQuery("#vvq-flv-skin").val() + ".swf";
-				vvqflvparams["wmode"] = "opaque";
+				vvqflvparams["wmode"] = "transparent";
 				vvqflvparams["allowfullscreen"] = "true";
 <?php
 					// Handle the advanced parameters (these require a page reload to be updated)
@@ -2385,6 +2385,7 @@ class VipersVideoQuicktags {
 	<p><?php _e('The following people have been nice enough to translate this plugin into other languages:', 'vipers-video-quicktags'); ?></p>
 
 	<ul>
+		<li><?php printf( __('<strong>Brazilian Portuguese:</strong> %s', 'vipers-video-quicktags'), 'Ricardo Martins' ); ?></li>
 		<li><?php printf( __('<strong>Danish:</strong> %s', 'vipers-video-quicktags'), '<a href="http://wordpress.blogos.dk/">Dr. Georg S. Adamsen</a>' ); ?></li>
 		<li><?php printf( __('<strong>Dutch:</strong> %s', 'vipers-video-quicktags'), 'Sypie' ); ?></li>
 		<li><?php printf( __('<strong>French:</strong> %s', 'vipers-video-quicktags'), '<a href="http://www.duretz.net/">Laurent Duretz</a>' ); ?></li>
@@ -2660,7 +2661,7 @@ class VipersVideoQuicktags {
 <script type="text/javascript">
 // <![CDATA[
 	var vvqflashvars = {};
-	var vvqparams = { wmode: "opaque", allowfullscreen: "true" };
+	var vvqparams = { wmode: "opaque", allowfullscreen: "true", allowscriptacess: "always" };
 	var vvqattributes = {};
 	var vvqexpressinstall = "<?php echo plugins_url('/vipers-video-quicktags/resources/expressinstall.swf'); ?>";
 // ]]>
@@ -3411,6 +3412,7 @@ class VipersVideoQuicktags {
 
 		// Start setting up the flashvars
 		$flashvars = array(
+			'wmode'        => 'transparent', // Allow skins with transparency to have the background color shine through (props rich)
 			'file'         => $content,
 			'volume'       => 100,
 			'bufferlength' => 15,
@@ -3629,7 +3631,7 @@ class VipersVideoQuicktags {
 			} else {
 				$content .= '{ ';
 
-				$embed['flashvars'] = array_merge( array( 'wmode' => 'opaque', 'allowfullscreen' => 'true' ), $embed['flashvars'] );
+				$embed['flashvars'] = array_merge( array( 'wmode' => 'opaque', 'allowfullscreen' => 'true', 'allowscriptacess' => 'always' ), $embed['flashvars'] );
 				$flashvars = array();
 
 				foreach ( $embed['flashvars'] as $property => $value ) {
