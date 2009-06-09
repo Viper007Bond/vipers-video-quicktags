@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.2.3**
+
+* **Translations:** Added Belorussian translation thanks to Fat Cow.
+
 **Version 6.2.2**
 
 * **Translations:** Added Brazilian Portuguese translation thanks to Ricardo Martins.
