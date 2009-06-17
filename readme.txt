@@ -99,17 +99,21 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.2.5**
+
+* **Localization:** Added Hungarian translation thanks to [jamesb](http://filmhirek.com/).
+
 **Version 6.2.4**
 
 * **VideoPress:** Rebrand everything in the plugin to VideoPress rather than like WordPress.com video.
 
 **Version 6.2.3**
 
-* **Translations:** Added Belorussian translation thanks to Fat Cow.
+* **Localization:** Added Belorussian translation thanks to Fat Cow.
 
 **Version 6.2.2**
 
-* **Translations:** Added Brazilian Portuguese translation thanks to Ricardo Martins.
+* **Localization:** Added Brazilian Portuguese translation thanks to Ricardo Martins.
 * **General:** Change `wmode` from `opaque` to `transparent` to allow transparency in FLV skins as well as other embeds.
 * **General:** Enable `allowscriptaccess` so Javascript can interact with the embeds.
 * **FLV:** Fix an upgrade bug with custom colors.
@@ -152,8 +156,8 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 **Version 6.1.20**
 
-* **Translations:** Added Danish transation thanks to Georg.
-* **Translations:** Updated Italian translation thanks to Gianni Diurno.
+* **Localization:** Added Danish transation thanks to Georg.
+* **Localization:** Updated Italian translation thanks to Gianni Diurno.
 
 **Version 6.1.19**
 
@@ -198,8 +202,8 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 * **General:** Icon for WordPress 2.7.
 * **General:** Translation and notice bugfixes from Laurent Duretz.
-* **Translations:** French translation thanks to Laurent Duretz.
-* **Translations:** Dutch translation thanks to Sypie.
+* **Localization:** French translation thanks to Laurent Duretz.
+* **Localization:** Dutch translation thanks to Sypie.
 
 **Version 6.1.9**
 
@@ -236,7 +240,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 * **General:** Remove `wp_head()` warning for admins. Doesn't work in themes like K2. Plugin's FAQ should cover this.
 * **General:** Add a filter to the shortcode attributes. This means plugins/themes can adjust things like the width automatically.
-* **Translations:** Russian translation thanks to [Dennis Bri](http://handynotes.ru/)
+* **Localization:** Russian translation thanks to [Dennis Bri](http://handynotes.ru/)
 * **General:** Properly hide some images in the admin that are there for pre-loading.
 
 **Version 6.1.1**
@@ -257,7 +261,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 * **General:** Ability to set custom feed text via settings page.
 * **General:** Image pre-cache URL fix.
 * **General:** Settings page improvements for users without Javascript.
-* **General:** More translations and translators added to credits page.
+* **General:** More Localization and translators added to credits page.
 * **General:** Redid admin warning message for users without the head hook.
 * **Flash:** Aliased "kml_flashembed" shortcode and "movie" parameter now used if it's there. This is to support Anarchy Media Player.
 * Other various bug fixes.
