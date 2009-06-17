@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == ChangeLog ==
 
+**Version 6.2.4**
+
+* **VideoPress:** Rebrand everything in the plugin to VideoPress rather than like WordPress.com video.
+
 **Version 6.2.3**
 
 * **Translations:** Added Belorussian translation thanks to Fat Cow.

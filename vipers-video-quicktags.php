@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.3
+Version:      6.2.4
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.3';
+	var $version = '6.2.4';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -329,7 +329,7 @@ class VipersVideoQuicktags {
 		add_shortcode( 'metacafe', array(&$this, 'shortcode_metacafe') );
 		add_shortcode( 'blip.tv', array(&$this, 'shortcode_bliptv') );
 		add_shortcode( 'bliptv', array(&$this, 'shortcode_bliptv') ); // Not the preferred format
-		add_shortcode( 'wpvideo', array(&$this, 'shortcode_wpvideo') ); // WordPress.tv
+		add_shortcode( 'wpvideo', array(&$this, 'shortcode_videopress') );
 		add_shortcode( 'flickr video', array(&$this, 'shortcode_flickrvideo') ); // WordPress.com
 		add_shortcode( 'flickrvideo', array(&$this, 'shortcode_flickrvideo') ); // Normal format
 		add_shortcode( 'ifilm', array(&$this, 'shortcode_ifilm') );
@@ -3213,8 +3213,8 @@ class VipersVideoQuicktags {
 	}
 
 
-	// Handle WordPress.com/WordPress.tv shortcodes
-	function shortcode_wpvideo( $atts ) {
+	// Handle VideoPress (WordPress.com) shortcodes
+	function shortcode_videopress( $atts ) {
 		$origatts = $atts;
 
 		if ( is_feed() )
@@ -3229,10 +3229,10 @@ class VipersVideoQuicktags {
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
-		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'wpvideo', $origatts );
+		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'videopress', $origatts );
 
 		if ( empty($atts[0]) )
-			return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('WordPress.com', 'vipers-video-quicktags') ) );
+			return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('VideoPress', 'vipers-video-quicktags') ) );
 
 		if ( false !== $atts['w'] ) {
 			$atts['width'] = $atts['w'];
@@ -3243,7 +3243,7 @@ class VipersVideoQuicktags {
 
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://v.wordpress.com/' . $atts[0] );
 
-		return '<span class="vvqbox vvqwpvideo" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('WordPress.com', 'vipers-video-quicktags') ) . '</em></span></span>';
+		return '<span class="vvqbox vvqvideopress" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('VideoPress', 'vipers-video-quicktags') ) . '</em></span></span>';
 	}
 
 
