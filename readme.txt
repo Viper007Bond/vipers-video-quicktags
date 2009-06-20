@@ -85,7 +85,7 @@ Yes, it does. Included in the `localization` folder is the translation template 
 
 = Where can I get additional support for this plugin? =
 
-I provide support via [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23), although just because you post a request for help doesn't mean I will have time to answer your question. This is a free plugin and as such, you aren't guaranteed support. Then again, I'll help as much as I can and have time for.
+This is a free plugin and as such, you aren't guaranteed support. However I do my best to answer support questions. Just post on the [WordPress.org support forums](http://wordpress.org/tags/vipers-video-quicktags).
 
 = I love your plugin! Can I donate to you? =
 
