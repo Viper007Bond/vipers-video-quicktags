@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.5
+Version:      6.2.6
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.5';
+	var $version = '6.2.6';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -2648,14 +2648,15 @@ class VipersVideoQuicktags {
 	function Head() {
 		$this->wpheadrun = TRUE;
 
-		echo "<!-- Viper's Video Quicktags v" . $this->version . " | http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/ -->\n<style type=\"text/css\">\n";
+		echo "<!-- Vipers Video Quicktags v" . $this->version . " | http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/ -->\n<style type=\"text/css\">\n";
 
 		$aligncss = str_replace( '\n', ' ', $this->cssalignments[$this->settings['alignment']] );
 		$standardcss = $this->StringShrink( $this->standardcss );
 		echo strip_tags( str_replace( '/* alignment CSS placeholder */', $aligncss, $standardcss ) );
 
 		// WPMU can't use this to avoid them messing with the theme
-		if ( empty($wpmu_version) ) echo ' ' . strip_tags( $this->StringShrink( $this->settings['customcss'] ) );
+		if ( empty($wpmu_version) )
+			echo ' ' . strip_tags( $this->StringShrink( $this->settings['customcss'] ) );
 
 		echo "\n</style>\n";
 

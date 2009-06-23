@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.6 =
+
+* **General:** Fixed an issue with pingback sending failing. The remote XML-RPC would check the referring site (your site) for the ping-to URL and due to an apostrophe in an HTML comment, it'd fail. Very, very weird. Thanks to Robert Windisch of [Inpsyde](http://inpsyde.com/)!
+
 = v6.2.5 =
 
 * **Localization:** Added Hungarian translation thanks to [jamesb](http://filmhirek.com/).
