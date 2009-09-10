@@ -2404,6 +2404,7 @@ class VipersVideoQuicktags {
 		<li><?php printf( __('<strong>Italian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://gidibao.net/">Gianni Diurno</a>' ); ?></li>
 		<!--<li><?php printf( __('<strong>Polish:</strong> %s', 'vipers-video-quicktags'), '<a href="http://www.brt12.eu/">Bartosz Sobczyk</a>' ); ?></li>-->
 		<li><?php printf( __('<strong>Russian:</strong> %s', 'vipers-video-quicktags'), '<a href="http://handynotes.ru/">Dennis Bri</a>' ); ?></li>
+		<li><?php printf( __('<strong>Spanish:</strong> %s', 'vipers-video-quicktags'), '<a href="http://equipajedemano.info/">Omi</a>' ); ?></li>
 	</ul>
 
 	<p><?php printf( __('If you\'d like to use this plugin in another language and have your name listed here, just translate the strings in the provided <a href="%1$s">template file</a> located in this plugin\'s &quot;<code>localization</code>&quot; folder and then <a href="%2$s">send it to me</a>. For help, see the <a href="%3$s">WordPress Codex</a>.', 'vipers-video-quicktags'), plugins_url('/vipers-video-quicktags/localization/_vipers-video-quicktags-template.po'), 'http://www.viper007bond.com/contact/', 'http://codex.wordpress.org/Translating_WordPress' ); ?></p>

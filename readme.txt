@@ -104,6 +104,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 * **General:** Update SWFObject to version 2.2.
 * **General:** Update JW Player to version 4.5.
 * **Localization:** Added Chinese translation thanks to [Dreamcolor](http://dreamcolor.net/).
+* **Localization:** Added Spanish translation thanks to [Omi](http://equipajedemano.info/).
 
 = v6.2.6 =
 
