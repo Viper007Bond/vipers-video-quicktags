@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.8 =
+
+* **General:** Revert SWFObject enqueue hack as it's failing for some users.
+
 = v6.2.7 =
 
 * **General:** Update SWFObject to version 2.2.
