@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.9 =
+
+* **General:** SWFObject issue was likely WordPress version related. I'm tired of dealing with older versions of WordPress anyway, not to mention they're insecure. Make VVQ only support WordPress 2.8+. It's for their own good.
+
 = v6.2.8 =
 
 * **General:** Revert SWFObject enqueue hack as it's failing for some users.

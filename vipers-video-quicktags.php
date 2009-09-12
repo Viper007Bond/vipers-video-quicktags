@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.8
+Version:      6.2.9
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.8';
+	var $version = '6.2.9';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -71,8 +71,8 @@ class VipersVideoQuicktags {
 	function VipersVideoQuicktags() {
 		global $wp_db_version, $wpmu_version, $shortcode_tags, $wp_scripts;
 
-		// This version of VVQ requires WordPress 2.6+
-		if ( !function_exists('plugins_url') ) {
+		// This version of VVQ requires WordPress 2.8+
+		if ( !function_exists('esc_attr') ) {
 			load_plugin_textdomain( 'vipers-video-quicktags', '/wp-content/plugins/vipers-video-quicktags/localization' ); // Old format
 			if ( isset( $_GET['activate'] ) ) {
 				wp_redirect( 'plugins.php?deactivate=true' );
@@ -349,7 +349,6 @@ class VipersVideoQuicktags {
 			add_shortcode( 'kml_flashembed', array(&$this, 'shortcode_flash') );
 
 		// Replace bundled SWFObject if it's older
-		/*
 		if ( !is_a($wp_scripts, 'WP_Scripts') )
 			$wp_scripts = new WP_Scripts();
 		if ( !empty($wp_scripts->registered) && !empty($wp_scripts->registered['swfobject']) && !empty($wp_scripts->registered['swfobject']->ver) && version_compare( $wp_scripts->registered['swfobject']->ver, '2.2', '<' ) ) {
@@ -358,8 +357,6 @@ class VipersVideoQuicktags {
 		} else {
 			wp_enqueue_script( 'swfobject' );
 		}
-		*/
-		wp_enqueue_script( 'swfobject' );
 
 		// Register other scripts and styles
 		wp_register_script( 'qtobject', plugins_url('/vipers-video-quicktags/resources/qtobject.js'), array(), '1.0.2' );
@@ -443,7 +440,7 @@ class VipersVideoQuicktags {
 
 	// This function gets called when the minimum WordPress version isn't met
 	function WPVersionTooOld() {
-		echo '<div class="error"><p>' . sprintf( __( 'This version of <strong>Viper\'s Video Quicktags</strong> requires WordPress 2.6 or newer. Please <a href="%1$s">upgrade</a> or use the <a href="%2$s">legacy version</a> of this plugin.', 'vipers-video-quicktags' ), 'http://codex.wordpress.org/Upgrading_WordPress', 'http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip' ) . "</p></div>\n";
+		echo '<div class="error"><p>' . sprintf( __( '<strong>Viper\'s Video Quicktags</strong> requires WordPress 2.8 or newer. Please <a href="%1$s">upgrade</a>! By not upgrading, your blog is <a href="%2$s">likely to be hacked</a>.', 'vipers-video-quicktags' ), 'http://codex.wordpress.org/Upgrading_WordPress', 'http://wordpress.org/development/2009/09/keep-wordpress-secure/' ) . "</p></div>\n";
 	}
 
 
