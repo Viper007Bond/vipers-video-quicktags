@@ -69,7 +69,7 @@ class VipersVideoQuicktags {
 
 	// Class initialization
 	function VipersVideoQuicktags() {
-		global $wp_db_version, $wpmu_version, $shortcode_tags, $wp_scripts;
+		global $wpmu_version, $shortcode_tags, $wp_scripts;
 
 		// This version of VVQ requires WordPress 2.8+
 		if ( !function_exists('esc_attr') ) {
@@ -302,8 +302,6 @@ class VipersVideoQuicktags {
 		add_action( 'the_content', array(&$this, 'SWFObjectCalls'), 50 );
 		add_filter( 'widget_text', 'do_shortcode', 11 ); // Videos in the text widget
 		add_action( 'widget_text', array(&$this, 'SWFObjectCalls'), 50 );
-		if ( $wp_db_version < 8989 && 'update.php' == basename( $_SERVER['PHP_SELF'] ) && 'upgrade-plugin' == $_GET['action'] && FALSE !== strstr( $_GET['plugin'], 'vipers-video-quicktags' ) )
-			add_action( 'admin_notices', array(&$this, 'AutomaticUpgradeNotice') );
 
 		// Register editor button hooks
 		add_filter( 'tiny_mce_version', array(&$this, 'tiny_mce_version') );
@@ -441,14 +439,6 @@ class VipersVideoQuicktags {
 	// This function gets called when the minimum WordPress version isn't met
 	function WPVersionTooOld() {
 		echo '<div class="error"><p>' . sprintf( __( '<strong>Viper\'s Video Quicktags</strong> requires WordPress 2.8 or newer. Please <a href="%1$s">upgrade</a>! By not upgrading, your blog is <a href="%2$s">likely to be hacked</a>.', 'vipers-video-quicktags' ), 'http://codex.wordpress.org/Upgrading_WordPress', 'http://wordpress.org/development/2009/09/keep-wordpress-secure/' ) . "</p></div>\n";
-	}
-
-
-	// Tell the user that WordPress won't properly upload SWF files via FTP
-	function AutomaticUpgradeNotice() {
-		if ( 'ftpext' != get_filesystem_method() ) return;
-
-		echo '<div class="error"><p>' . sprintf( __( "<strong>WARNING:</strong> If you use the FLV embed feature of Viper's Video Quicktags, there is a bug in WordPress with the FTP method of upgrading plugins. It will not upload the <code>.swf</code> files properly. If you do embed FLV files, please <a href='%s'>manually download</a> the plugin and upload the files to your server. If you don't embed FLV files (and only embed YouTube, etc. videos), you can safely ignore this message and upgrade automatically.", 'vipers-video-quicktags' ), 'http://downloads.wordpress.org/plugin/vipers-video-quicktags.zip' ) . "</p></div>\n";
 	}
 
 
