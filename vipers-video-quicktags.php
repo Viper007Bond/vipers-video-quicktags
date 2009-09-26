@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.9
+Version:      6.2.10
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.9';
+	var $version = '6.2.10';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -242,13 +242,50 @@ class VipersVideoQuicktags {
 			'customcss'           => '',
 			'customfeedtext'      => '',
 		) );
-
 		// Default customfeedtext. Change it via the settings page.
-		$this->customfeedtext = '<p><em>' . __( 'Click here to view the embedded video.', 'vipers-video-quicktags' ) . '</em></p>';
+		$this->customfeedtext = '<em>' . __( 'Click here to view the embedded video.', 'vipers-video-quicktags' ) . '</em>';
 
-		// Setup the settings by using the default as a base and then adding in any changed values
-		// This allows settings arrays from old versions to be used even though they are missing values
 		$usersettings = (array) get_option('vvq_options');
+
+		// Upgrade settings
+		$upgrade = false;
+		if ( empty($usersettings['version']) )
+			$usersettings['version'] = '1.0.0';
+		if ( -1 == version_compare( $usersettings['version'], '6.0.0' ) ) {
+			// Reset buttons
+			foreach ( $this->defaultsettings as $type => $setting ) {
+				if ( !is_array($this->defaultsettings[$type]) ) continue;
+				if ( isset($usersettings[$type]['button']) )
+					unset($usersettings[$type]['button']);
+			}
+			$upgrade = true;
+		}
+		if ( -1 == version_compare( $usersettings['version'], '6.1.0' ) ) {
+			// Custom FLV colors
+			$colors = array( 'backcolor', 'frontcolor', 'lightcolor', 'screencolor' );
+			foreach ( $colors as $color ) {
+				if ( !empty($usersettings['flv'][$color]) && $usersettings['flv'][$color] != $this->defaultsettings['flv'][$color] )
+					$usersettings['flv']['customcolors'] = 1;
+			}
+			$upgrade = true;
+		}
+		if ( -1 == version_compare( $usersettings['version'], '6.1.23' ) ) {
+			// Change default YouTube preview video to one supporting HD (rather than only HQ)
+			if ( !empty($usersettings['youtube']) && !empty($usersettings['youtube']['previewurl']) && 'http://www.youtube.com/watch?v=stdJd598Dtg' === $usersettings['youtube']['previewurl'] )
+				$usersettings['youtube']['previewurl'] = $this->defaultsettings['youtube']['previewurl'];
+			$upgrade = true;
+		}
+		if ( -1 == version_compare( $usersettings['version'], '6.2.10' ) ) {
+			if ( false !== strpos( $usersettings['customfeedtext'], '<p>' ) || false !== strpos( $usersettings['customfeedtext'], '</p>' ) )
+				$usersettings['customfeedtext'] = str_replace( array( '<p>', '</p>' ), '', $usersettings['customfeedtext'] );
+			$upgrade = true;
+		}
+		if ( $upgrade ) {
+			$usersettings['version'] = $this->version;
+			update_option( 'vvq_options', $usersettings );
+		}
+
+		// Use the defaults as a base, merge in any user defined changes
 		$this->settings = $this->defaultsettings;
 		if ( $usersettings !== $this->defaultsettings ) {
 			foreach ( (array) $usersettings as $key1 => $value1 ) {
@@ -260,37 +297,6 @@ class VipersVideoQuicktags {
 					$this->settings[$key1] = $value1;
 				}
 			}
-		}
-
-		// Upgrade settings
-		$upgrade = false;
-		if ( empty($this->settings['version']) || -1 == version_compare($this->settings['version'], '6.0.0') ) {
-			// Reset buttons
-			foreach ( $this->defaultsettings as $type => $setting ) {
-				if ( !is_array($this->defaultsettings[$type]) ) continue;
-				if ( isset($usersettings[$type]['button']) )
-					unset($usersettings[$type]['button']);
-			}
-			$upgrade = true;
-		}
-		if ( -1 == version_compare($this->settings['version'], '6.1.0') ) {
-			// Custom FLV colors
-			$colors = array( 'backcolor', 'frontcolor', 'lightcolor', 'screencolor' );
-			foreach ( $colors as $color ) {
-				if ( !empty($usersettings['flv'][$color]) && $usersettings['flv'][$color] != $this->defaultsettings['flv'][$color] )
-					$usersettings['flv']['customcolors'] = 1;
-			}
-			$upgrade = true;
-		}
-		if ( -1 == version_compare($this->settings['version'], '6.1.23') ) {
-			// Change default YouTube preview video to one supporting HD (rather than only HQ)
-			if ( !empty($usersettings['youtube']) && !empty($usersettings['youtube']['previewurl']) && 'http://www.youtube.com/watch?v=stdJd598Dtg' === $usersettings['youtube']['previewurl'] )
-				$usersettings['youtube']['previewurl'] = $this->defaultsettings['youtube']['previewurl'];
-			$upgrade = true;
-		}
-		if ( $upgrade ) {
-			$usersettings['version'] = $this->version;
-			update_option( 'vvq_options', $usersettings );
 		}
 
 		// Register general hooks
@@ -2698,11 +2704,12 @@ class VipersVideoQuicktags {
 	function postlink() {
 		global $post;
 
-		if ( empty($post->ID) ) return ''; // This should never happen (I hope)
+		if ( empty($post->ID) )
+			return ''; // This should never happen (I hope)
 
 		$text = ( !empty($this->settings['customfeedtext']) ) ? $this->settings['customfeedtext'] : $this->customfeedtext;
 
-		return apply_filters( 'vvq_feedoutput', '<a href="' . get_permalink( $post->ID ) . '">' . $text . '</a>' );
+		return apply_filters( 'vvq_feedoutput', '<p><a href="' . get_permalink( $post->ID ) . '">' . $text . '</a></p>' );
 	}
 
 
