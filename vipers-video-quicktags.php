@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.11
+Version:      6.2.12
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.11';
+	var $version = '6.2.12';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -186,8 +186,8 @@ class VipersVideoQuicktags {
 			),
 			'wpvideo' => array(
 				'button'          => 1,
-				'width'           => 400,
-				'height'          => 224,
+				'width'           => 605,
+				'height'          => 452,
 				'aspectratio'     => 1,
 			),
 			'flickrvideo' => array(
@@ -3251,8 +3251,9 @@ class VipersVideoQuicktags {
 		$atts = shortcode_atts(array(
 			0               => '',
 			'w'             => false,
-			'width'         => $this->settings['wpvideo']['width'],
-			'height'        => $this->settings['wpvideo']['height'],
+			'width'         => false,
+			'h'             => false,
+			'height'        => false,
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
@@ -3261,10 +3262,22 @@ class VipersVideoQuicktags {
 		if ( empty($atts[0]) )
 			return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('VideoPress', 'vipers-video-quicktags') ) );
 
-		if ( false !== $atts['w'] ) {
+		$atts['w']      = (int) $atts['w'];
+		$atts['width']  = (int) $atts['width'];
+		$atts['h']      = (int) $atts['h'];
+		$atts['height'] = (int) $atts['height'];
+
+		if ( $atts['w'] )
 			$atts['width'] = $atts['w'];
+
+		if ( !$atts['width'] )
+			$atts['width'] = $this->settings['wpvideo']['width'];
+
+		if ( $atts['h'] )
+			$atts['height'] = $atts['h'];
+
+		if ( !$atts['height'] )
 			$atts['height'] = round( ( $atts['width'] / $this->settings['wpvideo']['width'] ) * $this->settings['wpvideo']['height'] );
-		}
 
 		$objectid = $this->videoid('wpvideo');
 

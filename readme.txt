@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.12 =
+
+* **VideoPress:** Width/height parameter improvements.
+
 = v6.2.11 =
 
 * **FLV:** Allow periods in Flashvar names. See [http://wordpress.org/support/topic/316159](http://wordpress.org/support/topic/316159).
