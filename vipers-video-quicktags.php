@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.10
+Version:      6.2.11
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.10';
+	var $version = '6.2.11';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -1870,7 +1870,7 @@ class VipersVideoQuicktags {
 <?php
 					// Handle the advanced parameters (these require a page reload to be updated)
 					if ( !empty($this->settings['flv']['flashvars']) ) {
-						parse_str( $this->settings['flv']['flashvars'], $flashvars );
+						$flashvars = $this->parse_str_periods( $this->settings['flv']['flashvars'] );
 						foreach ( (array) $flashvars as $key => $value )
 							echo '				vvqflvparams["' . $key . '"] = "' . $value . '";' . "\n";
 					}
@@ -2757,6 +2757,23 @@ class VipersVideoQuicktags {
 	}
 
 
+	// parse_str() but allow periods in the keys
+	// Also returns instead of setting a variable
+	function parse_str_periods( $string ) {
+		$string = str_replace( '.', '{{vvqperiod}}', $string );
+		parse_str( $string, $result_raw );
+
+		// Reset placeholders
+		$result = array();
+		foreach ( $result_raw as $key => $value ) {
+			$key = str_replace( '{{vvqperiod}}', '.', $key );
+			$result[$key] = str_replace( '{{vvqperiod}}', '.', $value );
+		}
+
+		return $result;
+	}
+
+
 	// Show an error for Stage6
 	function shortcode_stage6() {
 		return '<em>[' . __('Stage6 is no more, so this Stage6-hosted video cannot be displayed.', 'vipers-video-quicktags') . ']</em>';
@@ -3210,7 +3227,7 @@ class VipersVideoQuicktags {
 		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'bliptv', $origatts );
 
 		// Parse WordPress.com shortcode format
-		parse_str( $atts[0], $params );
+		$params = $this->parse_str_periods( $atts[0] );
 		if ( empty($params['?posts_id']) ) return $this->error( sprintf( __('An invalid %s shortcode format was used. Please check your code.', 'vipers-video-quicktags'), __('Blip.tv', 'vipers-video-quicktags') ) );
 		$videoid = $params['?posts_id'];
 
@@ -3445,14 +3462,14 @@ class VipersVideoQuicktags {
 
 		// Copy in the defaults from the settings page
 		if ( !empty($this->settings['flv']['flashvars']) ) {
-			parse_str( $this->settings['flv']['flashvars'], $params );
+			$params = $this->parse_str_periods( $this->settings['flv']['flashvars'] );
 			$flashvars = array_merge( $flashvars, $params );
 		}
 
 		// Copy in any one-off passed flashvars added via the "flashvars" parameter
 		if ( !empty($atts['flashvars']) ) {
 			$atts['flashvars'] = $this->wpuntexturize( str_replace( '&amp;', '&', $atts['flashvars'] ) );
-			parse_str( $atts['flashvars'], $params );
+			$params = $this->parse_str_periods( $atts['flashvars'] );
 			$flashvars = array_merge( $flashvars, $params );
 		}
 
@@ -3608,7 +3625,7 @@ class VipersVideoQuicktags {
 		$flashvars = array();
 		if ( !empty($atts['flashvars']) ) {
 			$atts['flashvars'] = str_replace( array('#038;', '&amp;'), '&', $atts['flashvars'] ); // Fix formatting applied by WordPress
-			parse_str( $atts['flashvars'], $params );
+			$params = $this->parse_str_periods( $atts['flashvars'] );
 			foreach ( $params as $key => $value )
 				$flashvars[$key] = $value;
 		}

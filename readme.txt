@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.11 =
+
+* **FLV:** Allow periods in Flashvar names. See [http://wordpress.org/support/topic/316159](http://wordpress.org/support/topic/316159).
+
 = v6.2.10 =
 
 * **General:** Change default feed link text. Always wrap in paragraph tags regardless. Props [andrewpaulbiss](http://wordpress.org/support/topic/314764).
