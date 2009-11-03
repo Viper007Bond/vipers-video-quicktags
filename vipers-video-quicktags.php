@@ -3495,7 +3495,7 @@ class VipersVideoQuicktags {
 			$flashvars['bufferlength'] = (int) $atts['bufferlength'];
 
 		// No image yet? Okay, default to the URL to the video but .jpg instead of .flv/.mp4
-		if ( false === $flashvars['image'] && !in_array( substr( $content, -4 ), array( '.mp3' ) ) )
+		if ( false === $flashvars['image'] && in_array( substr( $content, -4 ), array('.flv', '.mp4') ) )
 			$flashvars['image'] = str_replace( array('.flv', '.mp4'), '.jpg', $content );
 
 		// Check if link is a RTMP stream and adjust accordingly if so
