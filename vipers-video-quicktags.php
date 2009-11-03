@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.12
+Version:      6.2.13
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.12';
+	var $version = '6.2.13';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -3495,7 +3495,7 @@ class VipersVideoQuicktags {
 			$flashvars['bufferlength'] = (int) $atts['bufferlength'];
 
 		// No image yet? Okay, default to the URL to the video but .jpg instead of .flv/.mp4
-		if ( empty($flashvars['image']) )
+		if ( false === $flashvars['image'] && !in_array( substr( $content, -4 ), array( '.mp3' ) ) )
 			$flashvars['image'] = str_replace( array('.flv', '.mp4'), '.jpg', $content );
 
 		// Check if link is a RTMP stream and adjust accordingly if so
@@ -3676,6 +3676,9 @@ class VipersVideoQuicktags {
 				$flashvars = array();
 
 				foreach ( $embed['flashvars'] as $property => $value ) {
+					if ( false === $value )
+						continue;
+
 					$flashvars[] = '"' . js_escape( $property ). '": "' . js_escape( $value ) . '"';
 				}
 
