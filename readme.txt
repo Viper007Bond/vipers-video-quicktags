@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.14 =
+
+* **FLV:** Fix automatic images and make them work better.
+
 = v6.2.13 =
 
 * **FLV:** Make MP3's stream properly by not setting the image value to the MP3. Props [tranified](http://wordpress.org/support/topic/327598).
