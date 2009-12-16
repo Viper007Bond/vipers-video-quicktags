@@ -2,8 +2,8 @@
 Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
-Requires at least: 2.8.4
-Tested up to: 2.8.4
+Requires at least: 2.8
+Tested up to: 2.9
 Stable tag: trunk
 
 Allows easy and XHTML valid posting of videos from various websites such as YouTube, DailyMotion, Vimeo, and more.
