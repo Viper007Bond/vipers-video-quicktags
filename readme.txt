@@ -99,10 +99,13 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.16 =
+
+* Default to less buttons being enabled by default due to not being able to put them on their own line anymore.
+
 = v6.2.15 =
 
 * **TinyMCE:** Trying to inject the buttons onto the third button line completely breaks TinyMCE. Only allow them to be added to the first or second line, and even then they may not show up even then. I have no idea why (I hate TinyMCE) and I frankly don't care at this point (they're going away in v7.0).
-* Default to less buttons being enabled by default due to not being able to put them on their own line anymore.
 
 = v6.2.14 =
 
