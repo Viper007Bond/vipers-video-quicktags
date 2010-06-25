@@ -130,7 +130,7 @@ class VipersVideoQuicktags {
 				'aspectratio'     => 1,
 			),
 			'googlevideo' => array(
-				'button'          => 1,
+				'button'          => 0,
 				'width'           => 400,
 				'height'          => 326,
 				'autoplay'        => 0,
@@ -170,10 +170,10 @@ class VipersVideoQuicktags {
 				'aspectratio'     => 1,
 			),
 			'viddler' => array(
-				'button'          => 1,
+				'button'          => 0,
 			),
 			'metacafe' => array(
-				'button'          => 1,
+				'button'          => 0,
 				'width'           => 400,
 				'height'          => 345,
 				'aspectratio'     => 1,
@@ -185,25 +185,25 @@ class VipersVideoQuicktags {
 				'aspectratio'     => 1,
 			),
 			'wpvideo' => array(
-				'button'          => 1,
+				'button'          => 0,
 				'width'           => 605,
 				'height'          => 452,
 				'aspectratio'     => 1,
 			),
 			'flickrvideo' => array(
-				'button'          => 1,
+				'button'          => 0,
 				'width'           => 400,
 				'height'          => 300,
 				'aspectratio'     => 1,
 			),
 			'spike' => array(
-				'button'          => 1,
+				'button'          => 0,
 				'width'           => 448,
 				'height'          => 365,
 				'aspectratio'     => 1,
 			),
 			'myspace' => array(
-				'button'          => 1,
+				'button'          => 0,
 				'width'           => 425,
 				'height'          => 360,
 				'aspectratio'     => 1,
