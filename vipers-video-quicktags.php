@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.16
+Version:      6.2.17
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.16';
+	var $version = '6.2.17';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -379,8 +379,7 @@ class VipersVideoQuicktags {
 				if ( 1 == $this->settings['tinymceline'] ) {
 					add_filter( 'mce_buttons', array(&$this, 'mce_buttons') );
 				} else {
-					//add_filter( 'mce_buttons_' . $this->settings['tinymceline'], array(&$this, 'mce_buttons') );
-					add_filter( 'mce_buttons_2', array(&$this, 'mce_buttons') ); // "j is undefined" for 3+ for some reason
+					add_filter( 'mce_buttons_' . $this->settings['tinymceline'], array(&$this, 'mce_buttons') );
 				}
 			}
 		}
@@ -2054,9 +2053,9 @@ class VipersVideoQuicktags {
 				<select name="vvq-tinymceline" id="vvq-tinymceline">
 <?php
 					$alignments = array(
-						1 => __('1', 'vipers-video-quicktags'),
+						1 => __('1 (Default)', 'vipers-video-quicktags'),
 						2 => __('2 (Kitchen Sink Toolbar)', 'vipers-video-quicktags'),
-						//3 => __('3 (Default)', 'vipers-video-quicktags'),
+						3 => __('3 (New Line)', 'vipers-video-quicktags'),
 					);
 					foreach ( $alignments as $alignment => $name ) {
 						echo '					<option value="' . $alignment . '"';

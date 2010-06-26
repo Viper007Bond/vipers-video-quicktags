@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.17 =
+
+* **TinyMCE:** Re-enable the third button row as not everyone was having issues with it. Default to the first row though.
+
 = v6.2.16 =
 
 * Default to less buttons being enabled by default due to not being able to put them on their own line anymore.
