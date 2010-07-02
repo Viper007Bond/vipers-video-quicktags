@@ -65,7 +65,7 @@ To configure this plugin, visit it's settings page. It can be found under the "S
 
 = The videos won't show up. Only a YouTube image or a link to the video does. =
 
-Your theme lacks the `<?php wp_head(); ?>` hook. Please add it.
+Your theme lacks the `<?php wp_head(); ?>` hook. Please add it right before `</head>` in your theme's `header.php` file.
 
 = I have the plugin running, but I have some questions about how to use it. =
 
