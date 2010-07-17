@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.17
+Version:      6.2.18
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.17';
+	var $version = '6.2.18';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -323,7 +323,6 @@ class VipersVideoQuicktags {
 		add_shortcode( 'metacafe', array(&$this, 'shortcode_metacafe') );
 		add_shortcode( 'blip.tv', array(&$this, 'shortcode_bliptv') );
 		add_shortcode( 'bliptv', array(&$this, 'shortcode_bliptv') ); // Not the preferred format
-		add_shortcode( 'wpvideo', array(&$this, 'shortcode_videopress') );
 		add_shortcode( 'flickr video', array(&$this, 'shortcode_flickrvideo') ); // WordPress.com
 		add_shortcode( 'flickrvideo', array(&$this, 'shortcode_flickrvideo') ); // Normal format
 		add_shortcode( 'ifilm', array(&$this, 'shortcode_ifilm') );
@@ -338,9 +337,15 @@ class VipersVideoQuicktags {
 		add_shortcode( 'avi', array(&$this, 'shortcode_videofile') ); // Legacy
 		add_shortcode( 'mpeg', array(&$this, 'shortcode_videofile') ); // Legacy
 		add_shortcode( 'wmv', array(&$this, 'shortcode_videofile') ); // Legacy
+
 		// Anarchy Media Plugin / Kimili Flash Embed support but only if those plugins aren't enabled
 		if ( !class_exists('KimiliFlashEmbed') && !function_exists('kml_flashembed') && !isset($shortcode_tags['kml_flashembed']) )
 			add_shortcode( 'kml_flashembed', array(&$this, 'shortcode_flash') );
+
+		// VideoPress support but only if the official plugin isn't installed
+		if ( !function_exists('videopress_shortcode') && !isset($shortcode_tags['wpvideo']) )
+			add_shortcode( 'wpvideo', array(&$this, 'shortcode_videopress') );
+
 
 		// Replace bundled SWFObject if it's older
 		if ( !is_a($wp_scripts, 'WP_Scripts') )
@@ -1233,7 +1238,7 @@ class VipersVideoQuicktags {
 	// <![CDATA[
 		jQuery(document).ready(function() {
 			var vvqflashvars = {};
-			var vvqparams = { wmode: "transparent", allowfullscreen: "true", allowscriptacess: "always" };
+			var vvqparams = { wmode: "transparent", allowfullscreen: "true", allowscriptaccess: "always" };
 			var vvqattributes = {};
 			var vvqexpressinstall = "<?php echo plugins_url('/vipers-video-quicktags/resources/expressinstall.swf'); ?>";
 
@@ -2672,7 +2677,7 @@ class VipersVideoQuicktags {
 <script type="text/javascript">
 // <![CDATA[
 	var vvqflashvars = {};
-	var vvqparams = { wmode: "opaque", allowfullscreen: "true", allowscriptacess: "always" };
+	var vvqparams = { wmode: "opaque", allowfullscreen: "true", allowscriptaccess: "always" };
 	var vvqattributes = {};
 	var vvqexpressinstall = "<?php echo plugins_url('/vipers-video-quicktags/resources/expressinstall.swf'); ?>";
 // ]]>
@@ -3282,7 +3287,7 @@ class VipersVideoQuicktags {
 
 		$objectid = $this->videoid('wpvideo');
 
-		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://v.wordpress.com/' . $atts[0] );
+		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://s0.videopress.com/player.swf?v=1.01', 'flashvars' => array( 'guid' => $atts[0], 'seamlesstabbing' => 'true', 'overstretch' => 'true' ) );
 
 		return '<span class="vvqbox vvqvideopress" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('VideoPress', 'vipers-video-quicktags') ) . '</em></span></span>';
 	}
@@ -3666,14 +3671,14 @@ class VipersVideoQuicktags {
 		//$content .= "// <![CDATA[\n";
 
 		foreach ( $this->swfobjects as $objectid => $embed ) {
-			$content .= '	swfobject.embedSWF("' . htmlspecialchars( $embed['url'] ) . '", "' . $objectid . '", "' . $embed['width'] . '", "' . $embed['height'] . '", "9", vvqexpressinstall, ';
+			$content .= '	swfobject.embedSWF("' . htmlspecialchars( $embed['url'] ) . '", "' . $objectid . '", "' . $embed['width'] . '", "' . $embed['height'] . '", "10", vvqexpressinstall, ';
 
 			if ( empty($embed['flashvars']) || !is_array($embed['flashvars']) ) {
 				$content .= 'vvqflashvars';
 			} else {
 				$content .= '{ ';
 
-				$embed['flashvars'] = array_merge( array( 'wmode' => 'opaque', 'allowfullscreen' => 'true', 'allowscriptacess' => 'always' ), $embed['flashvars'] );
+				$embed['flashvars'] = array_merge( array( 'wmode' => 'opaque', 'allowfullscreen' => 'true', 'allowscriptaccess' => 'always' ), $embed['flashvars'] );
 				$flashvars = array();
 
 				foreach ( $embed['flashvars'] as $property => $value ) {
