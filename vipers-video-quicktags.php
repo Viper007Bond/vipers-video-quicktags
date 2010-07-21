@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.18
+Version:      6.2.19
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.18';
+	var $version = '6.2.19';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -346,18 +346,8 @@ class VipersVideoQuicktags {
 		if ( !function_exists('videopress_shortcode') && !isset($shortcode_tags['wpvideo']) )
 			add_shortcode( 'wpvideo', array(&$this, 'shortcode_videopress') );
 
-
-		// Replace bundled SWFObject if it's older
-		if ( !is_a($wp_scripts, 'WP_Scripts') )
-			$wp_scripts = new WP_Scripts();
-		if ( !empty($wp_scripts->registered) && !empty($wp_scripts->registered['swfobject']) && !empty($wp_scripts->registered['swfobject']->ver) && version_compare( $wp_scripts->registered['swfobject']->ver, '2.2', '<' ) ) {
-			wp_deregister_script( 'swfobject' );
-			wp_enqueue_script( 'swfobject', plugins_url('/vipers-video-quicktags/resources/swfobject.js'), array(), '2.2' );
-		} else {
-			wp_enqueue_script( 'swfobject' );
-		}
-
 		// Register other scripts and styles
+		wp_enqueue_script( 'swfobject' );
 		wp_register_script( 'qtobject', plugins_url('/vipers-video-quicktags/resources/qtobject.js'), array(), '1.0.2' );
 		if ( is_admin() ) {
 			// Settings page only

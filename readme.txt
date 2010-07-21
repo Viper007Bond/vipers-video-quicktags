@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.2.19 =
+
+* **General:** Remove potentially buggy SWFObject registration.
+
 = v6.2.18 =
 
 * **VideoPress:** If the [official VideoPress plugin](http://wordpress.org/extend/plugins/video/) is installed, don't take over it's shortcode.
