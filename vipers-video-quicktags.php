@@ -5,13 +5,13 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.2.19
+Version:      6.3.0
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
 **************************************************************************
 
-Copyright (C) 2006-2008 Viper007Bond
+Copyright (C) 2006-2010 Viper007Bond
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.2.19';
+	var $version = '6.3.0';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -3042,24 +3042,17 @@ class VipersVideoQuicktags {
 		$byline     = ( 1 == $atts['byline'] )     ? '1' : '0';
 		$fullscreen = ( 1 == $atts['fullscreen'] ) ? '1' : '0';
 
+		$iframeurl = 'http://player.vimeo.com/video/' . $videoid;
+		foreach ( array( 'title', 'byline', 'portrait', 'fullscreen' ) as $attribute ) {
+			$iframeurl = add_query_arg( $attribute, $$attribute, $iframeurl );
+		}
+
+		if ( '' != $atts['color'] && $this->defaultsettings['vimeo']['color'] != $atts['color'] )
+			$iframeurl = add_query_arg( 'color', str_replace( '#', '', $atts['color'] ), $iframeurl );
 
 		$objectid = $this->videoid('vimeo');
 
-		// Gotta pass these via flashvars rather than the URL to keep for valid XHTML (Vimeo doesn't like &amp;'s)
-		$flashvars = array(
-			'server'        => 'www.vimeo.com',
-			'clip_id'       => $videoid,
-			'show_portrait' => $portrait,
-			'show_title'    => $title,
-			'show_byline'   => $byline,
-			'fullscreen'    => $fullscreen,
-		);
-		if ( '' != $atts['color'] && $this->defaultsettings['vimeo']['color'] != $atts['color'] )
-			$flashvars['color'] = str_replace( '#', '', $atts['color'] );
-
-		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => 'http://www.vimeo.com/moogaloop.swf', 'flashvars' => $flashvars );
-
-		return '<span class="vvqbox vvqvimeo" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="http://www.vimeo.com/' . $videoid . '">http://www.vimeo.com/' . $videoid . '</a></span></span>';
+		return '<span class="vvqbox vvqvimeo" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><iframe id="' . $objectid . '" src="' . esc_attr( $iframeurl ) . '" width="' . $atts['width'] . '" height="' . $atts['height'] . '" frameborder="0"><a href="http://www.vimeo.com/' . $videoid . '">http://www.vimeo.com/' . $videoid . '</a></iframe></span>';
 	}
 
 

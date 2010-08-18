@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.3.0 =
+
+* **Vimeo:** Implement their new `iframe`-based embed since they seem to have broken my previous embed method.
+
 = v6.2.19 =
 
 * **General:** Remove potentially buggy SWFObject registration.
