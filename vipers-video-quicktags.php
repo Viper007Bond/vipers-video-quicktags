@@ -3694,7 +3694,7 @@ class VipersVideoQuicktags {
 		$safe_text = preg_replace('/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes($safe_text));
 		$safe_text = preg_replace("/\r?\n/", "\\n", addslashes($safe_text));
 		$safe_text = str_replace('\\\n', '\n', $safe_text);
-		return apply_filters('esc_js', $safe_text, $text);
+		return apply_filters('js_escape', $safe_text, $text);
 	}
 
 
