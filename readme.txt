@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.3.1 =
+
+* **General:** Remove usage of deprecated functions. Thanks ninnypants for reminding me.
+
 = v6.3.0 =
 
 * **Vimeo:** Implement their new `iframe`-based embed since they seem to have broken my previous embed method.
