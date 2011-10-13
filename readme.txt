@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= October 13th, 2011 (no version bump) ==
+
+* **Localization:** Added Norwegian translation thanks to [Kristoffer Risanger](http://kristofferr.com/).
+
 = v6.3.1 =
 
 * **General:** Remove usage of deprecated functions. Thanks ninnypants for reminding me.
