@@ -99,6 +99,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.3.2 =
+
+* **YouTube:** Fix for YouTube playlists. See [forum thread](http://wordpress.org/support/topic/plugin-vipers-video-quicktags-youtube-playlists-do-not-work) for details.
+* **General:** Fix buttons in HTML editor for WordPress 3.3.
+
 = October 13th, 2011 (no version bump) ==
 
 * **Localization:** Added Norwegian translation thanks to [Kristoffer Risanger](http://kristofferr.com/).
@@ -483,3 +488,8 @@ This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A
 = v1.0.0 =
 
 * Inital release.
+
+== Upgrade Notice ==
+
+= 6.3.2 =
+YouTube playlists fixed and better WordPress 3.3 support.
