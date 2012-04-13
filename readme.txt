@@ -103,7 +103,7 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 The "I should have done this a long time ago but have been neglecting this plugin" release.
 
-* **FLV:** Don't bundle JW's FLV Player with this plugin. It isn't GPL compatible. You'll now need to install it on your own.
+* **FLV:** Don't bundle JW FLV Player with this plugin. It isn't GPL compatible. You'll now need to install it on your own. See [this blog post](http://v007.me/9a4) for details.
 * **YouTube:** youtu.be short URL support.
 * **General:** Move SWFObject calls to the footer so `<!--nextpage-->` doesn't break this plugin.
 * **Localization:** Added Romanian translation thanks to Web Hosting Geeks.
