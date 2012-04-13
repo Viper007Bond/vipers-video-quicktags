@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.4.0
+Version:      6.4.1
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.4.0';
+	var $version = '6.4.1';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -385,7 +385,7 @@ class VipersVideoQuicktags {
 			}
 
 			// Display a warning if FLV button is showing but player isn't installed
-			if ( 1 == $this->settings['flv']['button'] && ! $this->is_jw_flv_player_installed() ) {
+			if ( 1 == $this->settings['flv']['button'] && current_user_can( 'manage_options' ) && ! $this->is_jw_flv_player_installed() ) {
 				add_action( 'admin_notices', array( &$this, 'admin_notices_install_jw_player_warning' ) );
 			}
 		}
@@ -484,7 +484,7 @@ class VipersVideoQuicktags {
 	function admin_notices_install_jw_player_warning() {
 		global $parent_file;
 
-		add_settings_error( 'vvq_options', 'vvq_jw_flv_player_not_installed', sprintf( __( 'IMPORTANT MESSAGE FROM THE VIPER\'S VIDEO QUICKTAGS PLUGIN: In order for your <code>[flv]</code> video embeds to continue to work, you must manually reinstall the JW FLV Player! Please download <a href="%1$s">this ZIP file</a> and then upload the <code>jw-flv-player</code> folder inside of the ZIP to your <code>wp-content</code> folder (%2$s). For details about this change, please see <a href="%3$s">this blog post</a> on the plugin author\'s website.', 'a8c-developer' ), 'http://v007.me/jwflvplayer', '<code>' . WP_CONTENT_DIR . '/</code>', 'http://v007.me/9a4' ) );
+		add_settings_error( 'vvq_options', 'vvq_jw_flv_player_not_installed', sprintf( __( 'IMPORTANT MESSAGE FROM THE VIPER\'S VIDEO QUICKTAGS PLUGIN: In order for your <code>[flv]</code> video embeds to continue to work, you must manually reinstall the JW FLV Player! Please download <a href="%1$s">this ZIP file</a> and then upload the <code>jw-flv-player</code> folder inside of the ZIP to your <code>wp-content</code> folder (%2$s). For details about this change, please see <a href="%3$s">this blog post</a> on the plugin author\'s website. Or if you just had the button enabled but never actually embeded anything using it, you can uncheck the button checkbox on the <a href="%4$s">settings page</a> to hide this message.', 'a8c-developer' ), 'http://v007.me/jwflvplayer', '<code>' . WP_CONTENT_DIR . '/</code>', 'http://v007.me/9a4', admin_url( 'options-general.php?page=vipers-video-quicktags' ) ) );
 
 		// Avoid a double message
 		if ( 'options-general.php' != $parent_file )
@@ -2678,7 +2678,7 @@ class VipersVideoQuicktags {
 					if ( empty($wpmu_version) )
 						echo '<br /><small>' . sprintf( __('<a href="%1$s">JW\'s FLV Media Player</a> is covered by the <a href="%2$s">Creative Commons Noncommercial<br />license</a> which means you cannot use it on a <a href="%3$s">commercial website</a>.', 'vipers-video-quicktags'), 'http://www.jeroenwijering.com/?item=JW_FLV_Media_Player', 'http://creativecommons.org/licenses/by-nc-sa/3.0/', 'http://www.jeroenwijering.com/?page=order' );
 				?></small></td>
-				<td><input name="vvq[flv][button]" id="vvq-flvbutton" type="checkbox" value="1" <?php checked($this->settings['flv']['button'], 1); disabled( $this->is_jw_flv_player_installed(), false ); ?> /></td>
+				<td><input name="vvq[flv][button]" id="vvq-flvbutton" type="checkbox" value="1" <?php checked($this->settings['flv']['button'], 1); ?> /></td>
 				<td><input name="vvq[flv][width]" type="text" size="5" value="<?php echo $this->settings['flv']['width']; ?>" /></td>
 				<td><input name="vvq[flv][height]" type="text" size="5" value="<?php echo $this->settings['flv']['height']; ?>" /></td>
 				<td>&nbsp;</td>

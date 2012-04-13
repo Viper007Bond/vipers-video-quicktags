@@ -99,6 +99,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.4.1 =
+
+* **FLV:** Don't disable the checkbox so that it can be unchecked to hide the message.
+* **FLV:** Only show the admin notice to administrators. It's unlikely anyone else can do anything about it.
+
 = v6.4.0 =
 
 The "I should have done this a long time ago but have been neglecting this plugin" release.
