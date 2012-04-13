@@ -3,7 +3,7 @@ Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
 Requires at least: 2.8
-Tested up to: 3.3
+Tested up to: 3.4
 Stable tag: trunk
 
 Allows easy and XHTML valid posting of videos from various websites such as YouTube, DailyMotion, Vimeo, and more.
@@ -98,6 +98,15 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == Changelog ==
+
+= v6.4.0 =
+
+The "I should have done this a long time ago but have been neglecting this plugin" release.
+
+* **FLV:** Don't bundle JW's FLV Player with this plugin. It isn't GPL compatible. You'll now need to install it on your own.
+* **YouTube:** youtu.be short URL support.
+* **General:** Move SWFObject calls to the footer so `<!--nextpage-->` doesn't break this plugin.
+* **Localization:** Added Romanian translation thanks to Web Hosting Geeks.
 
 = v6.3.4 =
 
