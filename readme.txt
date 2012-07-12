@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= v6.4.2 =
+
+* **General:** Support SSL (`https://`) video URLs. Props [Tyrel Kelsey](http://ninnypants.com/) for the bug report.
+
 = v6.4.1 =
 
 * **FLV:** Don't disable the checkbox so that it can be unchecked to hide the message.
