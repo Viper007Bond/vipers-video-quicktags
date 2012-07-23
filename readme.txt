@@ -99,6 +99,10 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
+= July 23rd, 2012 (no version bump) ==
+
+* **Localization:** Updated Italian translation thanks to Gianni Diurno.
+
 = v6.4.2 =
 
 * **General:** Support SSL (`https://`) video URLs. Props [Tyrel Kelsey](http://ninnypants.com/) for the bug report.
