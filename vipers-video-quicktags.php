@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.4.2
+Version:      6.4.3
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.4.2';
+	var $version = '6.4.3';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -3635,29 +3635,45 @@ class VipersVideoQuicktags {
 			'useplaceholder' => 0,
 			'placeholder'    => str_replace( '.mov', '.jpg', $content ),
 			'controller'     => 1,
-
+			'bgcolor'        => '',
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
 		$atts = apply_filters( 'vvq_shortcodeatts', $atts, 'quicktime', $origatts );
 
+		$qt_args = array(
+			'scale' => 'aspect',
+		);
 
 		if ( 1 == $atts['useplaceholder'] && !empty($atts['placeholder']) ) {
 			$mov = $atts['placeholder'];
-			$href = ' myQTObject.addParam("href", "' . $content . '"); myQTObject.addParam("target", "myself");';
+			$qt_args['href'] = $content;
+			$qt_args['target'] = 'myself';
 		} else {
 			$mov = $content;
-			$href = '';
 		}
 
 		if ( 1 == $atts['autostart'] )
-			$autoplay = 'true';
+			$qt_args['autoplay'] = 'true';
 		else
-			$autoplay = ( 1 == $atts['autoplay'] ) ? 'true' : 'false';
+			$qt_args['autoplay'] = ( 1 == $atts['autoplay'] ) ? 'true' : 'false';
 
-		$controller = ( 1 == $atts['controller'] ) ? 'true' : 'false';
+		$qt_args['controller'] = ( 1 == $atts['controller'] ) ? 'true' : 'false';
 
-		return '<span class="vvqbox vvqquicktime" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><script type="text/javascript">var myQTObject = new QTObject("' . $mov . '", "' . $this->videoid('quicktime') . '", "' . $atts['width'] . '", "' . $atts['height'] . '");' . $href . ' myQTObject.addParam("autoplay", "' . $autoplay . '"); myQTObject.addParam("controller", "' . $controller . '"); myQTObject.addParam("scale", "aspect"); myQTObject.write();</script></span>';
+		if ( ! empty( $atts['bgcolor'] ) )
+			$qt_args['bgcolor'] = $atts['bgcolor'];
+
+		// Use this to inject extra myQTObject.addParam() entries
+		$qt_args = apply_filters( 'vvq_quicktime_args', $qt_args );
+
+		$html = '<span class="vvqbox vvqquicktime" style="width:' . esc_attr( $atts['width'] ) . 'px;height:' . esc_attr( $atts['height'] ) . 'px;"><script type="text/javascript">' . "var myQTObject = new QTObject( '" . esc_js( $mov ) . "', '" . esc_js( $this->videoid('quicktime') ) . "', '" . esc_js( $atts['width'] ) . "', '" . esc_js( $atts['height'] ) . "');";
+
+		foreach ( $qt_args as $name => $value )
+			$html .= " myQTObject.addParam( '" . esc_js( $name ) . "', '" . esc_js( $value ) . "' );";
+
+		$html .= ' myQTObject.write();</script></span>';
+
+		return $html;
 	}
 
 
