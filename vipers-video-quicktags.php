@@ -129,6 +129,7 @@ class VipersVideoQuicktags {
 				'hd'              => 0,
 				'previewurl'      => 'http://www.youtube.com/watch?v=zlfKdbWwruY',
 				'aspectratio'     => 1,
+				'api'             => 0,
 			),
 			'googlevideo' => array(
 				'button'          => 0,
@@ -464,7 +465,7 @@ class VipersVideoQuicktags {
 	// Add a link to the settings page to the plugins list
 	function AddPluginActionLink( $links, $file ) {
 		static $this_plugin;
-		
+
 		if( empty($this_plugin) ) $this_plugin = plugin_basename(__FILE__);
 
 		if ( $file == $this_plugin ) {
@@ -699,7 +700,7 @@ class VipersVideoQuicktags {
 		var VVQDialogDefaultHeight = 246;
 		var VVQDialogDefaultExtraHeight = 106;
 	}
-	
+
 	// This function is run when a button is clicked. It creates a dialog box for the user to input the data.
 	function VVQButtonClick( tag ) {
 
@@ -986,6 +987,7 @@ class VipersVideoQuicktags {
 				$usersettings['youtube']['showsearch']  = (int) $_POST['vvq-youtube-showsearch'];
 				$usersettings['youtube']['showinfo']    = (int) $_POST['vvq-youtube-showinfo'];
 				$usersettings['youtube']['aspectratio'] = (int) $_POST['vvq-youtube-aspectratio'];
+				$usersettings['youtube']['api']         = (int) $_POST['vvq-youtube-api'];
 
 				// Fill in an missing items with the defaults
 				if ( empty($usersettings['youtube']['previewurl']) ) $usersettings['youtube']['previewurl'] = $this->defaultsettings['youtube']['previewurl'];
@@ -1585,7 +1587,8 @@ class VipersVideoQuicktags {
 				<label><input type="checkbox" name="vvq-youtube-showsearch" id="vvq-youtube-showsearch" value="1"<?php checked($this->settings['youtube']['showsearch'], 1); ?> /> <?php _e('Show the search box', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-youtube-showinfo" id="vvq-youtube-showinfo" value="1"<?php checked($this->settings['youtube']['showinfo'], 1); ?> /> <?php _e('Show the video title and rating', 'vipers-video-quicktags'); ?></label><br />
 				<label><input type="checkbox" name="vvq-youtube-autoplay" id="vvq-youtube-autoplay" value="1"<?php checked($this->settings['youtube']['autoplay'], 1); ?> /> <?php _e('Autoplay video (not recommended)', 'vipers-video-quicktags'); ?></label><br />
-				<label><input type="checkbox" name="vvq-youtube-loop" id="vvq-youtube-loop" value="1"<?php checked($this->settings['youtube']['loop'], 1); ?> /> <?php _e('Loop video playback', 'vipers-video-quicktags'); ?></label>
+				<label><input type="checkbox" name="vvq-youtube-loop" id="vvq-youtube-loop" value="1"<?php checked($this->settings['youtube']['loop'], 1); ?> /> <?php _e('Loop video playback', 'vipers-video-quicktags'); ?></label><br />
+				<label><input type="checkbox" name="vvq-youtube-api" id="vvq-youtube-api" value="1"<?php checked($this->settings['youtube']['api'], 1); ?> /> <?php _e('Enable API', 'vipers-video-quicktags'); ?></label>
 			</td>
 		</tr>
 	</table>
@@ -2895,6 +2898,7 @@ class VipersVideoQuicktags {
 			'showsearch' => $this->settings['youtube']['showsearch'],
 			'showinfo'   => $this->settings['youtube']['showinfo'],
 			'hd'         => $this->settings['youtube']['hd'],
+			'api'        => $this->settings['youtube']['api'],
 		), $atts);
 
 		// Allow other plugins to modify these values (for example based on conditionals)
@@ -2947,8 +2951,10 @@ class VipersVideoQuicktags {
 			$fallbackcontent = '<img src="http://img.youtube.com/vi/' . $content . '/0.jpg" alt="' . __('YouTube Preview Image', 'vipers-video-quicktags') . '" />';
 		}
 
+		$objectid = $this->videoid('youtube');
+
 		// Setup the parameters
-		$color1 = $color2 = $border = $autoplay = $loop = $showsearch = $showinfo = $hd = '';
+		$color1 = $color2 = $border = $autoplay = $loop = $showsearch = $showinfo = $hd = $api = '';
 
 		if ( '' != $atts['color1'] && $this->defaultsettings['youtube']['color1'] != $atts['color1'] )
 			$color1 = '&color1=0x' . str_replace( '#', '', $atts['color1'] );
@@ -2968,23 +2974,25 @@ class VipersVideoQuicktags {
 		if ( $atts['hd'] )
 			$hd = '&hd=1';
 
+		if( $atts['api'])
+			$api = '&enablejsapi=1&version=3&playerapiid=' . $objectid;
+
+
 		$rel        = ( 1 == $atts['rel'] ) ? '1' : '0';
 		$fs         = ( 1 == $atts['fs'] ) ? '1' : '0';
 		$showsearch = ( 1 == $atts['showsearch'] ) ? '1' : '0';
 		$showinfo   = ( 1 == $atts['showinfo'] ) ? '1' : '0';
 
 
-		$objectid = $this->videoid('youtube');
-
 		// Hack until this plugin properly supports iframe-based embeds
 		if ( ! empty( $iframe ) ) {
-			return '<iframe class="vvqbox vvqyoutube" width="' . esc_attr( $atts['width'] ) . '" height="' . esc_attr( $atts['height'] ) . '" src="'. esc_url( $iframe . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop . $hd ) . '" frameborder="0" allowfullscreen></iframe>';
+			return '<iframe class="vvqbox vvqyoutube" width="' . esc_attr( $atts['width'] ) . '" height="' . esc_attr( $atts['height'] ) . '" src="'. esc_url( $iframe . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop . $hd . $api ) . '" frameborder="0" allowfullscreen></iframe>';
 		}
 
 		$this->swfobjects[$objectid] = array(
 			'width' => $atts['width'],
 			'height' => $atts['height'],
-			'url' => 'http://www.youtube.com/' . $embedpath . $color1 . $color2 . $border . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop . $hd,
+			'url' => 'http://www.youtube.com/' . $embedpath . $color1 . $color2 . $border . '&rel=' . $rel . '&fs=' . $fs . '&showsearch=' . $showsearch . '&showinfo=' . $showinfo . $autoplay . $loop . $hd . $api,
 		);
 
 		return '<span class="vvqbox vvqyoutube" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><a href="' . $fallbacklink . '">' . $fallbackcontent . '</a></span></span>';
