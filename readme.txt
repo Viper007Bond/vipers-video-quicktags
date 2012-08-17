@@ -4,7 +4,7 @@ Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
 Requires at least: 2.8
 Tested up to: 3.4
-Stable tag: trunk
+Stable tag: 6.4.3
 
 Allows easy and XHTML valid posting of videos from various websites such as YouTube, DailyMotion, Vimeo, and more.
 
@@ -98,6 +98,19 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == Changelog ==
+
+= v6.4.3 =
+
+* **Quicktime:** Control the background color via a new parameter (`bgcolor`) per request.
+* **Quicktime:** Rewrite of the Quicktime parameter functionality. Also a new filter for other plugins to be able to control these parameters.
+
+= July 23rd, 2012 (no version bump) ==
+
+* **Localization:** Updated Italian translation thanks to Gianni Diurno.
+
+= v6.4.2 =
+
+* **General:** Support SSL (`https://`) video URLs. Props [Tyrel Kelsey](http://ninnypants.com/) for the bug report.
 
 = v6.4.1 =
 
