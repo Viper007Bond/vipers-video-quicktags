@@ -306,6 +306,7 @@ class VipersVideoQuicktags {
 		add_action( 'admin_post_vvqsettings', array(&$this, 'POSTHandler') );
 		add_action( 'wp_head', array(&$this, 'Head') );
 		add_action( 'admin_head', array(&$this, 'Head') );
+		add_action( 'wp_print_footer_scripts', array(&$this, 'maybe_enqueue_swfobject'), 5 );
 		add_action( 'wp_footer', array(&$this, 'SWFObjectCalls'), 50 );
 		add_filter( 'widget_text', 'do_shortcode', 11 ); // Videos in the text widget
 
@@ -347,12 +348,13 @@ class VipersVideoQuicktags {
 			add_shortcode( 'wpvideo', array(&$this, 'shortcode_videopress') );
 
 		// Register other scripts and styles
-		wp_enqueue_script( 'swfobject' );
 		wp_register_script( 'qtobject', plugins_url('/vipers-video-quicktags/resources/qtobject.js'), array(), '1.0.2' );
 		if ( is_admin() ) {
 			// Settings page only
 			if ( isset($_GET['page']) && 'vipers-video-quicktags' == $_GET['page'] ) {
 				add_action( 'admin_head', array(&$this, 'StyleTweaks' ) );
+
+				wp_enqueue_script( 'swfobject' );
 
 				wp_enqueue_script( 'farbtastic' );
 				wp_enqueue_style( 'farbtastic' );
@@ -3768,6 +3770,15 @@ class VipersVideoQuicktags {
 		$this->swfobjects[$objectid] = array( 'width' => $atts['width'], 'height' => $atts['height'], 'url' => $content, 'flashvars' => $flashvars );
 
 		return '<span class="vvqbox vvqflash" style="width:' . $atts['width'] . 'px;height:' . $atts['height'] . 'px;"><span id="' . $objectid . '"><em>' . sprintf( __('Please <a href="%1$s">enable Javascript</a> and <a href="%2$s">Flash</a> to view this %3$s video.', 'vipers-video-quicktags'), 'http://www.google.com/support/bin/answer.py?answer=23852', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash', __('Flash', 'vipers-video-quicktags') ) . '</em></span></span>';
+	}
+
+
+	// This function tells WordPress to load the SWFObject JS file if SWFObjectCalls() is going to run
+	function maybe_enqueue_swfobject() {
+		if ( is_feed() || empty($this->swfobjects) )
+			return;
+
+		wp_enqueue_script( 'swfobject' );
 	}
 
 
