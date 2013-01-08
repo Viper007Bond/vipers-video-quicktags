@@ -892,7 +892,7 @@ class VipersVideoQuicktags {
 </div>
 <div id="vvq-precacher">
 	<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_right.gif') ); ?>" alt="" />
-	<img src="<?php echo esC_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_down.gif') ); ?>" alt="" />
+	<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_down.gif') ); ?>" alt="" />
 </div>
 <?php
 	}
