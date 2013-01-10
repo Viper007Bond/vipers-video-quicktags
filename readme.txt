@@ -4,7 +4,7 @@ Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
 Requires at least: 2.8
 Tested up to: 3.5
-Stable tag: 6.4.4
+Stable tag: 6.4.5
 
 Allows easy and XHTML valid posting of videos from various websites such as YouTube, DailyMotion, Vimeo, and more.
 
@@ -98,6 +98,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == Changelog ==
+
+= v6.4.5 =
+
+* **Security:** Better sanitization and validation of shortcode attributes to prevent low-access users from doing naughty things. Props Jacek. PS: This plugin badly needs a rewrite from scratch.
+* **General:** Only output SWFObject JavaScript if it's actually needed.
 
 = v6.4.4 =
 
@@ -530,5 +535,5 @@ This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A
 
 == Upgrade Notice ==
 
-= 6.4.4 =
-Updates to support new version of jQuery UI that is included in WordPress 3.5. Fixes dialog box not opening.
+= 6.4.5 =
+**Security:** Better sanitization and validation of shortcode attributes to prevent low-access users from doing naughty things. Props Jacek.

@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.4.4
+Version:      6.4.5
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -55,7 +55,7 @@ http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.4.4';
+	var $version = '6.4.5';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -3825,7 +3825,7 @@ class VipersVideoQuicktags {
 
 	// This function tells WordPress to load the SWFObject JS file if SWFObjectCalls() is going to run
 	function maybe_enqueue_swfobject() {
-		if ( is_feed() || empty($this->swfobjects) )
+		if ( is_feed() || empty( $this->swfobjects ) )
 			return;
 
 		wp_enqueue_script( 'swfobject' );
@@ -3834,7 +3834,7 @@ class VipersVideoQuicktags {
 
 	// Output the SWFObject calls that replace all of the placeholders created by the shortcode handlers with the Flash videos
 	function SWFObjectCalls() {
-		if ( is_feed() || empty($this->swfobjects) )
+		if ( is_feed() || empty( $this->swfobjects ) )
 			return;
 
 		// Abort if wp_head() is missing from the theme
