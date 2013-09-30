@@ -242,6 +242,7 @@ class VipersVideoQuicktags {
 			'tinymceline'         => 1,
 			'customcss'           => '',
 			'customfeedtext'      => '',
+			'disablelegacy'       => false,
 		) );
 		// Default customfeedtext. Change it via the settings page.
 		$this->customfeedtext = '<em>' . __( 'Click here to view the embedded video.', 'vipers-video-quicktags' ) . '</em>';
@@ -334,10 +335,12 @@ class VipersVideoQuicktags {
 		add_shortcode( 'quicktime', array(&$this, 'shortcode_quicktime') );
 		add_shortcode( 'flash', array(&$this, 'shortcode_flash') );
 		add_shortcode( 'videofile', array(&$this, 'shortcode_videofile') );
-		add_shortcode( 'video', array(&$this, 'shortcode_videofile') ); // Legacy
-		add_shortcode( 'avi', array(&$this, 'shortcode_videofile') ); // Legacy
-		add_shortcode( 'mpeg', array(&$this, 'shortcode_videofile') ); // Legacy
-		add_shortcode( 'wmv', array(&$this, 'shortcode_videofile') ); // Legacy
+		if ( !$this->settings['disablelegacy'] ) {
+			add_shortcode( 'video', array(&$this, 'shortcode_videofile') ); // Legacy
+			add_shortcode( 'avi', array(&$this, 'shortcode_videofile') ); // Legacy
+			add_shortcode( 'mpeg', array(&$this, 'shortcode_videofile') ); // Legacy
+			add_shortcode( 'wmv', array(&$this, 'shortcode_videofile') ); // Legacy
+		}
 
 		// Anarchy Media Plugin / Kimili Flash Embed support but only if those plugins aren't enabled
 		if ( !class_exists('KimiliFlashEmbed') && !function_exists('kml_flashembed') && !isset($shortcode_tags['kml_flashembed']) )
@@ -466,7 +469,7 @@ class VipersVideoQuicktags {
 	// Add a link to the settings page to the plugins list
 	function AddPluginActionLink( $links, $file ) {
 		static $this_plugin;
-		
+
 		if( empty($this_plugin) ) $this_plugin = plugin_basename(__FILE__);
 
 		if ( $file == $this_plugin ) {
@@ -701,7 +704,7 @@ class VipersVideoQuicktags {
 		var VVQDialogDefaultHeight = 246;
 		var VVQDialogDefaultExtraHeight = 106;
 	}
-	
+
 	// This function is run when a button is clicked. It creates a dialog box for the user to input the data.
 	function VVQButtonClick( tag ) {
 
@@ -960,6 +963,7 @@ class VipersVideoQuicktags {
 				$usersettings['customfeedtext']           = trim( $_POST['vvq-customfeedtext'] );
 				$usersettings['videofile']['usewmp']      = (int) $_POST['vvq-videofile-usewmp'];
 				$usersettings['quicktime']['dynamicload'] = (int) $_POST['vvq-quicktime-dynamicload'];
+				$usersettings['disablelegacy']            = isset( $_POST['vvq-disablelegacy'] );
 
 				if ( empty($wpmu_version) )
 					$usersettings['customcss']            = trim( strip_tags( $_POST['vvq-customcss'] ) );
@@ -1998,7 +2002,7 @@ class VipersVideoQuicktags {
 			<td>
 				<input type="text" name="vvq-flv-width" id="vvq-width" size="3" value="<?php echo esc_attr($this->settings['flv']['width']); ?>" /> &#215;
 				<input type="text" name="vvq-flv-height" id="vvq-height" size="3" value="<?php echo esc_attr($this->settings['flv']['height']); ?>" />
-				<?php _e("pixels (if you're using the default skin, add 20 to the height for the control bar)", 'vipers-video-quicktags'); ?> 
+				<?php _e("pixels (if you're using the default skin, add 20 to the height for the control bar)", 'vipers-video-quicktags'); ?>
 				<input type="hidden" id="vvq-aspectratio" value="0" />
 				<input type="hidden" id="vvq-width-default" value="<?php echo esc_attr($this->defaultsettings['flv']['width']); ?>" />
 				<input type="hidden" id="vvq-height-default" value="<?php echo esc_attr($this->defaultsettings['flv']['height']); ?>" />
@@ -2175,6 +2179,14 @@ class VipersVideoQuicktags {
 					?></pre>
 					<textarea name="vvq-customcss" id="vvq-customcss" cols="60" rows="10" style="font-size: 12px;" class="vvqwide code"><?php echo esc_attr( $this->settings['customcss'] ); ?></textarea>
 				</div>
+			</td>
+		</tr>
+<?php endif; ?>
+<?php if ( version_compare('3.6', get_bloginfo( 'version' ), '<=' ) ) : ?>
+		<tr valign="top">
+			<th scope="row"><label for="vvq-disablelegacy"><?php _e('Disable legacy shortcodes', 'vipers-video-quicktags'); ?></label></th>
+			<td>
+				<label><input type="checkbox" name="vvq-disablelegacy" id="vvq-disablelegacy" value="1"<?php checked($this->settings['disablelegacy'], 1); ?> /></label>
 			</td>
 		</tr>
 <?php endif; ?>
