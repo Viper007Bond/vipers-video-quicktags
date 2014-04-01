@@ -5,7 +5,7 @@
 Plugin Name:  Viper's Video Quicktags
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/
 Description:  Easily embed videos from various video websites such as YouTube, DailyMotion, and Vimeo into your posts.
-Version:      6.4.5
+Version:      6.5.0
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -26,36 +26,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-**************************************************************************
-
-In short, this plugin is free to use by anyone and everyone. You are
-welcome to use it on a commercial site or whatever you want. However, I do
-very much appreciate donations for all of my time and effort, although
-they obviously aren't required for you to use this plugin. You can even
-just buy me a beer ( http://www.viper007bond.com/donate/ ).
-
-If you sell this code (i.e. are a web developer selling features provided
-via this plugin to clients), it would be very nice if you threw some of
-your profits my way. After all, you are profiting off my hard work. ;)
-
-Thanks and enjoy this plugin!
-
-**************************************************************************
-
-If you're here looking for how to add support for both TinyMCE 2 and
-TinyMCE 3 buttons, then you'll need to check out the legacy version
-of this plugin. The version you are looking at only supports
-WordPress 2.6 and newer to keep the code of this plugin
-siginificantly simpler as well as encourage people to update.
-
-The legacy version can be found here:
-
-http://downloads.wordpress.org/plugin/vipers-video-quicktags.5.4.4.zip
-
 **************************************************************************/
 
 class VipersVideoQuicktags {
-	var $version = '6.4.5';
+	var $version = '6.5.0';
 	var $settings = array();
 	var $defaultsettings = array();
 	var $swfobjects = array();
@@ -1199,34 +1173,8 @@ class VipersVideoQuicktags {
 
 <div class="wrap">
 
-	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-	<input type="hidden" name="cmd" value="_donations" />
-	<input type="hidden" name="business" value="paypal@viper007bond.com" />
-	<input type="hidden" name="item_name" value="<?php echo esc_attr( __("Viper's Video Quicktags", 'vipers-video-quicktags') ); ?>" />
-	<input type="hidden" name="no_shipping" value="1" />
-	<input type="hidden" name="return" value="http://www.viper007bond.com/donation-thanks/" />
-	<input type="hidden" name="cancel_return" value="http://www.viper007bond.com/wordpress-plugins/vipers-video-quicktags/" />
-	<input type="hidden" name="cn" value="<?php echo esc_attr( __('Optional Comment', 'vipers-video-quicktags') ); ?>" />
-	<input type="hidden" name="currency_code" value="USD" />
-	<input type="hidden" name="tax" value="0" />
-	<input type="hidden" name="lc" value="US" />
-	<input type="hidden" name="bn" value="PP-DonationsBF" />
-
-<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
-	<h2>
-<?php
-
-	_e("Viper's Video Quicktags", 'vipers-video-quicktags');
-
-	// Want to get rid of the donate button? Alright, if you insist. :(
-	// Use the "vvq_donatebutton" filter to return FALSE and it'll go away (much better than editing this file).
-	if ( TRUE === apply_filters( 'vvq_donatebutton', TRUE ) )
-		echo '		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but04.gif" name="submit" alt="Donate" title="' . esc_attr( __('Donate to Viper007Bond for this plugin via PayPal', 'vipers-video-quicktags') ) . '" style="vertical-align:middle;" />' . "\n";
-
-?>
-	</h2>
-
-	</form>
+	<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
+	<h2><?php _e( "Viper's Video Quicktags", 'vipers-video-quicktags' ); ?></h2>
 
 	<ul class="subsubsub">
 <?php
