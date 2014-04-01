@@ -340,7 +340,7 @@ class VipersVideoQuicktags {
 				add_action( 'admin_footer', array(&$this, 'OutputjQueryDialogDiv') );
 
 				wp_enqueue_script( 'jquery-ui-dialog' );
-				wp_enqueue_style( 'vvq-jquery-ui', plugins_url('/vipers-video-quicktags/resources/vvq-jquery-ui.css'), array(), $this->version, 'screen' );
+				wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 				// Register editor button hooks
 				add_filter( 'tiny_mce_version', array(&$this, 'tiny_mce_version') );
@@ -667,35 +667,17 @@ class VipersVideoQuicktags {
 	var VVQData = {};
 <?php echo $datajs; ?>
 
-	// Set default heights (IE sucks)
-	if ( jQuery.browser.msie ) {
-		var VVQDialogDefaultHeight = 254;
-		var VVQDialogDefaultExtraHeight = 114;
-	} else {
-		var VVQDialogDefaultHeight = 246;
-		var VVQDialogDefaultExtraHeight = 106;
-	}
-	
+
 	// This function is run when a button is clicked. It creates a dialog box for the user to input the data.
 	function VVQButtonClick( tag ) {
 
 		// Close any existing copies of the dialog
 		VVQDialogClose();
 
-		// Calculate the height/maxHeight (i.e. add some height for Blip.tv)
-		VVQDialogHeight = VVQDialogDefaultHeight;
-		VVQDialogMaxHeight = VVQDialogDefaultHeight + VVQDialogDefaultExtraHeight;
-		if ( "bliptv" == tag ) {
-			VVQDialogHeight = VVQDialogDefaultHeight + 16;
-			VVQDialogMaxHeight = VVQDialogMaxHeight + 16;
-		} else if ( "viddler" == tag ) {
-			VVQDialogMaxHeight = VVQDialogDefaultHeight;
-		}
-
 		// Open the dialog while setting the width, height, title, buttons, etc. of it
 		var buttons = { "<?php echo esc_js('Okay', 'vipers-video-quicktags'); ?>": VVQButtonOkay, "<?php echo esc_js('Cancel', 'vipers-video-quicktags'); ?>": VVQDialogClose };
-		var title = '<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/buttons/') ); ?>' + tag + '.png" alt="' + tag + '" width="20" height="20" /> ' + VVQData[tag]["title"];
-		jQuery("#vvq-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, height: VVQDialogHeight, minHeight: VVQDialogHeight, maxHeight: VVQDialogMaxHeight, title: title, buttons: buttons, resize: VVQDialogResizing });
+		var title = VVQData[tag]["title"];
+		jQuery("#vvq-dialog").dialog({ autoOpen: false, width: 750, minWidth: 750, title: title, buttons: buttons });
 
 		// Reset the dialog box incase it's been used before
 		jQuery("#vvq-dialog-slide-header").removeClass("selected");
@@ -732,13 +714,13 @@ class VipersVideoQuicktags {
 		jQuery("#vvq-dialog-input").focus();
 	}
 
-	// Close + reset
+	// Close
 	function VVQDialogClose() {
-		jQuery(".ui-dialog").height(VVQDialogDefaultHeight);
-
-		if ( jQuery('#vvq-dialog').dialog('isOpen') )
+		if (jQuery('#vvq-dialog').dialog('isOpen')) {
 			jQuery("#vvq-dialog").dialog("close");
+		}
 	}
+
 
 	// Callback function for the "Okay" button
 	function VVQButtonOkay() {
@@ -765,43 +747,17 @@ class VipersVideoQuicktags {
 				ed.selection.moveToBookmark(tinymce.EditorManager.activeEditor.windowManager.bookmark);
 
 			ed.execCommand('mceInsertContent', false, text);
-		} else
+		} else {
 			edInsertContent(edCanvas, text);
+		}
 
 		VVQDialogClose();
-	}
-
-	// This function is called while the dialog box is being resized.
-	function VVQDialogResizing( test ) {
-		if ( jQuery(".ui-dialog").height() > VVQDialogHeight ) {
-			jQuery("#vvq-dialog-slide-header").addClass("selected");
-		} else {
-			jQuery("#vvq-dialog-slide-header").removeClass("selected");
-		}
 	}
 
 	// On page load...
 	jQuery(document).ready(function(){
 		// Add the buttons to the HTML view
 		jQuery("#ed_toolbar").append('<?php echo $this->esc_js( $buttonshtml ); ?>');
-
-		// Make the "Dimensions" bar adjust the dialog box height
-		jQuery("#vvq-dialog-slide-header").click(function(){
-			var slide = jQuery('#vvq-dialog-slide');
-
-			if ( jQuery(this).hasClass("selected") ) {
-				jQuery(this).removeClass("selected");
-				jQuery(this).parents(".ui-dialog").animate({ height: VVQDialogHeight }, function(){
-					if ( !slide.hasClass('hidden') )
-						slide.hide();
-				});
-			} else {
-				jQuery(this).addClass("selected");
-				jQuery(this).parents(".ui-dialog").animate({ height: VVQDialogMaxHeight });
-				if ( !slide.hasClass('hidden') )
-					slide.show();
-			}
-		});
 
 		// If the Enter key is pressed inside an input in the dialog, do the "Okay" button event
 		jQuery("#vvq-dialog :input").keyup(function(event){
@@ -856,7 +812,7 @@ class VipersVideoQuicktags {
 			<p><input type="text" id="vvq-dialog-input" style="width:98%" /></p>
 			<input type="hidden" id="vvq-dialog-tag" />
 		</div>
-		<div id="vvq-dialog-slide-header" class="vvq-dialog-slide ui-dialog-titlebar"><?php _e('Dimensions', 'vipers-video-quicktags'); ?></div>
+		<h3 id="vvq-dialog-slide-header" class="vvq-dialog-slide"><?php _e('Dimensions', 'vipers-video-quicktags'); ?></h3>
 		<div id="vvq-dialog-slide" class="vvq-dialog-slide vvq-dialog-content">
 			<p><?php printf( __("The default dimensions for this video type can be set on this plugin's <a href='%s'>settings page</a>. However, you can set custom dimensions for this one particular video here:", 'vipers-video-quicktags'), admin_url('options-general.php?page=vipers-video-quicktags') ); ?></p>
 			<p><input type="text" id="vvq-dialog-width" class="vvq-dialog-dim" style="width:50px" /> &#215; <input type="text" id="vvq-dialog-height" class="vvq-dialog-dim" style="width:50px" /> pixels</p>
