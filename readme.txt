@@ -99,10 +99,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 
 == Changelog ==
 
-= v6.5 =
+= v6.5.0 =
 
 * **TinyMCE:** WordPress 3.9 (TinyMCE 4.0) compatibility.
-* **General:** Dump the donate button. I meant to remove this years ago but kept forgetting. I'm lucky enough to work for Automattic and no longer need to the rare donation that this button brings.
+* **Editor:** Switch to native dialog box styling and drop the variable height functionality. It was too complicated to be worth it.
+* **General:** Remove the donate button. I meant to remove this years ago but kept forgetting. I'm lucky enough to work for Automattic and no longer need to the rare donation that this button brings.
 
 = v6.4.5 =
 
