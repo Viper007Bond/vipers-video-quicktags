@@ -3067,7 +3067,7 @@ class VipersVideoQuicktags {
 		$byline     = ( 1 == $atts['byline'] )     ? '1' : '0';
 		$fullscreen = ( 1 == $atts['fullscreen'] ) ? '1' : '0';
 
-		$iframeurl = 'http://player.vimeo.com/video/' . $videoid;
+		$iframeurl = '//player.vimeo.com/video/' . $videoid;
 		foreach ( array( 'title', 'byline', 'portrait', 'fullscreen' ) as $attribute ) {
 			$iframeurl = add_query_arg( $attribute, $$attribute, $iframeurl );
 		}
