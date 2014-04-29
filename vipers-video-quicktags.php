@@ -322,7 +322,7 @@ class VipersVideoQuicktags {
 			add_shortcode( 'wpvideo', array(&$this, 'shortcode_videopress') );
 
 		// Register other scripts and styles
-		wp_register_script( 'qtobject', plugins_url('/vipers-video-quicktags/resources/qtobject.js'), array(), '1.0.2' );
+		wp_register_script( 'qtobject', plugins_url( 'resources/qtobject.js', __FILE__ ), array(), '1.0.2' );
 		if ( is_admin() ) {
 			// Settings page only
 			if ( isset($_GET['page']) && 'vipers-video-quicktags' == $_GET['page'] ) {
@@ -492,7 +492,7 @@ class VipersVideoQuicktags {
 
 	// Load the custom TinyMCE plugin
 	function mce_external_plugins( $plugins ) {
-		$plugins['vipersvideoquicktags'] = add_query_arg( 'ver', $this->version, plugins_url( '/vipers-video-quicktags/resources/tinymce3/editor_plugin.js' ) );
+		$plugins['vipersvideoquicktags'] = add_query_arg( 'ver', $this->version, plugins_url( 'resources/tinymce3/editor_plugin.js', __FILE__ ) );
 		return $plugins;
 	}
 
@@ -797,8 +797,8 @@ class VipersVideoQuicktags {
 	</div>
 </div>
 <div id="vvq-precacher" style="display:none">
-	<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_right.gif') ); ?>" alt="" />
-	<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_down.gif') ); ?>" alt="" />
+	<img src="<?php echo esc_url( plugins_url( 'resources/images/333333_7x7_arrow_right.gif', __FILE__ ) ); ?>" alt="" />
+	<img src="<?php echo esc_url( plugins_url( 'resources/images/333333_7x7_arrow_down.gif', __FILE__ ) ); ?>" alt="" />
 </div>
 <?php
 	}
@@ -1072,7 +1072,7 @@ class VipersVideoQuicktags {
 	.vvq-swatch {
 		padding: 2px 10px;
 		cursor: pointer;
-		background: transparent url('<?php echo plugins_url('/vipers-video-quicktags/resources/images/color_wheel.png'); ?>') top left no-repeat;
+		background: transparent url('<?php echo esc_url( plugins_url( 'resources/images/color_wheel.png', __FILE__ ) ); ?>') top left no-repeat;
 	}
 	.vvq-preset {
 		float: left;
@@ -1185,7 +1185,7 @@ class VipersVideoQuicktags {
 			var vvqflashvars = {};
 			var vvqparams = { wmode: "transparent", allowfullscreen: "true", allowscriptaccess: "always" };
 			var vvqattributes = {};
-			var vvqexpressinstall = "<?php echo plugins_url('/vipers-video-quicktags/resources/expressinstall.swf'); ?>";
+			var vvqexpressinstall = "<?php echo plugins_url( 'resources/expressinstall.swf', __FILE__ ); ?>";
 
 
 			/* Color picker code based on code stolen with permission from Ozh's "Liz Comment Counter" */
@@ -2118,14 +2118,14 @@ class VipersVideoQuicktags {
 			<p class="vvq-help-title"><?php _e('Where do I get the code from to embed a Viddler video?', 'vipers-video-quicktags'); ?></p>
 			<div>
 				<p><?php _e('Since the URL to a video on Viddler has nothing in common with the embed URL, you must use WordPress.com-style format. Go to the video on Viddler, click the &quot;Embed This&quot; button below the video, and then select the WordPress.com format. You can paste that code directly into a post or Page and it will embed the video.', 'vipers-video-quicktags'); ?></p>
-				<p><img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/help_viddler.png') ); ?>" alt="<?php esc_attr_e('Viddler', 'vipers-video-quicktags'); ?>" width="572" height="543" /></p>
+				<p><img src="<?php echo esc_url( plugins_url( 'resources/images/help_viddler.png', __FILE__ ) ); ?>" alt="<?php esc_attr_e('Viddler', 'vipers-video-quicktags'); ?>" width="572" height="543" /></p>
 			</div>
 		</li>
 		<li id="vvq-bliptvhelp">
 			<p class="vvq-help-title"><?php _e('Where do I get the code from to embed a Blip.tv video?', 'vipers-video-quicktags'); ?></p>
 			<div>
 				<p><?php _e('Since the URL to a video on Blip.tv has nothing in common with the embed URL, you must use WordPress.com-style format. Go to the video on Blip.tv, click on the yellow &quot;Share&quot; dropdown to the right of the video and select &quot;Embed&quot;. Next select &quot;WordPress.com&quot; from the &quot;Show Player&quot; dropdown. Finally press &quot;Go&quot;. You can paste that code directly into a post or Page and it will embed the video.', 'vipers-video-quicktags'); ?></p>
-				<p><img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/help_bliptv.png') ); ?>" alt="<?php esc_attr_e('Blip.tv', 'vipers-video-quicktags'); ?>" width="317" height="240" /></p>
+				<p><img src="<?php echo esc_url( plugins_url( 'resources/images/help_bliptv.png', __FILE__ ) ); ?>" alt="<?php esc_attr_e('Blip.tv', 'vipers-video-quicktags'); ?>" width="317" height="240" /></p>
 				<p><?php _e('<strong>NOTE:</strong> Ignore the warning message. This plugin adds support for the WordPress.com so it <strong>will</strong> work on your blog.', 'vipers-video-quicktags'); ?></p>
 			</div>
 		</li>
@@ -2355,7 +2355,7 @@ class VipersVideoQuicktags {
 		<li><?php printf( __('<strong>Spanish:</strong> %s', 'vipers-video-quicktags'), '<a href="http://equipajedemano.info/">Omi</a>' ); ?></li>
 	</ul>
 
-	<p><?php printf( __('If you\'d like to use this plugin in another language and have your name listed here, just translate the strings in the provided <a href="%1$s">template file</a> located in this plugin\'s &quot;<code>localization</code>&quot; folder and then <a href="%2$s">send it to me</a>. For help, see the <a href="%3$s">WordPress Codex</a>.', 'vipers-video-quicktags'), plugins_url('/vipers-video-quicktags/localization/_vipers-video-quicktags-template.po'), 'http://www.viper007bond.com/contact/', 'http://codex.wordpress.org/Translating_WordPress' ); ?></p>
+	<p><?php printf( __('If you\'d like to use this plugin in another language and have your name listed here, just translate the strings in the provided <a href="%1$s">template file</a> located in this plugin\'s &quot;<code>localization</code>&quot; folder and then <a href="%2$s">send it to me</a>. For help, see the <a href="%3$s">WordPress Codex</a>.', 'vipers-video-quicktags'), plugins_url( 'localization/_vipers-video-quicktags-template.po', __FILE__ ), 'http://www.viper007bond.com/contact/', 'http://codex.wordpress.org/Translating_WordPress' ); ?></p>
 
 <?php
 			break; // End credits
@@ -2632,7 +2632,7 @@ class VipersVideoQuicktags {
 	var vvqflashvars = {};
 	var vvqparams = { wmode: "opaque", allowfullscreen: "true", allowscriptaccess: "always" };
 	var vvqattributes = {};
-	var vvqexpressinstall = "<?php echo plugins_url('/vipers-video-quicktags/resources/expressinstall.swf'); ?>";
+	var vvqexpressinstall = "<?php echo plugins_url( 'resources/expressinstall.swf', __FILE__ ); ?>";
 // ]]>
 </script>
 <?php
