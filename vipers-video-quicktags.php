@@ -336,7 +336,6 @@ class VipersVideoQuicktags {
 
 			// Editor pages only
 			if ( in_array( basename($_SERVER['PHP_SELF']), apply_filters( 'vvq_editor_pages', array('post-new.php', 'page-new.php', 'post.php', 'page.php') ) ) ) {
-				add_action( 'admin_head', array(&$this, 'EditorCSS') );
 				add_action( 'admin_footer', array(&$this, 'OutputjQueryDialogDiv') );
 
 				wp_enqueue_script( 'jquery-ui-dialog' );
@@ -493,7 +492,7 @@ class VipersVideoQuicktags {
 
 	// Load the custom TinyMCE plugin
 	function mce_external_plugins( $plugins ) {
-		$plugins['vipersvideoquicktags'] = plugins_url('/vipers-video-quicktags/resources/tinymce3/editor_plugin.js');
+		$plugins['vipersvideoquicktags'] = add_query_arg( 'ver', $this->version, plugins_url( '/vipers-video-quicktags/resources/tinymce3/editor_plugin.js' ) );
 		return $plugins;
 	}
 
@@ -502,51 +501,6 @@ class VipersVideoQuicktags {
 	function mce_buttons( $buttons ) {
 		array_push( $buttons, 'vvqYouTube', 'vvqGoogleVideo', 'vvqDailyMotion', 'vvqVimeo', 'vvqVeoh', 'vvqViddler', 'vvqMetacafe', 'vvqBlipTV', 'vvqFlickrVideo', 'vvqSpike', 'vvqMySpace', 'vvqFLV', 'vvqQuicktime', 'vvqVideoFile' );
 		return $buttons;
-	}
-
-
-	// Hide TinyMCE buttons the user doesn't want to see + some misc editor CSS
-	function EditorCSS() {
-		global $user_id;
-
-		echo "<style type='text/css'>\n	#vvq-precacher { display: none; }\n";
-
-		// Attempt to match the dialog box to the admin colors
-		if ( 'classic' == get_user_option('admin_color', $user_id) ) {
-			$color = '#093E56';
-			$background = '#EAF2FA';
-		} else {
-			$color = '#464646';
-			$background = '#DFDFDF';
-		}
-		// Allow plugins with custom admin colors to set their own colors
-		$color      = apply_filters( 'vvq_titlebarcolor',      $color );
-		$background = apply_filters( 'vvq_titlebarbackground', $background );
-
-		echo "	.ui-dialog-titlebar { color: $color; background: $background; }\n";
-
-		$buttons2hide = array();
-		if ( 1 != $this->settings['youtube']['button'] )     $buttons2hide[] = 'YouTube';
-		if ( 1 != $this->settings['googlevideo']['button'] ) $buttons2hide[] = 'GoogleVideo';
-		if ( 1 != $this->settings['dailymotion']['button'] ) $buttons2hide[] = 'DailyMotion';
-		if ( 1 != $this->settings['vimeo']['button'] )       $buttons2hide[] = 'Vimeo';
-		if ( 1 != $this->settings['veoh']['button'] )        $buttons2hide[] = 'Veoh';
-		if ( 1 != $this->settings['viddler']['button'] )     $buttons2hide[] = 'Viddler';
-		if ( 1 != $this->settings['metacafe']['button'] )    $buttons2hide[] = 'Metacafe';
-		if ( 1 != $this->settings['bliptv']['button'] )      $buttons2hide[] = 'BlipTV';
-		if ( 1 != $this->settings['flickrvideo']['button'] ) $buttons2hide[] = 'FlickrVideo';
-		if ( 1 != $this->settings['spike']['button'] )       $buttons2hide[] = 'Spike';
-		if ( 1 != $this->settings['myspace']['button'] )     $buttons2hide[] = 'MySpace';
-		if ( 1 != $this->settings['quicktime']['button'] )   $buttons2hide[] = 'Quicktime';
-		if ( 1 != $this->settings['videofile']['button'] )   $buttons2hide[] = 'VideoFile';
-
-		if ( 1 != $this->settings['flv']['button'] || ! $this->is_jw_flv_player_installed() )
-			$buttons2hide[] = 'FLV';
-
-		if ( ! empty( $buttons2hide ) )
-			echo '	.mce_vvq' . implode( ', .mce_vvq', $buttons2hide ) . " { display: none !important; }\n";
-
-		echo "</style>\n";
 	}
 
 
@@ -641,13 +595,6 @@ class VipersVideoQuicktags {
 
 		$buttonshtml = $datajs = '';
 		foreach ( $this->buttons as $type => $strings ) {
-			if ( 'flv' == $type && ! $this->is_jw_flv_player_installed() )
-				continue;
-
-			// HTML for quicktag button
-			if ( 1 == $this->settings[$type]['button'] )
-				$buttonshtml .= '<input type="button" class="ed_button" onclick="VVQButtonClick(\'' . $type . '\')" title="' . $strings[1] . '" value="' . $strings[0] . '" />';
-
 			// Create the data array
 			$datajs .= "	VVQData['$type'] = {\n";
 			$datajs .= '		title: "' . $this->esc_js( ucwords( $strings[1] ) ) . '",' . "\n";
@@ -658,6 +605,13 @@ class VipersVideoQuicktags {
 				$datajs .= '		height: ' . $this->settings[$type]['height'];
 			}
 			$datajs .= "\n	};\n";
+
+			if ( 'flv' == $type && ! $this->is_jw_flv_player_installed() )
+				continue;
+
+			// HTML for quicktag button
+			if ( 1 == $this->settings[$type]['button'] )
+				$buttonshtml .= '<input type="button" class="ed_button" onclick="VVQButtonClick(\'' . $type . '\')" title="' . $strings[1] . '" value="' . $strings[0] . '" />';
 		}
 
 		?>
@@ -666,6 +620,28 @@ class VipersVideoQuicktags {
 	// Video data
 	var VVQData = {};
 <?php echo $datajs; ?>
+
+<?php
+	 	$buttons = array();
+		if ( 1 == $this->settings['youtube']['button'] )     $buttons['youtube'] = true;
+		if ( 1 == $this->settings['googlevideo']['button'] ) $buttons['googlevideo'] = true;
+		if ( 1 == $this->settings['dailymotion']['button'] ) $buttons['dailymotion'] = true;
+		if ( 1 == $this->settings['vimeo']['button'] )       $buttons['vimeo'] = true;
+		if ( 1 == $this->settings['veoh']['button'] )        $buttons['veoh'] = true;
+		if ( 1 == $this->settings['viddler']['button'] )     $buttons['viddler'] = true;
+		if ( 1 == $this->settings['metacafe']['button'] )    $buttons['metacafe'] = true;
+		if ( 1 == $this->settings['bliptv']['button'] )      $buttons['bliptv'] = true;
+		if ( 1 == $this->settings['flickrvideo']['button'] ) $buttons['flickrvideo'] = true;
+		if ( 1 == $this->settings['spike']['button'] )       $buttons['spike'] = true;
+		if ( 1 == $this->settings['myspace']['button'] )     $buttons['myspace'] = true;
+		if ( 1 == $this->settings['quicktime']['button'] )   $buttons['quicktime'] = true;
+		if ( 1 == $this->settings['videofile']['button'] )   $buttons['videofile'] = true;
+
+		if ( 1 == $this->settings['flv']['button'] && $this->is_jw_flv_player_installed() )
+			$buttons['flv'] = true;
+
+?>
+	var VVQButtons = <?php echo json_encode( (object) $buttons ); ?>;
 
 
 	// This function is run when a button is clicked. It creates a dialog box for the user to input the data.
@@ -820,7 +796,7 @@ class VipersVideoQuicktags {
 		</div>
 	</div>
 </div>
-<div id="vvq-precacher">
+<div id="vvq-precacher" style="display:none">
 	<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_right.gif') ); ?>" alt="" />
 	<img src="<?php echo esc_url( plugins_url('/vipers-video-quicktags/resources/images/333333_7x7_arrow_down.gif') ); ?>" alt="" />
 </div>
