@@ -1,6 +1,5 @@
 === Viper's Video Quicktags ===
 Contributors: Viper007Bond
-Donate link: http://www.viper007bond.com/donate/
 Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
 Requires at least: 2.8
 Tested up to: 3.9
@@ -87,10 +86,6 @@ Yes, it does. Included in the `localization` folder is the translation template 
 
 This is a free plugin and as such, you aren't guaranteed support. However I do my best to answer support questions. Just post on the [WordPress.org support forums](http://wordpress.org/tags/vipers-video-quicktags).
 
-= I love your plugin! Can I donate to you? =
-
-Sure! I do this in my free time and I appreciate all donations that I get. It makes me want to continue to update this plugin. You can find more details on [my donate page](http://www.viper007bond.com/donate/).
-
 == Screenshots ==
 
 1. TinyMCE, the plugin's buttons, and the plugin's dialog window.
@@ -98,6 +93,11 @@ Sure! I do this in my free time and I appreciate all donations that I get. It ma
 2. DailyMotion configuration page with Farbtastic color picker showing.
 
 == Changelog ==
+
+= v6.5.1 =
+
+* **Editor:** Actually hide buttons in TinyMCE that have been disabled rather than showing all of them.
+* **General:** Code improvements around having the plugin in a different location.
 
 = v6.5.0 =
 
