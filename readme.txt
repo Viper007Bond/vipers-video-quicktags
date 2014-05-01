@@ -94,6 +94,10 @@ This is a free plugin and as such, you aren't guaranteed support. However I do m
 
 == Changelog ==
 
+= v6.5.2 =
+
+* **Editor:** Don't try to load the jQuery Dialog images that were removed in v6.5.1 in favor of WordPress core's styling.
+
 = v6.5.1 =
 
 * **Editor:** Actually hide buttons in TinyMCE that have been disabled rather than showing all of them.
