@@ -434,7 +434,7 @@ class VipersVideoQuicktags {
 	public function all_admin_notices_discontinued_plugin() {
 		global $hook_suffix;
 
-		if ( current_user_can( 'ainstall_plugins' ) ) {
+		if ( current_user_can( 'install_plugins' ) ) {
 			echo '<div class="notice notice-warning"><p>';
 			printf(
 				__( '<strong>A message from the developer of Viper\'s Video Quicktags:</strong> My plugin, the one you are using, has been <strong>discontinued</strong>. It is recommended that you install <a href="%1$s">the migration plugin</a> which will allow you to disable and remove Viper\'s Video Quicktags without embeds in old posts breaking. For further details, please see <a href="%2$s">this post on my blog</a>.', 'vipers-video-quicktags' ),
