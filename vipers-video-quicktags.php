@@ -275,6 +275,7 @@ class VipersVideoQuicktags {
 		}
 
 		// Register general hooks
+		add_action( 'all_admin_notices', array( $this, 'all_admin_notices_discontinued_plugin' ) );
 		add_action( 'admin_menu', array($this, 'RegisterSettingsPage') );
 		add_filter( 'plugin_action_links', array($this, 'AddPluginActionLink'), 10, 2 );
 		add_action( 'admin_post_vvqsettings', array($this, 'POSTHandler') );
@@ -421,6 +422,42 @@ class VipersVideoQuicktags {
 			'stijl'          => __('Stijl', 'vipers-video-quicktags'),
 			'traganja'       => __('Traganja', 'vipers-video-quicktags'),
 		) );
+	}
+
+
+	/**
+	 * This plugin has been discontinued.
+	 *
+	 * If the current user can install plugins, display a message on all admin pages.
+	 * If they can't, only display a message on the plugin management screen and the VVQ settings page.
+	 */
+	public function all_admin_notices_discontinued_plugin() {
+		global $hook_suffix;
+
+		if ( current_user_can( 'ainstall_plugins' ) ) {
+			echo '<div class="notice notice-warning"><p>';
+			printf(
+				__( '<strong>A message from the developer of Viper\'s Video Quicktags:</strong> My plugin, the one you are using, has been <strong>discontinued</strong>. It is recommended that you install <a href="%1$s">the migration plugin</a> which will allow you to disable and remove Viper\'s Video Quicktags without embeds in old posts breaking. For further details, please see <a href="%2$s">this post on my blog</a>.', 'vipers-video-quicktags' ),
+				add_query_arg(
+					array_map( 'urlencode', array(
+						's'    => "Viper's Video Quicktags Migrator",
+						'tab'  => 'search',
+						'type' => 'term',
+					) ),
+					admin_url( 'plugin-install.php' )
+				),
+				'http://www.viper007bond.com/2016/07/04/vipers-video-quicktags-wordpress-plugin-discontinued/'
+			);
+			echo "</p></div>\n";
+		}
+		elseif ( in_array( $hook_suffix, array( 'settings_page_vipers-video-quicktags', 'plugins.php' ) ) ) {
+			echo '<div class="notice notice-warning"><p>';
+			printf(
+				__( '<strong>A message from the developer of Viper\'s Video Quicktags:</strong> My plugin, the one you are using, has been <strong>discontinued</strong>. Please contact the person that manages this website and direct them to <a href="%s">this post on my blog</a>.', 'vipers-video-quicktags' ),
+				'http://www.viper007bond.com/2016/07/04/vipers-video-quicktags-wordpress-plugin-discontinued/'
+			);
+			echo "</p></div>\n";
+		}
 	}
 
 
