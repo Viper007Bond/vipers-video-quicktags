@@ -1,0 +1,3 @@
+# Viper's Video Quicktags
+
+This is a discontinued WordPress plugin. Existing users should install [the migrator plugin](https://wordpress.org/plugins/vipers-video-quicktags-migrator/) instead ([GitHub](https://github.com/Viper007Bond/vipers-video-quicktags-migrator)). For details, see [this post on my blog](http://www.viper007bond.com/2016/07/04/vipers-video-quicktags-wordpress-plugin-discontinued/).
