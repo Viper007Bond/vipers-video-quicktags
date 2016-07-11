@@ -1,3 +1,3 @@
-# Viper's Video Quicktags
+# Viper's Video Quicktags - oEmbed Attempt
 
-This is a discontinued WordPress plugin. Existing users should install [the migrator plugin](https://wordpress.org/plugins/vipers-video-quicktags-migrator/) instead ([GitHub](https://github.com/Viper007Bond/vipers-video-quicktags-migrator)). For details, see [this post on my blog](http://www.viper007bond.com/2016/07/04/vipers-video-quicktags-wordpress-plugin-discontinued/).
+This was an attempted rewrite of the plugin to integrate into the oEmbed support that was added to WordPress. It was written sometime between 2010 and 2013. It was ultimately abandoned but is here just for my own records.
