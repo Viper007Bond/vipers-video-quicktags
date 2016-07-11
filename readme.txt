@@ -1,98 +1,20 @@
 === Viper's Video Quicktags ===
 Contributors: Viper007Bond
-Tags: video, quicktags, wysiwyg, tinymce, youtube, google video, dailymotion, vimeo, veoh, viddler, metacafe, blip.tv, flickr, ifilm, myspace, flv, quicktime
 Requires at least: 2.8
 Tested up to: 3.9
 Stable tag: trunk
 
-Allows easy and XHTML valid posting of videos from various websites such as YouTube, DailyMotion, Vimeo, and more.
+This plugin has been discontinued.
 
 == Description ==
 
-Tired of copying and pasting the embed HTML from sites like YouTube? Then this plugin is for you.
-
-Just simply click one of the [new buttons](http://wordpress.org/extend/plugins/vipers-video-quicktags/screenshots/) that this plugin adds to the write screen (rich editor included) and then paste the URL that the video is located at into the prompt box -- easy as that. You can fully configure how the videos are displayed (width, height, colors, alignment on the page) and much more. Your site will even stay (X)HTML valid unlike with the code provided by most video sites.
-
-Currently supports these video sites:
-
-* [YouTube](http://www.youtube.com/) (including playlists)
-* [Google Video](http://video.google.com/)
-* [DailyMotion](http://www.dailymotion.com/)
-* [Vimeo](http://www.vimeo.com/)
-* [Veoh](http://www.veoh.com/)
-* [Viddler](http://www.viddler.com/)
-* [Metacafe](http://www.metacafe.com/)
-* [Blip.tv](http://blip.tv/)
-* [VideoPress aka WordPress.com Video](http://videopress.com/) **NEW!**
-* [Flickr](http://www.flickr.com/) videos
-* [Spike.com/IFILM](http://www.spike.com/)
-* [MySpaceTV](http://vids.myspace.com/)
-
-As well as these file types:
-
-* Flash Video Files (FLV)
-* QuickTime (MOV, etc.)
-* Generic video files (AVI, MPEG, WMV, etc.)
-
-You can also use the `[flash]` shortcode to Flash-based video from **any** website (see Help section after installing for details).
-
-If your favorite video site is not supported, please see [the FAQ](http://wordpress.org/extend/plugins/vipers-video-quicktags/faq/) for details on how to get me to include it.
-
-== Installation ==
-
-###Updgrading From A Previous Version###
-
-To upgrade from a previous version of this plugin, delete the entire folder and files from the previous version of the plugin and then follow the installation instructions below.
-
-###Installing The Plugin###
-
-Extract all files from the ZIP file, **making sure to keep the file structure intact**, and then upload it to `/wp-content/plugins/`. This should result in multiple subfolders and files.
-
-Then just visit your admin area and activate the plugin.
-
-**See Also:** ["Installing Plugins" article on the WP Codex](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
-
-###Installing For [WordPress MU](http://mu.wordpress.org/)###
-
-Install as stated above to `plugins`, but place `vipers-video-quicktags.php` in the `mu-plugins` folder. Just that file, nothing else.
-
-###Plugin Configuration###
-
-To configure this plugin, visit it's settings page. It can be found under the "Settings" tab in your admin area, titled "Video Quicktags".
-
-== Frequently Asked Questions ==
-
-= The videos won't show up. Only a YouTube image or a link to the video does. =
-
-Your theme lacks the `<?php wp_head(); ?>` hook. Please add it right before `</head>` in your theme's `header.php` file.
-
-= I have the plugin running, but I have some questions about how to use it. =
-
-A help section is now included with this plugin. Please visit your admin area -> Settings -> Video Quicktags -> Help.
-
-= Why doesn't this plugin support such-and-such site? =
-
-There are few possible reasons for this:
-
-* I may have never heard of the site and simply linking it to me on [my WordPress plugin forums](http://www.viper007bond.com/wordpress-plugins/forums/viewforum.php?id=23) may make me include it in a future release.
-* The URL at which the video can be viewed has nothing in common with the embed URL. This means my plugin can't do anything with the URL you give it. Support for fetching the emded URL from the website may be added in a future version though, we'll see.
-* I have deemed the site not popular enough to warrant being added to my plugin. I don't wish to bloat my plugin with tiny little sites that only one or two people will use.
-
-= Does this plugin support other languages? =
-
-Yes, it does. Included in the `localization` folder is the translation template you can use to translate the plugin. See the [WordPress Codex](http://codex.wordpress.org/Translating_WordPress) for details. When you're done translating it, please [send me](http://www.viper007bond.com/contact/) the translation file so I can include it with the plugin.
-
-= Where can I get additional support for this plugin? =
-
-This is a free plugin and as such, you aren't guaranteed support. However I do my best to answer support questions. Just post on the [WordPress.org support forums](http://wordpress.org/tags/vipers-video-quicktags).
-
-== Screenshots ==
-
-1. TinyMCE, the plugin's buttons, and the plugin's dialog window.
-2. YouTube configuration page.
-2. DailyMotion configuration page with Farbtastic color picker showing.
+This plugin has been discontinued. Please install the [migration plugin](https://wordpress.org/plugins/vipers-video-quicktags-migrator/) instead. For details, see [this blog post](http://www.viper007bond.com/2016/07/04/vipers-video-quicktags-wordpress-plugin-discontinued/).
 
 == Changelog ==
+
+= v6.6.0 =
+
+* Plugin discontinued. Display a migration notice in the admin area for people who can install plugins, manage plugins, or view the plugin's settings page.
 
 = v6.5.2 =
 
@@ -542,8 +464,3 @@ This is a hotfix version to address WordPress 2.5 plus some bugfixes and such. A
 = v1.0.0 =
 
 * Inital release.
-
-== Upgrade Notice ==
-
-= 6.4.5 =
-**Security:** Better sanitization and validation of shortcode attributes to prevent low-access users from doing naughty things. Props Jacek.
